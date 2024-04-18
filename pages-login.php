@@ -36,6 +36,10 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+
+  <script>
+    var ajaxUrl = "connect.php";
+  </script>
 </head>
 
 <body>
@@ -64,20 +68,20 @@
                     <p class="text-center small">Enter your username & password to login</p>
                   </div>
 
-                  <form class="row g-3 needs-validation" novalidate>
+                  <form id="loginForm" class="row g-3 needs-validation" novalidate>
 
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Username</label>
                       <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="text" name="username" class="form-control" id="yourUsername" required>
+                        <input type="text" id="username" name="username" class="form-control" id="yourUsername" required>
                         <div class="invalid-feedback">Please enter your username.</div>
                       </div>
                     </div>
 
                     <div class="col-12">
                       <label for="yourPassword" class="form-label">Password</label>
-                      <input type="password" name="password" class="form-control" id="yourPassword" required>
+                      <input type="password" id="password" name="password" class="form-control" id="yourPassword" required>
                       <div class="invalid-feedback">Please enter your password!</div>
                     </div>
 
@@ -127,8 +131,15 @@
   <script src="assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
 
+  <!-- Inclure jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Inclure votre fichier JavaScript login.js -->
+<script src="assets/js/login.js"></script>
+
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+ 
 
 </body>
 
