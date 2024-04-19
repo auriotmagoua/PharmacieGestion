@@ -23,7 +23,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     }
 
     // Préparer la requête SQL pour vérifier les identifiants
-    $requete = $connexion->prepare("SELECT idU FROM user WHERE login = ? AND password = ?");
+    $requete = $connexion->prepare("SELECT * FROM user WHERE login = ? AND password = ? AND etat='active'");
     $requete->bind_param("ss", $username, $hachepassword);
     $requete->execute();
     $resultat = $requete->get_result();
