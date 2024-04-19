@@ -10,7 +10,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     $hachepassword = md5($password );
     // Connexion à la base de données
     require_once 'connexiondb.php';
-    $conn = connexionMysqli();
+    $connexion = connexionMysqli();
     // Préparer la requête SQL pour vérifier les identifiants
     $requete = $connexion->prepare("SELECT * FROM user WHERE login = ? AND password = ? AND etat='active'");
     $requete->bind_param("ss", $username, $hachepassword);
