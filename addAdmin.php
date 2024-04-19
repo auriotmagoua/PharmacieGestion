@@ -18,18 +18,8 @@ $hashedPassword = md5($password);
 
 
 // Ici, vous devez insérer les données récupérées dans votre base de données
-$servername = "localhost";
-$username = "black";
-$password = "black";
-$dbname = "pharmacie";
-
-// // Créer une connexion
- $conn = new mysqli($servername, $username, $password, $dbname);
-
-// // Vérifier la connexion
-if ($conn->connect_error) {
-    die("Échec de la connexion à la base de données: " . $conn->connect_error);
-}
+require_once 'connexiondb.php';
+$conn = connexionMysqli();
 
 // // Préparer et exécuter la requête SQL pour insérer les données
  $sql = "INSERT INTO user (nomU, login, password,etat) VALUES ('$nom',  '$login', '$hashedPassword','$etat')";

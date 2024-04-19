@@ -1,7 +1,7 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    
-    include '../connexionBD.php';
+    include '../connexiondb.php';
 
     $conn = connexionMysqli();
 

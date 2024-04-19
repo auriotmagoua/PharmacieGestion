@@ -5,7 +5,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     // Récupérer l'ID du produit depuis la requête AJAX
     $id = $_POST['id'];
 
-    include '../connexionBD.php';
+    include '../connexiondb.php';
 
     $conn = connexionMysqli();
 

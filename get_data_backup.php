@@ -2,7 +2,6 @@
 // Connexion à la base de données (vous devrez peut-être modifier ces paramètres)
 require_once 'connexiondb.php';
 $conn = connexionMysqli();
-
 // Requête SQL pour récupérer les données de la base de données
 $sql = "SELECT * FROM user WHERE etat='active'";
 $result = $conn->query($sql);

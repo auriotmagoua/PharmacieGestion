@@ -9,19 +9,8 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 
     $hachepassword = md5($password );
     // Connexion à la base de données
-    $serveur = "localhost";
-    $utilisateur = "black";
-    $motdepasse = "black";
-    $basededonnees = "pharmacie";
-
-    // Création d'une connexion
-    $connexion = new mysqli($serveur, $utilisateur, $motdepasse, $basededonnees);
-
-    // Vérifier les erreurs de connexion
-    if ($connexion->connect_error) {
-        die("Erreur de connexion à la base de données: " . $connexion->connect_error);
-    }
-
+    require_once 'connexiondb.php';
+    $conn = connexionMysqli();
     // Préparer la requête SQL pour vérifier les identifiants
     $requete = $connexion->prepare("SELECT * FROM user WHERE login = ? AND password = ? AND etat='active'");
     $requete->bind_param("ss", $username, $hachepassword);

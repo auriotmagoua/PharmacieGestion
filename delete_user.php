@@ -5,18 +5,8 @@ if(isset($_POST['userId'])) {
     $userId = $_POST['userId'];
 
     // Connexion à la base de données
-    $servername = "localhost";
-    $username = "black";
-    $password = "black";
-    $dbname = "pharmacie";
-
-    // Créer une connexion
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Vérifier la connexion
-    if ($conn->connect_error) {
-        die("La connexion à la base de données a échoué: " . $conn->connect_error);
-    }
+    require_once 'connexiondb.php';
+    $conn = connexionMysqli();
 
     // Préparer la requête SQL pour mettre à jour l'état de l'utilisateur dans la table "etat"
     $updateSql = "UPDATE user SET etat = 'supprimer' WHERE idU = $userId";

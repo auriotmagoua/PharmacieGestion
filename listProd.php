@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-
+   <!-- Lien de non connection -->
+<?php include "tet.php"?>
 <?php include "include/header.php"?>
   <!-- datatable link -->
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"> -->
