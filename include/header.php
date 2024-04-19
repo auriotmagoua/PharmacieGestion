@@ -10,6 +10,19 @@
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
+  <!-- jQuery link-->
+  <link href="libs/jquery-ui-1.13.2/jquery-ui.css" rel="stylesheet">
+  <script src="libs/jquery-ui-1.13.2/external/jquery/jquery.js"></script>
+  <script src="libs/jquery-ui-1.13.2/jquery-ui.js"></script>
+
+  <!-- select2  link-->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+  
+  <!-- sweet alert 2 link  -->
+  <script src="libs/sweetAlert/sweetalert2.all.min.js"></script>
+  <link href="libs/sweetAlert/sweetalert2.css" rel="stylesheet">
+
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -25,4 +38,9 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+  
+  <!-- Toastr link-->
+  <link href="libs/toastr/toastr.scss" rel="stylesheet">
+  <script src="libs/toastr/toastr.js"></script>
+
 </head>

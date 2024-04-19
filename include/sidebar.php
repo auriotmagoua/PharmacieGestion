@@ -99,7 +99,7 @@
             </a>
           </li>
           <li>
-            <a href="listProd.php">
+            <a href="listProd2.php">
               <i class="bi bi-circle"></i><span>Lister</span>
             </a>
           </li>
