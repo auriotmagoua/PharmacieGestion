@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+   <!-- Lien de non connection -->
+<?php include "tet.php"?>
+
+
 
 <?php include "include/header.php"?>
 
@@ -9,6 +13,8 @@
 
 <!-- sidebar -->
 <?php include "include/sidebar.php"?>
+
+
 
 
 <!-- contain page -->
