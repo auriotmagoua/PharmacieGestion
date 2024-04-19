@@ -10,7 +10,11 @@
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
+<<<<<<< HEAD
   <!-- jQuery link-->
+=======
+      <!-- jQuery link-->
+>>>>>>> 344bf581cffc79a9d52317613b195de11c607d9c
   <link href="libs/jquery-ui-1.13.2/jquery-ui.css" rel="stylesheet">
   <script src="libs/jquery-ui-1.13.2/external/jquery/jquery.js"></script>
   <script src="libs/jquery-ui-1.13.2/jquery-ui.js"></script>
@@ -34,7 +38,7 @@
   <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
   <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+  <!-- <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet"> -->
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
@@ -42,5 +46,16 @@
   <!-- Toastr link-->
   <link href="libs/toastr/toastr.scss" rel="stylesheet">
   <script src="libs/toastr/toastr.js"></script>
+<<<<<<< HEAD
 
 </head>
+=======
+  
+  <script type="text/javascript" src="assets/vendor/jquery-ui-1.13.2.custom/external/jquery/jquery.js"></script>
+  <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+  <script type="text/javascript" src="assets/vendor/DataTables/datatables.min.js"></script>
+  <link href="assets/vendor/DataTables/datatables.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+>>>>>>> 344bf581cffc79a9d52317613b195de11c607d9c

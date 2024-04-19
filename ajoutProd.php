@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
+    
+<!-- Lien de non connection -->
+<?php include "tet.php"?>
 <?php include "include/header.php"?>
 
 
@@ -183,7 +185,7 @@
         'debug': false,
         'newestOnTop': false,
         'progressBar': true,
-        'positionClass': 'toast-top-right',
+        'positionClass': 'toast-top-center',
         'preventDuplicates': false,
         'showDuration': '1000',
         'hideDuration': '1000',

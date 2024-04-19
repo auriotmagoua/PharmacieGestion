@@ -15,7 +15,11 @@ if ($result->num_rows > 0) {
     $data[] = array(
         'idCategorie' => $row['idCategorie'],
         'nomCategorie' => $row['nomCategorie']
+<<<<<<< HEAD
       );
+=======
+    );
+>>>>>>> 344bf581cffc79a9d52317613b195de11c607d9c
   }
 }
 // Renvoi des résultats en tant que réponse JSON
