@@ -11,7 +11,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $prixTotal = $_POST['prixTotal'];
     $idProduit = $_POST['produit'];
 
-    $conn = new mysqli("localhost", "christian", "Christian$1", "pharmacie");
+    // connexion base de donnees 
+    include 'connexiondb.php';
+    $conn = connexionMysqli();
 
     // Préparer la requête de modification
     $sql = "UPDATE ventes SET idClient='$idClient', qteVente='$quantite', prixT='$prixTotal', idProd='$idProduit' WHERE idVente='$idVente'";

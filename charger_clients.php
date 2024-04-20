@@ -2,14 +2,9 @@
     ini_set('display_errors', 1);
     ini_set('display_status_errors',1);
     error_reporting(E_ALL);
-// Code de connexion à la base de données
-$conn = new mysqli("localhost", "christian", "Christian$1", "pharmacie");
-
-
-// Vérifier la connexion à la base de données
-if ($conn->connect_error) {
-    die("Erreur de connexion à la base de données : " . $conn->connect_error);
-}
+    // connexion base de donnees 
+    include 'connexiondb.php';
+    $conn = connexionMysqli();
 
 // Requête SQL pour sélectionner les clients
 $sql = "SELECT idClient, nomClient FROM client";

@@ -2,8 +2,9 @@
     ini_set('display_errors', 1);
     ini_set('display_status_errors',1);
     error_reporting(E_ALL);
-// Code de connexion à la base de données
-$conn = new mysqli("localhost", "christian", "Christian$1", "pharmacie");
+    // connexion base de donnees 
+    include 'connexiondb.php';
+    $conn = connexionMysqli();
 
 // Vérifier la connexion à la base de données
 if ($conn->connect_error) {
