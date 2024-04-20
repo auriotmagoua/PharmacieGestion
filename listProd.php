@@ -172,6 +172,10 @@
               Categorie requise!
               </div>
             </div>
+            <div class="col-md-4">
+              <label for="idCategorie" class="form-label">image preview:</label>
+              <img class="form-control" src="" alt="" with="40" height="100" id="image-preview">
+            </div>
             <input type="hidden" name="idProd" id="idProd">
             <div class="card-footer">
               <div class="col-12 ">

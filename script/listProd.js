@@ -36,9 +36,10 @@ $(document).ready(function() {
                        // Afficher les informations dans le formulaire de modification
                       $('#nomProd').val(response['nomProd']);
                       $('#numLot').val(response['numLot']);
-                      $('#imageProd').val(response['imageProd']);
+                      $('#image-preview').attr('src', response['imageProd']);
                       $('#datePerem').val(response['datePerem']);
                       $('#qteDispo').val(response['qteDispo']);
+                    //   $('#imageProd').val(response['imageProd']);
                       $('#prixU').val(response['prixU']);
                       $('#idCategorie').val(response['idCategorie']);
                       // Stocker l'identifiant dans un champ caché pour l'envoi ultérieur
@@ -56,6 +57,21 @@ $(document).ready(function() {
         });
         
     });
+
+
+    const imageInput = document.getElementById('imageProd');
+    const imagePreview = document.getElementById('image-preview');
+    imageInput.addEventListener('change', function() {
+        const file = this.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            imagePreview.src = e.target.result;
+        }
+
+        reader.readAsDataURL(file);
+    });
+
 
     // $(document).on('submit', '#editForm', function(e) {
     //     e.preventDefault(); // Empêche le comportement par défaut du formulaire

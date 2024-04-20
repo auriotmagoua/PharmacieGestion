@@ -10,11 +10,7 @@
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-<<<<<<< HEAD
-  <!-- jQuery link-->
-=======
-      <!-- jQuery link-->
->>>>>>> 344bf581cffc79a9d52317613b195de11c607d9c
+    <!-- jQuery link-->
   <link href="libs/jquery-ui-1.13.2/jquery-ui.css" rel="stylesheet">
   <script src="libs/jquery-ui-1.13.2/external/jquery/jquery.js"></script>
   <script src="libs/jquery-ui-1.13.2/jquery-ui.js"></script>
