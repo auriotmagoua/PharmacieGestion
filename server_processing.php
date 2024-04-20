@@ -31,20 +31,22 @@ $primaryKey = 'idProd';
 $columns = array(
     array( 'db' => 'idProd', 'dt'             => 0 ),
     array( 'db' => 'nomProd',   'dt'          => 1 ),
-    array( 'db' => 'numLot',   'dt'           => 2 ),
-    array( 'db' => 'datePerem',   'dt'        => 3 ),
-    array( 'db' => 'qteDispo',   'dt'         => 4 ),
-    array( 'db' => 'prixU',      'dt'         => 5 ),
-    // array( 'db' => 'idFournis',     'dt'      => 6 ),
-    array( 'db' => 'idCategorie',     'dt'    => 6 ),
-    // array(
-    //     'db' => 'idProd',
-    //     'dt' => 9,
-    //     'formatter' => function($d, $row) {
-    //         return '<button class="btn btn-outline-primary me-2" data-id="' . $d . '">Modifier</button>' .
-    //                '<button class="btn btn-outline-danger me-2" data-id="' . $d . '">Supprimer</button>';
-    //     }
-    // )
+    array(
+        'db' => 'imageProd',
+        'dt' => 2,
+        'formatter' => function($data, $row) {
+            // Générer le code HTML pour afficher l'image
+            $imageHTML = '<img src="' . $data . '"  width="70" height="80">';
+            
+            // Retourner le code HTML de l'image
+            return $imageHTML;
+        }
+    ),
+    array( 'db' => 'numLot',   'dt'           => 3 ),
+    array( 'db' => 'datePerem',   'dt'        => 4 ),
+    array( 'db' => 'qteDispo',   'dt'         => 5 ),
+    array( 'db' => 'prixU',      'dt'         => 6 ),
+  
 
 );
 // SQL server connection information

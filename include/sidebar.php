@@ -21,7 +21,7 @@
             </a>
           </li>
           <li>
-            <a href="listProd2.php">
+            <a href="listProd.php">
               <i class="bi bi-circle"></i><span>Lister</span>
             </a>
           </li>
