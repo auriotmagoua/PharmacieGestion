@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<?php 
+// include "tet.php"
+?>
 <?php include "include/header.php"?>
 
 <body>

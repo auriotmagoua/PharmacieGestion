@@ -25,13 +25,20 @@
               <i class="bi bi-circle"></i><span>Lister</span>
             </a>
           </li>
+        </ul>
+      </li><!-- End produit Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#vente-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i><span>Vente</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="vente-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
             <a href="vente.php">
               <i class="bi bi-circle"></i><span>Vente</span>
             </a>
           </li>
         </ul>
-      </li><!-- End produit Nav -->
+      </li><!-- End Vente Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-register.php">
