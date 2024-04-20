@@ -2,8 +2,10 @@
     ini_set('display_errors', 1);
     ini_set('display_status_errors',1);
     error_reporting(E_ALL);
-// Code de connexion à la base de données
-$conn = new mysqli("localhost", "christian", "Christian$1", "pharmacie");
+    
+    // Code de connexion à la base de données 
+    include 'connexiondb.php';
+    $conn = connexionMysqli();
 
 // Requête SQL pour récupérer les données de la table "ventes"
 $sql = "SELECT idVente, dateVente, qteVente, prixT, idProd, idClient, etat FROM ventes";

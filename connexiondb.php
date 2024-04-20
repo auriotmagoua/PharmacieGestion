@@ -1,7 +1,7 @@
 <?php 
    function connexionMysqli(){
     // $conn= new mysqli('localhost','auriot','auriot','pharmacie');
-    $conn = new mysqli("localhost", "christian", "Christian$1", "pharmacie");
+    $conn = new mysqli("localhost", "auriot", "auriot", "pharmacie");
    	if ($conn){
    		return $conn;
    	}else{

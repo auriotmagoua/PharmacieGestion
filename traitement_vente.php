@@ -4,7 +4,9 @@
     error_reporting(E_ALL);
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $conn = new mysqli("localhost", "christian", "Christian$1", "pharmacie");
+        include 'connexionbd.php';
+
+        $conn = connexionMysqli();
 
         // Récupérer les données du formulaire
         $dateVente = date('Y-m-d');

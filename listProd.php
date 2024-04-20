@@ -1,266 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
-   <!-- Lien de non connection -->
+
+<!-- Lien de non connection -->
 <?php include "tet.php"?>
+
 <?php include "include/header.php"?>
-  <!-- datatable link -->
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"> -->
-  <!-- <link rel="stylesheet" href="https://cdn.datatables.net/2.0.4/css/dataTables.bootstrap5.css"> -->
-  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
-  <script src="https://cdn.datatables.net/2.0.4/js/dataTables.js"></script>
-  <script src="https://cdn.datatables.net/2.0.4/js/dataTables.bootstrap5.js"></script>
 
 <body>
-<!-- navbar -->
+
+  <!-- navbar -->
 <?php include "include/navbar.php"?>
 
 <!-- sidebar -->
 <?php include "include/sidebar.php"?>
 
 
-<!-- contain page -->
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Dashboard</h1>
+      <h1>Produits</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item active">Dashboard</li>
+          <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+          <li class="breadcrumb-item active">Produits</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
+    <section class="section">
 
-    <section class="section dashboard">
-        <div class="row">
-            <!-- <div class="col-lg-2"></div> -->
-            <div class="col-lg-12  card">
-                <div class="row">
-                    <table id="example" class="table table-striped" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>nomProd</th>
-                                <!-- <th>Numlot</th> -->
-                                <th>datePerem</th>
-                                <th>QteDispo</th>
-                                <th>prixU</th>
-                                <th>fourni</th>
-                                <th>categorie</th>
-                                <th>Action</th>                                                                                                                                                                                                                                                                                                                                      
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011-04-25</td>
-                                <td>$320,800</td>
-                                <td>
-                                     <button class="btn btn-outline-primary" type="reset" data-bs-toggle="modal" data-bs-target="#edit">edit</button>
-                                     <button class="btn btn-outline-success" type="submit" data-bs-toggle="modal" data-bs-target="#delete" id="btn-send">delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Garrett Winters</td>
-                                <td>Accountant</td>
-                                <td>Tokyo</td>
-                                <td>63</td>
-                                <td>2011-07-25</td>
-                                <td>$170,750</td>
-                                <td>
-                                     <button class="btn btn-outline-primary" type="reset">edit</button>
-                                     <button class="btn btn-outline-success" type="submit" id="btn-send">delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Ashton Cox</td>
-                                <td>Junior Technical Author</td>
-                                <td>San Francisco</td>
-                                <td>66</td>
-                                <td>2009-01-12</td>
-                                <td>$86,000</td>
-                                <td>
-                                     <button class="btn btn-outline-primary" type="reset">edit</button>
-                                     <button class="btn btn-outline-success" type="submit" id="btn-send">delete</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+    <div class="card">
+      <div class="card-header">
+        <p class="h4 text-center">PRODUIT ENREGISTRER</p>
+      </div>
+      <div class="card-body">
+      <!-- <form class="container-fluid justify-content-start"><button type="button" class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">AJOUTER UN CLIENT</button></form></center> -->
+      <table id="example" class="display table table-bordered  table-bordered " style="width:100%">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>nomProd</th>
+              <th>imageProd</th>
+              <th>numLot</th>
+              <th>datePerem</th>
+              <th>qteDispo</th>
+              <th>PrixU</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tfoot>
+              <tr>
+                  <th>#</th>
+                  <th>nomProd</th>
+                  <th>imageProd</th>
+                  <th>numLot</th>
+                  <th>datePerem</th>
+                  <th>qteDispo</th>
+                  <th>PrixU</th>
+                  <th>Action</th>
+              </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+  <!-- add modal -->
+  <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="h4 text-center">ENREGISTRER UN CLIENT</p>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-    </section>
+        <div class="modal-body">
+          <form class="row g-3 needs-validation" id="myform" novalidate>
+            <div class="col-md-12">
+              <label for="nomC" class="form-label">Nom du client:</label>
+              <input type="text" class="form-control" id="nomC" name="nomC" required>
+              <div class="invalid-feedback">
+                nom du client requis!
+              </div>
+            </div>
+            <div class="col-md-12">
+              <label for="villeC" class="form-label">Ville:</label>
+              <input type="text" class="form-control" id="villeC" name="villeC" required>
+              <div class="invalid-feedback">
+                ville requise!
+              </div>
+            </div>
+            <div class="col-md-12">
+              <label for="emailC" class="form-label">email:</label>
+              <input type="email" class="form-control" id="emailC" name="emailC" required>
+              <div class="invalid-feedback">
+                email not valide!
+              </div>
+            </div>
+            <div class="col-md-12">
+              <label for="telC" class="form-label">telephone:</label>
+              <input type="number" class="form-control" id="telC" name="telC" required>
+              <div class="invalid-feedback">
+                numero de telephone requis!
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="col-12 ">
+                <button class="btn btn-outline-danger" type="reset">reset</button>
+                <button class="btn btn-outline-primary" type="submit" id="btn-send">save</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- edit modal -->
+  <div class="modal fade" id="editModalToggle" aria-hidden="true" aria-labelledby="editModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="h4 text-center">MODIFIER UN PRODUIT</p>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form class="row g-3 needs-validation" id="editForm" novalidate>
+            <div class="col-md-12">
+              <label for="nomProd" class="form-label">Nom du produit:</label>
+              <input type="text" class="form-control" id="nomProd" name="nomProd" required>
+              <div class="invalid-feedback">
+                nom du client requis!
+              </div>
+            </div>
+            <div class="col-md-12">
+              <label for="numLot" class="form-label">numero du Lot:</label>
+              <input type="number" class="form-control" id="numLot" name="numLot" required>
+              <div class="invalid-feedback">
+              numero du Lot requise!
+              </div>
+            </div>
+            <div class="col-md-12">
+              <label for="imageProd" class="form-label">image du produit:</label>
+              <input type="file" class="form-control" id="imageProd" name="imageProd" required>
+              <div class="invalid-feedback">
+              image du produit requise!
+              </div>
+            </div>
+            <div class="col-md-12">
+              <label for="datePerem" class="form-label">date de Peremption:</label>
+              <input type="date" class="form-control" id="datePerem" name="datePerem" required>
+              <div class="invalid-feedback">
+                date de Peremption requise!
+              </div>
+            </div>
+            <div class="col-md-12">
+              <label for="qteDispo" class="form-label">quantite Dispo:</label>
+              <input type="number" class="form-control" id="qteDispo" name="qteDispo" required>
+              <div class="invalid-feedback">
+              quantite disponible requis!
+              </div>
+            </div>
+            <div class="col-md-12">
+              <label for="prixU" class="form-label">prix Unitaire:</label>
+              <input type="number" class="form-control" id="prixU" name="prixU" required>
+              <div class="invalid-feedback">
+                prix Unitaire requise!
+              </div>
+            </div>
+            <div class="col-md-12">
+              <label for="idCategorie" class="form-label">Categorie:</label>
+              <input type="number" class="form-control" id="idCategorie" name="idCategorie" required>
+              <div class="invalid-feedback">
+              Categorie requise!
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label for="idCategorie" class="form-label">image preview:</label>
+              <img class="form-control" src="" alt="" with="40" height="100" id="image-preview">
+            </div>
+            <input type="hidden" name="idProd" id="idProd">
+            <div class="card-footer">
+              <div class="col-12 ">
+                <button class="btn btn-outline-danger" type="reset">cancel</button>
+                <button class="btn btn-outline-primary" type="submit" id="btn-send">save</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  </section>
+
   </main><!-- End #main -->
 
+  <?php include "include/footer.php";?>
 
-<!--start modal to edit -->
-<div class="modal fade" id="edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Editer Produit</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-        <div class="modal-body">
-            <form class="row g-3 needs-validation" id="myform" novalidate>
-                <div class="col-md-12">
-                    <label for="nomProd" class="form-label">Nom produit:</label>
-                    <input type="text" class="form-control" id="nomProd" name="nomProd" placeholder="enter un nom" required>
-                    <div class="invalid-feedback">
-                    nom produit requis!
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <label for="numLot" class="form-label">Numero lot:</label>
-                    <input type="number" class="form-control" id="numLot" name="numLot" placeholder="" required>
-                    <div class="invalid-feedback">
-                    numero de lot requis
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <label for="datePerem" class="form-label">Date peremption</label>
-                    <div class="input-group has-validation">
-                    <input type="date" class="form-control" id="datePerem" name="datePerem" placeholder="" aria-describedby="inputGroupPrepend" required>
-                    <div class="invalid-feedback">
-                        date peremption requise!
-                    </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <label for="qteProd" class="form-label">Quantite Disponible</label>
-                    <input type="number" class="form-control" id="qteProd" name="qteProd" placeholder="" required>
-                    <div class="invalid-feedback">
-                    quantite de produit requise!
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <label for="prixU" class="form-label">Prix unitaire</label>
-                    <input type="number" class="form-control" id="prixU" name="prixU" placeholder="" required>
-                    <div class="invalid-feedback">
-                    prix unitaire requis!
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <label for="fournisseur" class="form-label">Fournisseur</label>
-                    <select type="text" class="form-control" id="fournisseur" name="fournisseur" placeholder="" required></select>
-                    <div class="invalid-feedback">
-                    fournisseur requis!
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <label for="categoris" class="form-label">Categorie</label>
-                    <select type="text" class="form-control" id="categorie" name="categorie" placeholder="" required></select>
-                    <div class="invalid-feedback">
-                    categoris requise!
-                    </div>
-                </div>
-               
-            
-            </div>
-            <div class="modal-footer d-flex justify-content-center">
-                <div class="col-12">
-                    <div class="d-flex justify-content-center">
-                    <button class="btn btn-outline-danger" data-bs-dismiss="modal">cancel</button>
-                    <button class="btn btn-outline-primary mx-3" type="submit" id="btn-send">Modifier</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-  </div>
-</div>
-
-  <!--end modal to edit -->
-
-
-
-  <!-- start modal to delete -->
-<div class="modal fade" id="delete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Editer Produit</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-        <div class="modal-body">
-            <form class="row g-3 needs-validation" id="myform" novalidate>
-                <div class="col-md-12">
-                    <label for="nomProd" class="form-label">Nom produit:</label>
-                    <input type="text" class="form-control" id="nomProd" name="nomProd" placeholder="enter un nom" required>
-                    <div class="invalid-feedback">
-                    nom produit requis!
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <label for="numLot" class="form-label">Numero lot:</label>
-                    <input type="number" class="form-control" id="numLot" name="numLot" placeholder="" required>
-                    <div class="invalid-feedback">
-                    numero de lot requis
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <label for="datePerem" class="form-label">Date peremption</label>
-                    <div class="input-group has-validation">
-                    <input type="date" class="form-control" id="datePerem" name="datePerem" placeholder="" aria-describedby="inputGroupPrepend" required>
-                    <div class="invalid-feedback">
-                        date peremption requise!
-                    </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <label for="qteProd" class="form-label">Quantite Disponible</label>
-                    <input type="number" class="form-control" id="qteProd" name="qteProd" placeholder="" required>
-                    <div class="invalid-feedback">
-                    quantite de produit requise!
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <label for="prixU" class="form-label">Prix unitaire</label>
-                    <input type="number" class="form-control" id="prixU" name="prixU" placeholder="" required>
-                    <div class="invalid-feedback">
-                    prix unitaire requis!
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <label for="fournisseur" class="form-label">Fournisseur</label>
-                    <select type="text" class="form-control" id="fournisseur" name="fournisseur" placeholder="" required></select>
-                    <div class="invalid-feedback">
-                    fournisseur requis!
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <label for="categoris" class="form-label">Categorie</label>
-                    <select type="text" class="form-control" id="categorie" name="categorie" placeholder="" required></select>
-                    <div class="invalid-feedback">
-                    categoris requise!
-                    </div>
-                </div>
-               
-            
-            </div>
-            <div class="modal-footer d-flex justify-content-center">
-                <div class="col-12">
-                    <div class="d-flex justify-content-center">
-                    <button class="btn btn-outline-danger" data-bs-dismiss="modal">cancel</button>
-                    <button class="btn btn-outline-primary mx-3" type="submit" id="btn-send">Modifier</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-  </div>
-</div>
-
-  <!--end modal to delete -->
- 
- <?php include "include/footer.php";?>   
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
-  <script src="script/script.js"></script>
+  <script src="script/listProd.js"></script>
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/chart.js/chart.umd.js"></script>
@@ -274,4 +211,5 @@
   <script src="assets/js/main.js"></script>
 
 </body>
+
 </html>
