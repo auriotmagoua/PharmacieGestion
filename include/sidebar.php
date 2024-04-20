@@ -25,6 +25,11 @@
               <i class="bi bi-circle"></i><span>Lister</span>
             </a>
           </li>
+          <li>
+            <a href="vente.php">
+              <i class="bi bi-circle"></i><span>Vente</span>
+            </a>
+          </li>
         </ul>
       </li><!-- End produit Nav -->
 
