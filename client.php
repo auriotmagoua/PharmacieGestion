@@ -30,7 +30,7 @@
 
           <div class="card">
             <div class="card-body">
-            <center><p class="h4 text-center">Client enregistrés</p>
+            <center><p class="h4 text-center">Clients enregistrés</p>
             <br>
             <form class="container-fluid justify-content-start"><button type="button" class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">AJOUTER UN CLIENT</button></form></center>
             <table id="example" class="display" style="width:100%">
@@ -86,7 +86,7 @@
                       <label for="emailC" class="form-label">email:</label>
                       <input type="email" class="form-control" id="emailC" name="emailC" required>
                       <div class="invalid-feedback">
-                        email not valide!
+                        email non valide!
                       </div>
                     </div>
                     <div class="col-md-12">
@@ -136,7 +136,7 @@
                       <label for="emailC" class="form-label">email:</label>
                       <input type="email" class="form-control" id="emailC1" name="emailC1" required>
                       <div class="invalid-feedback">
-                        email not valide!
+                        email non valide!
                       </div>
                     </div>
                     <div class="col-md-12">
@@ -150,7 +150,7 @@
                     <div class="card-footer">
                       <div class="col-12 ">
                         <button class="btn btn-outline-danger" type="reset">reset</button>
-                        <button class="btn btn-outline-primary" type="submit" id="btn-send">save</button>
+                        <button class="btn btn-outline-primary" type="submit" id="btn-send">edit</button>
                       </div>
                     </div>
                   </form>

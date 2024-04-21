@@ -19,21 +19,21 @@
  */
  
 // DB table to use
-$table = 'client';
+$table = 'fournisseur';
  
 // Table's primary key
-$primaryKey = 'idClient';
+$primaryKey = 'idFournis';
  
 // Array of database columns which should be read and sent back to DataTables.
 // The `db` parameter represents the column name in the database, while the `dt`
 // parameter represents the DataTables column identifier. In this case simple
 // indexes
 $columns = array(
-    array( 'db' => 'idClient',      'dt' => 0 ),
-    array( 'db' => 'nomClient',     'dt' => 1 ),
-    array( 'db' => 'villeClient',   'dt' => 2 ),
-    array( 'db' => 'emailClient',   'dt' => 3 ),
-    array( 'db' => 'telephoneClient',     'dt' => 4 ),
+    array( 'db' => 'idFournis',      'dt' => 0 ),
+    array( 'db' => 'nomFournis',     'dt' => 1 ),
+    array( 'db' => 'villeFournis',   'dt' => 2 ),
+    array( 'db' => 'emailFournis',   'dt' => 3 ),
+    array( 'db' => 'telephoneFournis',     'dt' => 4 ),
     // array(
     //     'db'        => 'image',
     //     'dt'        => 3,
@@ -87,5 +87,4 @@ $whereClause = "etat = 'active'";
 echo json_encode(
     SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns, $whereClause)
 );
-
 
