@@ -73,60 +73,60 @@ $(document).ready(function() {
     });
 
 
-    // $(document).on('submit', '#editForm', function(e) {
-    //     e.preventDefault(); // Empêche le comportement par défaut du formulaire
+    $(document).on('submit', '#editForm', function(e) {
+        e.preventDefault(); // Empêche le comportement par défaut du formulaire
         
-    //     // Afficher la boîte de dialogue de confirmation
-    //     Swal.fire({
-    //       title: "Are you sure?",
-    //       text: "Voulez-vous modifier ce client?",
-    //       icon: "warning",
-    //       showCancelButton: true,
-    //       confirmButtonColor: "#3085d6",
-    //       cancelButtonColor: "#d33",
-    //       confirmButtonText: "Yes",
-    //       cancelButtonText: "No"
-    //     }).then((result) => {
-    //       if (result.isConfirmed) {
-    //         var formData = new FormData($(this)[0]);
+        // Afficher la boîte de dialogue de confirmation
+        Swal.fire({
+          title: "Are you sure?",
+          text: "Voulez-vous modifier ce client?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes",
+          cancelButtonText: "No"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            var formData = new FormData($(this)[0]);
             
-    //         $.ajax({
-    //           data: formData,
-    //           type: "post",
-    //           url: "forms/edit.php",
-    //           dataType: "json",
-    //           contentType: false,
-    //           processData: false,
-    //           success: function(dataResult) {
-    //             if (dataResult.statusCode == 200) {
-    //               Swal.fire({
-    //                 icon: 'success',
-    //                 title: 'Success',
-    //                 text: 'Modification du produit réussie',
-    //                 confirmButtonText: 'OK',
-    //                 showConfirmButton: true,
-    //               });
-    //               $('#editForm')[0].reset(); // Réinitialise le formulaire
-    //               $('#editModalToggle').modal('hide'); // Masque la fenêtre modale de modification
-    //             } else if (dataResult.statusCode == 500) {
-    //               Swal.fire({
-    //                 icon: 'error',
-    //                 title: 'Error',
-    //                 text: dataResult.message
-    //               });
-    //             }
-    //           },
-    //           error: function(xhr, textStatus, errorThrown) {
-    //             Swal.fire({
-    //               icon: 'error',
-    //               title: 'Error',
-    //               text: 'Erreur lors de la requête AJAX : ' + textStatus
-    //             });
-    //           }
-    //         });
-    //       }
-    //     });
-    //   });
+            $.ajax({
+              data: formData,
+              type: "post",
+              url: "editProd.php",
+              dataType: "json",
+              contentType: false,
+              processData: false,
+              success: function(dataResult) {
+                if (dataResult.statusCode == 200) {
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Modification du produit réussie',
+                    confirmButtonText: 'OK',
+                    showConfirmButton: true,
+                  });
+                  $('#editForm')[0].reset(); // Réinitialise le formulaire
+                  $('#editModalToggle').modal('hide'); // Masque la fenêtre modale de modification
+                } else if (dataResult.statusCode == 500) {
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: dataResult.message
+                  });
+                }
+              },
+              error: function(xhr, textStatus, errorThrown) {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Error',
+                  text: 'Erreur lors de la requête AJAX : ' + textStatus
+                });
+              }
+            });
+          }
+        });
+      });
 
     
 });

@@ -5,6 +5,10 @@
 <?php include "tet.php"?>
 
 <?php include "include/header.php"?>
+<!-- select2  link-->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
 
 <body>
 
@@ -122,7 +126,8 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form class="row g-3 needs-validation" id="editForm" novalidate>
+        <!-- needs-validation -->
+          <form class="row g-3 " id="editForm" novalidate>
             <div class="col-md-12">
               <label for="nomProd" class="form-label">Nom du produit:</label>
               <input type="text" class="form-control" id="nomProd" name="nomProd" required>
@@ -168,6 +173,7 @@
             <div class="col-md-12">
               <label for="idCategorie" class="form-label">Categorie:</label>
               <input type="number" class="form-control" id="idCategorie" name="idCategorie" required>
+            <!-- </select> -->
               <div class="invalid-feedback">
               Categorie requise!
               </div>
@@ -209,7 +215,28 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script>
+    // chargement des  categories dans le select 2
+    $(document).ready(function() {
+      $('#idCategorie').select2();
 
+      // Effectuer une requête AJAX pour récupérer les données de la base de données
+      $.ajax({
+        url: 'getCategorie.php', // Remplacez "obtenir_donnees.php" par votre script de récupération de données
+        type: 'GET',
+        minLength: 1,
+        dataType: 'json',
+        success: function(data) {
+          // Parcourir les données et générer les options de l'élément select
+          for (var i = 0; i < data.length; i++) {
+            $('#idCategorie').append('<option value="' + data[i].idCategorie + '">' + data[i].nomCategorie + '</option>');
+          }
+        },
+        error: function() {
+          alert('Une erreur s\'est produite lors de la récupération des données.');
+        }
+      });
+  });
+  </script>
 </body>
-
 </html>

@@ -4,9 +4,11 @@
     error_reporting(E_ALL);
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        include 'connexionbd.php';
-
+        
+        // connexion base de donnees 
+        include 'connexiondb.php';
         $conn = connexionMysqli();
+        
 
         // Récupérer les données du formulaire
         $dateVente = date('Y-m-d');

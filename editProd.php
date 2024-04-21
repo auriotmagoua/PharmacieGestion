@@ -1,34 +1,32 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    
-    include '../connexionbd.php';
+    include 'connexiondb.php';
 
     $conn = connexionMysqli();
+    $uploadDirectory = 'images/';
+    $uploadedFileName = basename($_FILES['imageProd']['name']);
+    $uploadedFileTmp = $_FILES['imageProd']['tmp_name'];
 
-    // Vérifier si la connexion a échoué
-    if ($conn->connect_error) {
-        $response = array(
-            'statusCode' => 500,
-            'message' => 'Erreur de connexion à la base de données : ' . $conn->connect_error
-        );
-        header('Content-Type: application/json');
-        echo json_encode($response);
-        exit;
-    }
+    // Validez et sécurisez le fichier si nécessaire
 
+    $destination = $uploadDirectory . $uploadedFileName;
+    move_uploaded_file($uploadedFileTmp, $destination);   
     // Récupérer les données du formulaire
-    $id = $_POST['idC1'];
-    $nomC = $_POST['nomC1'];
-    $villeC = $_POST['villeC1'];
-    $emailC = $_POST['emailC1'];
-    $telC = $_POST['telC1'];
+    $idProd = $_POST['idProd'];
+    $nomProd = $_POST['nomProd'];
+    $numLot = $_POST['numLot'];
+    // $imageProd = $_POST['imageProd'];
+    $datePerem = $_POST['datePerem'];
+    $qteDispo = $_POST['qteDispo'];
+    $prixU = $_POST['prixU'];
+    $idCategorie = $_POST['idCategorie'];
 
-    // Préparer la requête de modification
-    $sql = "UPDATE client SET nomClient=?, villeClient=?, emailClient=?, telephoneClient=?  WHERE idClient=?";
+        // Préparer la requête de modification
+    $sql = "UPDATE produit SET nomProd=?, numLot=?, imageProd=?, datePerem=?, qteDispo=?, prixU=?, idCategorie=? WHERE idProd=?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssi", $nomC, $villeC, $emailC, $telC, $id);
-
-    if ($stmt->execute()) {
+    $stmt->bind_param("sssssssi", $nomProd, $numLot, $destination, $datePerem, $qteDispo, $prixU, $idCategorie, $idProd); // Ajouter $idProd à la fin des paramètres
+        if ($stmt->execute()) {
         // Les informations du produit ont été mises à jour avec succès
         $response = array(
             'statusCode' => 200,
@@ -38,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Une erreur s'est produite lors de la mise à jour des informations du produit
         $response = array(
             'statusCode' => 500,
-            'message' => 'Erreur lors de la mise à jour des informations du client: ' . $conn->error
+            'message' => 'Erreur lors de la mise à jour des informations du produit: ' . $conn->error
         );
     }
 

@@ -42,10 +42,7 @@
   <!-- Toastr link-->
   <link href="libs/toastr/toastr.scss" rel="stylesheet">
   <script src="libs/toastr/toastr.js"></script>
-<<<<<<< HEAD
-
-</head>
-=======
+  
   
   <script type="text/javascript" src="assets/vendor/jquery-ui-1.13.2.custom/external/jquery/jquery.js"></script>
   <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
@@ -54,4 +51,3 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
->>>>>>> 344bf581cffc79a9d52317613b195de11c607d9c

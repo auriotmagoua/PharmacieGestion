@@ -5,9 +5,9 @@
 
 if (isset($_POST['idVente'])) {
 
-        // connexion base de donnees 
-        include 'connexiondb.php';
-        $conn = connexionMysqli();
+    // connexion base de donnees 
+    include 'connexiondb.php';
+    $conn = connexionMysqli();
 
     $idVente = $_POST['idVente'];
     $sql = "DELETE FROM ventes WHERE idVente = $idVente";
