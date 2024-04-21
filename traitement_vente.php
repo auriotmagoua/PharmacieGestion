@@ -4,7 +4,7 @@
     error_reporting(E_ALL);
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        include 'connexionbd.php';
+        include 'connexiondb.php';
 
         $conn = connexionMysqli();
 

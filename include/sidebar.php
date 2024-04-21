@@ -4,7 +4,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="index.html">
+        <a class="nav-link " href="index.php">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
@@ -53,6 +53,13 @@
           <span>Clients</span>
         </a>
       </li><!-- End client page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="fournisseur.php">
+          <i class="bi bi-file-earmark"></i>
+          <span>Fournisseurs</span>
+        </a>
+      </li><!-- End Fournisseur page Nav -->
 
     </ul>
 

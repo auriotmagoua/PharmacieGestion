@@ -2,7 +2,9 @@
     ini_set('display_errors', 1);
     ini_set('display_status_errors',1);
     error_reporting(E_ALL);
-$conn = new mysqli("localhost", "christian", "Christian$1", "pharmacie");
+    include 'connexiondb.php';
+
+    $conn = connexionMysqli();
 
 
 // Récupérer tous les produits de la base de données
