@@ -17,28 +17,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Récupérer les données du formulaire
-    $id = $_POST['idC1'];
-    $nomC = $_POST['nomC1'];
-    $villeC = $_POST['villeC1'];
-    $emailC = $_POST['emailC1'];
-    $telC = $_POST['telC1'];
+    $id = $_POST['idF1'];
+    $nom = $_POST['nomF1'];
+    $ville = $_POST['villeF1'];
+    $email = $_POST['emailF1'];
+    $tel = $_POST['telF1'];
 
     // Préparer la requête de modification
-    $sql = "UPDATE client SET nomClient=?, villeClient=?, emailClient=?, telephoneClient=?  WHERE idClient=?";
+    $sql = "UPDATE fournisseur SET nomFournis=?, villeFournis=?, emailFournis=?, telephoneFournis=?  WHERE idFournis=?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssi", $nomC, $villeC, $emailC, $telC, $id);
+    $stmt->bind_param("ssssi", $nom, $ville, $email, $tel, $id);
 
     if ($stmt->execute()) {
         // Les informations du produit ont été mises à jour avec succès
         $response = array(
             'statusCode' => 200,
-            'message' => 'Modification du client réussie'
+            'message' => 'Modification du fournisseur réussie'
         );
     } else {
         // Une erreur s'est produite lors de la mise à jour des informations du produit
         $response = array(
             'statusCode' => 500,
-            'message' => 'Erreur lors de la mise à jour des informations du client: ' . $conn->error
+            'message' => 'Erreur lors de la mise à jour des informations du fournisseur: ' . $conn->error
         );
     }
 

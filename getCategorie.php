@@ -15,7 +15,7 @@ if ($result->num_rows > 0) {
     $data[] = array(
         'idCategorie' => $row['idCategorie'],
         'nomCategorie' => $row['nomCategorie']
-    );
+      );
   }
 }
 // Renvoi des résultats en tant que réponse JSON

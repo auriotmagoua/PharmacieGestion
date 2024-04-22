@@ -4,7 +4,9 @@
 <!-- Lien de non connection -->
 <?php include "tet.php"?>
 <?php include "include/header.php"?>
-
+<!-- select2  link-->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
 <body>
 <!-- navbar -->
@@ -97,7 +99,7 @@
                 </div>
                 <div class="card-footer">
                     <div class="col-12 ">
-                    <input type="hidden" name="type" value="1">
+                        <input type="hidden" name="type" value="1">
                         <button class="btn btn-outline-danger" type="reset">reset</button>
                         <button class="btn btn-outline-primary" type="submit" id="btn-save">save</button>
                     </div>
@@ -154,7 +156,7 @@
     });
 
         // envoyer les donnees a  save.php pour enregistrement
-   $(document).on("click", "#btn-save", function (e) {
+    $(document).on("click", "#btn-save", function (e) {
         e.preventDefault();
         var formData = new FormData($("#myform")[0]);
         console.log(formData);
@@ -167,7 +169,7 @@
             contentType: false,
             success: function (response) {
                 if (response.statusCode == 200) {
-                    toastr.success('Produits enregistrées avec succès');
+                    toastr.success('Produit enregistrées avec succès');
                     $("#myform")[0].reset();
                 } else{
                     toastr.error('Erreur l\'or de l\'enregistrement');
@@ -178,8 +180,6 @@
             }
         });
     });
-
-
 
     $(document).ready(function() {
     toastr.options = {

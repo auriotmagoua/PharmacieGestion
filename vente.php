@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php include "tet.php"?>
+
 <?php 
 // include "tet.php"
 ?>

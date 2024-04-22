@@ -17,32 +17,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Récupérer les données du formulaire
-    $id = $_POST['idC1'];
-    $nomC = $_POST['nomC1'];
-    $villeC = $_POST['villeC1'];
-    $emailC = $_POST['emailC1'];
-    $telC = $_POST['telC1'];
+    $nomF = $_POST['nomF'];
+    $villeF = $_POST['villeF'];
+    $emailF = $_POST['emailF'];
+    $telF = $_POST['telF'];
 
-    // Préparer la requête de modification
-    $sql = "UPDATE client SET nomClient=?, villeClient=?, emailClient=?, telephoneClient=?  WHERE idClient=?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssi", $nomC, $villeC, $emailC, $telC, $id);
+    // Préparer la requête d'insertion
+    $stmt = $conn->prepare("INSERT INTO fournisseur (nomFournis, villeFournis, emailFournis, telephoneFournis) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $nomF, $villeF, $emailF, $telF);
 
     if ($stmt->execute()) {
-        // Les informations du produit ont été mises à jour avec succès
+        // echo 'succes de l\'enregistrement';
         $response = array(
             'statusCode' => 200,
-            'message' => 'Modification du client réussie'
+            'message' => 'forunisseur ajouté avec succès'
         );
     } else {
-        // Une erreur s'est produite lors de la mise à jour des informations du produit
+        // echo 'echec de l\'enregistrement';
         $response = array(
             'statusCode' => 500,
-            'message' => 'Erreur lors de la mise à jour des informations du client: ' . $conn->error
+            'message' => 'Erreur lors de l\'insertion du forunisseur : ' . $stmt->error
         );
     }
 
-    // Fermer la connexion à la base de données
+    // Fermer la connexion et libérer les ressources
     $stmt->close();
     // Fermer la connexion
     $conn->close();

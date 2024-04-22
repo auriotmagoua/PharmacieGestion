@@ -3,7 +3,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="index.php" class="logo d-flex align-items-center">
         <img src="assets/img/pharma.jpeg" alt="">
         <span class="d-none d-lg-block">Pharmacie</span>
       </a>
@@ -183,7 +183,7 @@
               <hr class="dropdown-divider">
             </li>
 
-            <li>
+            <!-- <li>
               <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                 <i class="bi bi-person"></i>
                 <span>My Profile</span>
@@ -208,7 +208,7 @@
                 <i class="bi bi-question-circle"></i>
                 <span>Need Help?</span>
               </a>
-            </li>
+            </li> -->
             <li>
               <hr class="dropdown-divider">
             </li>
