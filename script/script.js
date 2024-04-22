@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // new DataTable('#example', {
 //     scrollCollapse: true,
 //     scroller: true,
@@ -50,8 +49,3 @@
 //         { data: "imageProd" },
 //     ]
 // });
-=======
-new DataTable('#example');
-
-
->>>>>>> 344bf581cffc79a9d52317613b195de11c607d9c

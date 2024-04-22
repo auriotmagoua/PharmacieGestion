@@ -66,8 +66,8 @@ $columns = array(
  
 // SQL server connection information
 $sql_details = array(
-    'user' => 'black',
-    'pass' => 'black',
+    // 'user' => 'root',
+    // 'pass' => 'Pa$$w0rd',
     'db'   => 'pharmacie',
     'host' => 'localhost'
     // ,'charset' => 'utf8' // Depending on your PHP and MySQL config, you may need this
@@ -85,6 +85,6 @@ require( 'ssp.class.php' );
 $whereClause = "etat = 'active'";
 
 echo json_encode(
-    SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns, $whereClause)
+    SSP::complex( $_GET, $sql_details, $table, $primaryKey, $columns, $whereClause)
 );
 

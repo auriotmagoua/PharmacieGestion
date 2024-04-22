@@ -7,6 +7,7 @@
         include 'connexiondb.php';
 
         $conn = connexionMysqli();
+        
 
         // Récupérer les données du formulaire
         $dateVente = date('Y-m-d');
