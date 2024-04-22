@@ -222,7 +222,7 @@ $(document).ready(function() {
             {
                 "data": null,
                 "render": function(data, type, row, meta) {
-                    return "<a href= 'facture.php'><button class='btn btn-success btnImprimer' data-id='" + row.idVente + "'>Imprimer</button></a> <button class='btn btn-danger btnSupprimer'>Supprimer</button>";
+                    return "<a href= 'assets/vendor/alpha/facture.php'><button class='btn btn-success btnImprimer' data-id='" + row.idVente + "'>Imprimer</button></a> <button class='btn btn-danger btnSupprimer'>Supprimer</button>";
                 }
             }
         ]
