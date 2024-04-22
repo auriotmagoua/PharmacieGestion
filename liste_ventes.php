@@ -1,12 +1,14 @@
 <?php
-    ini_set('display_errors', 1);
-    ini_set('display_status_errors',1);
-    error_reporting(E_ALL);
-// Code de connexion à la base de données
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 $conn = new mysqli("localhost", "christian", "Christian$1", "pharmacie");
+// Requête SQL pour récupérer les données de la table "ventes" avec jointure
+$sql = "SELECT v.idVente, v.dateVente, v.qteVente, v.prixT, p.nomProd, c.nomClient, v.etat
+        FROM ventes v
+        JOIN produit p ON v.idProd = p.idProd
+        JOIN client c ON v.idClient = c.idClient";
 
-// Requête SQL pour récupérer les données de la table "ventes"
-$sql = "SELECT idVente, dateVente, qteVente, prixT, idProd, idClient, etat FROM ventes";
 $result = $conn->query($sql);
 
 $data = array();
