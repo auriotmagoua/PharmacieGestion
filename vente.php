@@ -74,7 +74,6 @@
             <th>Prix total</th>
             <th>Nom Produit</th>
             <th>Nom Client</th>
-            <th>État</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -218,11 +217,10 @@ $(document).ready(function() {
             { "data": "prixT" },
             { "data": "nomProd" },
             { "data": "nomClient" },
-            { "data": "etat" },
             {
                 "data": null,
                 "render": function(data, type, row, meta) {
-                    return "<button class='btn btn-success btnImprimer' data-id='" + row.idVente + "'>Imprimer</button> <button class='btn btn-danger btnSupprimer'>Supprimer</button>";
+                    return "<a href= 'facture.php'><button class='btn btn-success btnImprimer' data-id='" + row.idVente + "'>Imprimer</button></a> <button class='btn btn-danger btnSupprimer'>Supprimer</button>";
                 }
             }
         ]
@@ -233,24 +231,24 @@ $(document).ready(function() {
     var idVente = $(this).data('id');
     
         // Requête AJAX pour générer la facture PDF
-        $.ajax({
-            url: 'generer_facture.php', // Assurez-vous de remplacer 'generer_facture.php' par le chemin correct de votre script PHP
-            type: 'POST',
-            data: { idVente: idVente },
-            success: function(response) {
-                // Télécharger le fichier PDF généré
-                var blob = new Blob([response]);
-                var link = document.createElement('a');
-                link.href = window.URL.createObjectURL(blob);
-                link.download = 'facture.pdf';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            },
-            error: function() {
-                alert('Erreur lors de la génération de la facture PDF.');
-            }
-        });
+        // $.ajax({
+        //     url: 'generer_facture.php', // Assurez-vous de remplacer 'generer_facture.php' par le chemin correct de votre script PHP
+        //     type: 'POST',
+        //     data: { idVente: idVente },
+        //     success: function(response) {
+        //         // Télécharger le fichier PDF généré
+        //         var blob = new Blob([response]);
+        //         var link = document.createElement('a');
+        //         link.href = window.URL.createObjectURL(blob);
+        //         link.download = 'facture.pdf';
+        //         document.body.appendChild(link);
+        //         link.click();
+        //         document.body.removeChild(link);
+        //     },
+        //     error: function() {
+        //         alert('Erreur lors de la génération de la facture PDF.');
+        //     }
+        // });
     });
 });
 </script>
