@@ -61,6 +61,12 @@
         </a>
       </li><!-- End Fournisseur page Nav -->
 
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="listeVente.php">
+          <i class="bi bi-file-earmark"></i>
+          <span>Listing Vente</span>
+        </a>
+      </li><!-- End listing periode page Nav -->
     </ul>
 
   </aside><!-- End Sidebar-->
