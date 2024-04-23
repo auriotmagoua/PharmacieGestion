@@ -66,8 +66,8 @@ $columns = array(
  
 // SQL server connection information
 $sql_details = array(
-    'user' => 'black',
-    'pass' => 'black',
+    'user' => 'auriot',
+    'pass' => 'auriot',
     'db'   => 'pharmacie',
     'host' => 'localhost'
     // ,'charset' => 'utf8' // Depending on your PHP and MySQL config, you may need this
