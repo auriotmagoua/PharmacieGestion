@@ -149,6 +149,7 @@ $(document).ready(function() {
                   });
                   $('#editForm')[0].reset(); // Réinitialise le formulaire
                   $('#editModalToggle').modal('hide'); // Masque la fenêtre modale de modification
+                  location.reload(); // Recharge la page
                 } else if (dataResult.statusCode == 500) {
                   Swal.fire({
                     icon: 'error',

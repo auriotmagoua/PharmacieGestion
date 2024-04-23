@@ -48,6 +48,13 @@
       </li><!-- End Register Page Nav -->
 
       <li class="nav-item">
+        <a class="nav-link collapsed" href="approvisionnement.php">
+          <i class="bi bi-file-earmark"></i>
+          <span>Approvisionnement</span>
+        </a>
+      </li><!-- End Approvisionnement page Nav -->
+
+      <li class="nav-item">
         <a class="nav-link collapsed" href="client.php">
           <i class="bi bi-file-earmark"></i>
           <span>Clients</span>

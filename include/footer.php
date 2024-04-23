@@ -2,7 +2,7 @@
 <footer id="footer" class="footer">
     <div class="copyright">
       <!-- &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved -->
-      Lenora , Aurio , Digital , Black F 
+      Lenora , Auriot , Digital , Black F 
     </div>
     <div class="credits">
       <!-- All the links in the footer should remain intact. -->

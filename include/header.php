@@ -48,6 +48,9 @@
   <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
   <script type="text/javascript" src="assets/vendor/DataTables/datatables.min.js"></script>
   <link href="assets/vendor/DataTables/datatables.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+  <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">  -->
+  <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/smoothness/jquery-ui.css"> -->
+
 
 </head>
