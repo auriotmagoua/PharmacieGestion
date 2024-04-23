@@ -1,6 +1,6 @@
 <?php 
    function connexionMsqli(){
-    $conn= new mysqli('localhost','auriot','auriot','boutique');
+    $conn= new mysqli('localhost','auriot','auriot','pharmacie');
    	if ($conn){
    		return $conn;
    	}else{
