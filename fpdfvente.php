@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         {
             // En-tête
             foreach ($header as $col) {
-                $this->Cell(40, 7, $col, 1);
+                $this->Cell(40, 8, $col, 1);
             }
             $this->Ln();
 
@@ -38,14 +38,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $pdf->AddPage();
 
     // Titres des colonnes
-    $header = array('IdVente', 'DateVente', 'QteVente', 'PrixT', 'NomProd', 'NomClient');
+    $header = array('IdVente', 'DateVente', 'QteVente', 'Nom Fact', 'NomProd', 'NomClient');
 
     // Requête pour récupérer les données de la table produit
     $sql = "SELECT 
                 ventes.idVente, 
                 ventes.dateVente, 
                 ventes.qteVente, 
-                ventes.prixT, 
+                ventes.numFact, 
                 produit.nomProd, 
                 client.nomClient
             FROM 
@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($result->num_rows > 0) {
         // Récupérer chaque ligne de données
         while ($row = $result->fetch_assoc()) {
-            $data[] = array($row["idVente"], $row["dateVente"], $row["qteVente"], $row["prixT"], $row["nomProd"], $row["nomClient"]);
+            $data[] = array($row["idVente"], $row["dateVente"], $row["qteVente"], $row["numFact"], $row["nomProd"], $row["nomClient"]);
         }
     } else {
         echo "0 results";
