@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $pdf->AddPage();
 
     // Titres des colonnes
-    $header = array('IdApprov',  'QteApprov', 'dateApprov', 'prixU', 'NomProd','NomFour');
+    $header = array('Id Approv',  'Qte Approv', 'date Approv', 'prixU', 'Nom Prod','Nom Four');
 
     // Requête pour récupérer les données de la table produit
     $sql = "SELECT 
