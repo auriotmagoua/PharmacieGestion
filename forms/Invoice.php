@@ -52,6 +52,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$stmt->bind_param("ssssss", $quantity, $price, $dateAppro, $productName, $idFournis, $etat);
 	
 		if ($stmt->execute()) {
+			$sql1 = "UPDATE produit SET qteDispo = qteDispo + $quantity WHERE idProd = $productName";
+            $res = $conn->query($sql1);
 			// echo 'succes de l\'enregistrement';
 			$response = array(
 				'statusCode' => 200,
