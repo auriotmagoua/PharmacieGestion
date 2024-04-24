@@ -77,11 +77,11 @@ class CustomPDF extends AlphaPDF
         $this->Ln(20);
     }
 
-    // Fonction de pied de page
-    function Footer()
-    {
-        // Position à 15 mm du bas
-        $this->SetY(-15);
+//     // Fonction de pied de page
+//     function Footer()
+//     {
+//         // Position à 15 mm du bas
+//         $this->SetY(-15);
 
         // Texte du pied de page
         $this->SetFont('Arial', 'I', 14);
@@ -93,7 +93,7 @@ class CustomPDF extends AlphaPDF
 $pdf = new CustomPDF($data); // Création d'une instance de la classe CustomPDF
 $pdf->AliasNbPages(); // Gestion automatique du nombre de pages
 
-$pdf->AddPage(); // Ajout d'une page
+// $pdf->AddPage(); // Ajout d'une page
 
 // Données du client
 $pdf->SetFont('Arial','B',20); 
@@ -192,5 +192,5 @@ $pdf->Cell(40, 8, 'Signature Client', 'B', 0, 'L');
 $pdf->Cell(50);
 $pdf->Cell(40, 8, 'Signature Caisse', 'B', 1, 'L'); 
 
-$pdf->Output(); // Génération du document PDF
+// $pdf->Output(); // Génération du document PDF
 ?>
