@@ -1,4 +1,4 @@
- $(document).ready(function(){
+$(document).ready(function(){
 	$(document).on('click', '#checkAll', function() {          	
 		$(".itemRow").prop("checked", this.checked);
 	});	
@@ -16,13 +16,55 @@
 		htmlRows += '<tr>';
 		htmlRows += '<td><input class="itemRow" type="checkbox"></td>';          
 		// htmlRows += '<td><input type="text" name="productCode[]" id="productCode_'+count+'" class="form-control" autocomplete="off"></td>';          
-		htmlRows += '<td><input type="text" name="productName[]" id="productName_'+count+'" class="form-control" autocomplete="off"></td>';	
+		htmlRows += '<td><select type="text" name="productName[]" id="productName_'+count+'" class="form-control" autocomplete="off"></select></td>';	
 		htmlRows += '<td><input type="number" name="quantity[]" id="quantity_'+count+'" class="form-control quantity" autocomplete="off"></td>';   		
 		htmlRows += '<td><input type="number" name="price[]" id="price_'+count+'" class="form-control price" autocomplete="off"></td>';		 
 		htmlRows += '<td><input type="number" name="total[]" id="total_'+count+'" class="form-control total" autocomplete="off"></td>';          
 		htmlRows += '</tr>';
 		$('#invoiceItem').append(htmlRows);
+
+		$("#productName_" + count).select2({
+			ajax: {
+				url: 'forms/scriptCompleteProduct.php', 
+				dataType: 'json',
+				delay: 250,
+				data: function (params) {
+					return {
+						search: params.term, 
+						page: params.page
+					};
+				},
+				processResults: function (data, params) {
+					params.page = params.page || 1;
+
+					return {
+						results: data,
+						pagination: {
+							more: (params.page * 30) < data.total_count 
+						}
+					};
+				},
+				cache: true
+			},
+			escapeMarkup: function (markup) {
+				return markup;
+			},
+			minimumInputLength: 1,
+			templateResult: formatData,
+			templateSelection: formatData
+		});
+
+		function formatData(data) {
+			if (data.loading) {
+				return data.text;
+			}
+
+			var markup = "<div>" + data.text + "</div>";
+
+			return markup;
+		}
 	}); 
+	
 	$(document).on('click', '#removeRows', function(){
 		$(".itemRow:checked").each(function() {
 			$(this).closest('tr').remove();
@@ -54,7 +96,13 @@
 			return false;
 		}
 	});
+
+	
+	
 });	
+
+
+
 function calculateTotal(){
 	var totalAmount = 0; 
 	$("[id^='price_']").each(function() {

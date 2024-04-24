@@ -14,9 +14,6 @@
 <!-- sidebar -->
 <?php include "include/sidebar.php"?>
 
-
-
-
 <!-- contain page -->
   <main id="main" class="main">
 
@@ -36,7 +33,6 @@
       <!-- Sales Card -->
         <div class="card info-card sales-card">
             <?php //include 'forms/Invoice.php'; ?>
-            <script src="script/invoice.js"></script>
             <?php //include('inc/container.php');?>
             <div class="container content-invoice"><br><br>
                 <form action="" id="invoice-form" method="post" class="invoice-form" role="form" novalidate=""> 
@@ -55,7 +51,7 @@
 
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 pull-right">
-                                <button class="btn btn-primary" id="submit" type="submit">Enregistrer les produits</button>
+                                <button class="btn btn-primary" id="btn-submit" type="submit">Enregistrer les produits</button>
                             </div>
                         </div>
                         <div class="row"><br>
@@ -72,7 +68,7 @@
                                     <tr>
                                         <td><input class="itemRow" type="checkbox"></td>
                                         <!-- <td><input type="text" name="productCode[]" id="productCode_1" class="form-control" autocomplete="off"></td> -->
-                                        <td><input type="text" name="productName[]" id="productName_1" class="form-control" autocomplete="off"></td>			
+                                        <td><select type="text" name="productName[]" id="productName_1" class="form-control" autocomplete="off"></select></td>
                                         <td><input type="number" name="quantity[]" id="quantity_1" class="form-control quantity" autocomplete="off"></td>
                                         <td><input type="number" name="price[]" id="price_1" class="form-control price" autocomplete="off"></td>
                                         <td><input type="number" name="total[]" id="total_1" class="form-control total" autocomplete="off"></td>
@@ -81,7 +77,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <button class="btn btn-danger delete" id="removeRows" type="button">- Delete</button>
                                 <button class="btn btn-success" id="addRows" type="button">+ Add More</button>
                             </div>
@@ -154,6 +150,8 @@
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script src="libs/select2/dist/js/select2.min.js"></script>
+    <script src="script/invoice.js"></script>
     <script>
         $(document).ready(function() {
             $("#supplierName").autocomplete({
@@ -171,6 +169,99 @@
                 },
                 minLength: 1 
             });
+            
+            $("#productName_1").select2({
+                ajax: {
+                    url: 'forms/scriptCompleteProduct.php', 
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            search: params.term, 
+                            page: params.page
+                        };
+                    },
+                    processResults: function (data, params) {
+                        params.page = params.page || 1;
+
+                        return {
+                            results: data,
+                            pagination: {
+                                more: (params.page * 30) < data.total_count 
+                            }
+                        };
+                    },
+                    cache: true
+                },
+                escapeMarkup: function (markup) {
+                    return markup;
+                },
+                minimumInputLength: 1,
+                templateResult: formatData,
+                templateSelection: formatData
+            });
+
+            function formatData(data) {
+                if (data.loading) {
+                    return data.text;
+                }
+
+                var markup = "<div>" + data.text + "</div>";
+
+                return markup;
+            }
+        });
+
+        $(document).on('click', '#btn-submit', function(e) {
+            e.preventDefault();
+            // Afficher la boîte de dialogue de confirmation
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Voulez-vous enregistrer ce(s) produit(s)?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes",
+                cancelButtonText: "No"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Récupérer les données du formulaire
+                    var formData = new FormData($('#invoice-form')[0]);
+                    // console.log(formData)
+                    // Envoyer les données au script PHP via AJAX
+                    $.ajax({
+                        url: "forms/Invoice.php",
+                        data: formData,
+                        type: "post",
+                        dataType: "json",
+                        contentType: false,
+                        processData: false,
+                        success: function(response) {
+                            // Afficher le message de succès ou gérer d'autres actions si nécessaire
+                            // alert("Données envoyées avec succès !");
+                            if (response.statusCode == 200) {
+                                Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: response.message,
+                                confirmButtonText: 'OK',
+                                showConfirmButton: true,
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        location.reload(); // Recharge la page
+                                    }
+                                });
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            // Gérer les erreurs de requête AJAX
+                            alert("Une erreur s'est produite : " + xhr.responseText);
+                        }
+                    });
+                }
+            });
+                
         });
     </script>
 
