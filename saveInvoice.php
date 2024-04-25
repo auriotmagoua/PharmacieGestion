@@ -27,11 +27,8 @@ if (count($_POST) > 0) {
       $formattedNumber = '0000'; // Si aucun enregistrement n'est trouvé, initialisez la partie numérique à '0000'
     }
   
-    // Récupérer l'année actuelle
-    $currentYear = date('Y');
-  
     // Construire le nouveau numéro de facture en utilisant le format spécifié
-    $newInvoiceNumber = "CM-ICAB-$currentYear-CDRI-$formattedNumber";
+    $newInvoiceNumber = "FACT-$formattedNumber";
   
     // Fermeture de la connexion à la base de données
     $conn->close();
