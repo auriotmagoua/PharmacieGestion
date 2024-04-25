@@ -6,8 +6,8 @@ include '../../../connexiondb.php';
 
 $conn = connexionMysqli();
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-if(isset($_POST['IDfact'])){
-$numFact = $_POST['IDfact'];
+if(isset($_POST['numFact'])){
+$numFact = $_POST['numFact'];
 // echo $factid;
 
 // $query = "SELECT * FROM ventes WHERE numFact = '$factid'";

@@ -152,9 +152,29 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '.btn-facture', function() {
-        var numFact = $(this).data('fact-id');
-        window.location.href = 'assets/vendor/alpha/facture.php?numFact=' + numFact;
+    var numFact = $(this).data('fact-id');
+
+    // Envoyer la valeur numFact via AJAX
+    $.ajax({
+        url: 'assets/vendor/alpha/facture.php', // URL de votre fichier PHP
+        type: 'POST', // Méthode HTTP GET
+        data: { numFact: numFact }, // Données à envoyer
+        success: function(response) {
+            // Traitement de la réponse en cas de succès
+            // Vous pouvez effectuer des actions supplémentaires ici
+            // console.log('Réponse de la requête AJAX :', response);
+
+            $('#pdfViewer').attr('src', 'data:application/pdf;base64,' + response);
+                $('#pdfModal').modal('show');
+        },
+        error: function(xhr, status, error) {
+            // Traitement de l'erreur en cas d'échec de la requête AJAX
+            console.error('Erreur lors de la requête AJAX :', error);
+            // Afficher un message d'erreur à l'utilisateur ou effectuer d'autres actions nécessaires
+        }
     });
+});
+
 });
 </script>
 </body>
