@@ -37,7 +37,7 @@
             <!-- <div class="col-lg-2"></div> -->
             <div class="col-lg-12  card">
                 <div class="row">
-                    <table id="example" class="table table-striped" style="width:100%">
+                    <table id="dataTable" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
                                 <th>IDVente</th>
@@ -115,52 +115,32 @@
 <!-- Template Main JS File -->
 <script src="assets/js/main.js"></script>
 <script>
-    $(document).ready(function () {
-        // Chargement des données de la base de données lors du chargement de la page
-        $.ajax({
-            url: 'getVenteData.php', // Le script PHP pour récupérer les données de la base de données
-            type: 'GET',
-            success: function (response) {
-                // Ajout des éléments récupérés dans le tableau
-                $('tbody').html(response);
-            },
-            error: function (xhr, status, error) {
-                console.error('Une erreur est survenue lors du chargement des données.');
+$(document).ready(function() {
+    $('#dataTable').DataTable({
+        "ajax": {
+            "url": "getVenteData.php",
+            "dataSrc": ""
+        },
+        "columns": [
+            {"data": "idVente"},
+            {"data": "dateVente"},
+            {"data": "qteVente"},
+            {"data": "numFact"},
+            {"data": "nomProd"},
+            {"data": "nomClient"},
+            {
+                "render": function(data, type, row) {
+                    return '<button class="btn btn-outline-success btn-facture" data-fact-id="' + row.numFact + '">Imprimer</button>';
+                }
             }
-        });
-
-        var IdFactur ; // Variable pour stocker l'ID de l
-
-        $(document).on('click', '.btn-facture', function () {
-            IdFactur = $(this).data('fact-id'); // Récupérer l'ID
-            var rowData = $(this).closest('tr').find('td'); // Récupérer les données de la ligne sélectionnée
-
-            // Afficher les données de l'utilisateur dans le modal
-           
-
-           // $('#delete').modal('show'); // Afficher le modal de confirmation
-
-
-                         $.ajax({
-                                    url: 'assets/vendor/alpha/facture.php', // facture
-                                    type: 'POST',
-                                    data: { IDfact: IdFactur }, // Passer l'ID de la facture
-                                    
-                                    error: function (xhr, status, error) {
-                                        console.error('Une erreur .');
-                                        Swal.fire(
-                                            'Erreur!',
-                                            'Une erreur .',
-                                            'error'
-                                        );
-                                    }
-                                });
-        });
-           
-                    // Effectuer une requête AJAX pour 
-                                
-          
+        ]
     });
+
+    $(document).on('click', '.btn-facture', function() {
+        var numFact = $(this).data('fact-id');
+        window.location.href = 'assets/vendor/alpha/facture.php?numFact=' + numFact;
+    });
+});
 </script>
 </body>
 </html>
