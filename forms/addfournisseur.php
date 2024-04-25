@@ -21,16 +21,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $villeF = $_POST['villeF'];
     $emailF = $_POST['emailF'];
     $telF = $_POST['telF'];
+    $etat = "active";
 
     // Préparer la requête d'insertion
-    $stmt = $conn->prepare("INSERT INTO fournisseur (nomFournis, villeFournis, emailFournis, telephoneFournis) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("ssss", $nomF, $villeF, $emailF, $telF);
+    $stmt = $conn->prepare("INSERT INTO fournisseur (nomFournis, villeFournis, emailFournis, telephoneFournis, etat) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssss", $nomF, $villeF, $emailF, $telF, $etat);
 
     if ($stmt->execute()) {
         // echo 'succes de l\'enregistrement';
         $response = array(
             'statusCode' => 200,
-            'message' => 'forunisseur ajouté avec succès'
+            'message' => 'fournisseur ajouté avec succès'
         );
     } else {
         // echo 'echec de l\'enregistrement';

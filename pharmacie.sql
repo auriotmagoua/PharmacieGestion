@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : mer. 17 avr. 2024 à 15:05
+-- Généré le : jeu. 25 avr. 2024 à 09:25
 -- Version du serveur : 8.0.36-0ubuntu0.22.04.1
 -- Version de PHP : 8.1.27
 
@@ -20,6 +20,32 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `pharmacie`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `approvisionnement`
+--
+
+CREATE TABLE `approvisionnement` (
+  `idAppro` int NOT NULL,
+  `numBL` varchar(255) NOT NULL,
+  `qteAppro` int NOT NULL,
+  `dateAppro` date NOT NULL,
+  `prixU` float NOT NULL,
+  `idProd` int NOT NULL,
+  `idFournis` int NOT NULL,
+  `etat` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `approvisionnement`
+--
+
+INSERT INTO `approvisionnement` (`idAppro`, `numBL`, `qteAppro`, `dateAppro`, `prixU`, `idProd`, `idFournis`, `etat`) VALUES
+(87, 'BL-00002', 5, '2024-04-25', 400, 5, 2, 'active'),
+(88, 'BL-00002', 7, '2024-04-25', 450, 6, 2, 'active'),
+(89, 'BL-00002', 11, '2024-04-25', 200, 9, 2, 'active');
 
 -- --------------------------------------------------------
 
@@ -57,7 +83,7 @@ CREATE TABLE `client` (
   `villeClient` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `emailClient` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `telephoneClient` varchar(255) NOT NULL,
-  `etat` varchar(255) NOT NULL
+  `etat` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -65,16 +91,16 @@ CREATE TABLE `client` (
 --
 
 INSERT INTO `client` (`idClient`, `nomClient`, `villeClient`, `emailClient`, `telephoneClient`, `etat`) VALUES
-(1, 'Reinger', 'East Jaydeberg', 'lafayette87@hotmail.com', '1-901-806', 'active'),
-(2, 'Zboncak', 'Port Vickieville', 'anais84@price.biz', '(586) 951', 'active'),
-(3, 'Metz', 'Kennithton', 'queen.rau@williamson.biz', '218.616.3', 'active'),
-(4, 'Ferry', 'Donnellyview', 'ethelyn.kulas@stoltenberg.com', '886.574.0', 'active'),
-(5, 'Vandervort', 'South Hollisland', 'nweimann@hotmail.com', '571.600.1', 'active'),
-(6, 'Lang', 'Mayerfort', 'halvorson.palma@metz.org', '+1-952-86', 'active'),
-(7, 'Bahringer', 'Jarrettchester', 'shea.lubowitz@gmail.com', '435-594-2', 'active'),
-(8, 'Tromp', 'West Cathryn', 'sfarrell@reinger.info', '819-452-3', 'active'),
-(9, 'Prosacco', 'Rebekahville', 'aufderhar.duane@gmail.com', '+1.796.50', 'active'),
-(10, 'Hand', 'Torpbury', 'fabian.heaney@gmail.com', '264-943-6', 'active');
+(1, 'Rath', 'Legrosfort', 'monserrat.larkin@yahoo.com', '720-342-72', 'active'),
+(2, 'Sporer', 'Skilesmouth', 'jkonopelski@legros.net', '796.799.89', 'active'),
+(3, 'Streich', 'North Donnie', 'waters.reginald@gmail.com', '(439) 978-', 'active'),
+(4, 'Barrows', 'Constanceview', 'wilkinson.bessie@wehner.com', '543.885.87', 'active'),
+(5, 'Marquardt', 'Lake Candelarioville', 'whand@gmail.com', '264-890-92', 'active'),
+(6, 'Bradtke', 'Yostport', 'strosin.imogene@johnston.org', '1-996-951-', 'active'),
+(7, 'Cole', 'Port Gerard', 'ohodkiewicz@bode.com', '+1 (203) 6', 'active'),
+(8, 'Toy', 'New Myahchester', 'cali35@kutch.com', '(459) 649-', 'active'),
+(9, 'Rogahn', 'North Oren', 'tabitha79@herzog.com', '1-992-795-', 'active'),
+(10, 'Dooley', 'Abbottport', 'stacy.walter@corkery.com', '1-728-641-', 'active');
 
 -- --------------------------------------------------------
 
@@ -134,7 +160,8 @@ INSERT INTO `fournisseur` (`idFournis`, `nomFournis`, `villeFournis`, `emailFour
 (3, 'Murphy', 'Rempelbury', 'adolph47@yahoo.com', '1-682-545', 'active'),
 (4, 'Dickinson', 'East Fiona', 'ullrich.victor@walsh.com', '(613) 990', 'active'),
 (5, 'Bode', 'Hoseahaven', 'fadel.marlene@gmail.com', '802-556-5', 'active'),
-(6, 'Kirlin', 'South Coty', 'willy37@lebsack.com', '+1.795.53', 'active');
+(6, 'Kirlin', 'South Coty', 'willy37@lebsack.com', '+1.795.53', 'active'),
+(7, 'booba', 'bawouan', 'booba@g', '690909090', 'active');
 
 -- --------------------------------------------------------
 
@@ -160,21 +187,21 @@ CREATE TABLE `produit` (
 --
 
 INSERT INTO `produit` (`idProd`, `nomProd`, `numLot`, `datePerem`, `qteDispo`, `prixU`, `idFournis`, `idCategorie`, `etat`, `imageProd`) VALUES
-(1, 'Quae quia qui.', 82, '1970-06-13', 64, 302, 3, 6, 'active', 'https://lorempixel.com/200/200/?11982'),
-(2, 'Consequuntur dolorum nobis nulla.', 55, '1990-08-17', 79, 492, 5, 4, 'active', 'https://lorempixel.com/200/200/?78229'),
-(3, 'Vel est sapiente modi.', 33, '1971-01-20', 82, 58, 6, 1, 'active', 'https://lorempixel.com/200/200/?71785'),
+(1, 'Quae quia qui.', 82, '1970-06-13', 84, 302, 3, 6, 'active', 'https://lorempixel.com/200/200/?11982'),
+(2, 'Consequuntur dolorum nobis nulla.', 55, '1990-08-17', 101, 492, 5, 4, 'active', 'https://lorempixel.com/200/200/?78229'),
+(3, 'Vel est sapiente modi.', 33, '1971-01-20', 86, 58, 6, 1, 'active', 'https://lorempixel.com/200/200/?71785'),
 (4, 'Illum consequatur debitis corrupti id.', 1, '1998-04-10', 63, 285, 2, 2, 'active', 'https://lorempixel.com/200/200/?46300'),
-(5, 'Ut non possimus vero.', 7, '1991-03-27', 45, 560, 6, 3, 'active', 'https://lorempixel.com/200/200/?35982'),
-(6, 'Nostrum nemo quo.', 52, '1989-05-25', 92, 509, 4, 6, 'active', 'https://lorempixel.com/200/200/?15092'),
+(5, 'Ut non possimus vero.', 7, '1991-03-27', 50, 560, 6, 3, 'active', 'https://lorempixel.com/200/200/?35982'),
+(6, 'Nostrum nemo quo.', 52, '1989-05-25', 99, 509, 4, 6, 'active', 'https://lorempixel.com/200/200/?15092'),
 (7, 'Deserunt adipisci et ab.', 4, '2007-09-27', 46, 673, 4, 6, 'active', 'https://lorempixel.com/200/200/?55345'),
-(8, 'Non officia qui error suscipit.', 75, '2013-09-22', 87, 160, 2, 5, 'active', 'https://lorempixel.com/200/200/?51736'),
-(9, 'Ab est sit aliquam.', 82, '1973-09-17', 37, 257, 5, 5, 'active', 'https://lorempixel.com/200/200/?90552'),
+(8, 'Non officia qui error suscipit.', 75, '2013-09-22', 91, 160, 2, 5, 'active', 'https://lorempixel.com/200/200/?51736'),
+(9, 'Ab est sit aliquam.', 82, '1973-09-17', 48, 257, 5, 5, 'active', 'https://lorempixel.com/200/200/?90552'),
 (10, 'Doloribus et voluptatem.', 24, '2010-07-31', 75, 979, 6, 4, 'active', 'https://lorempixel.com/200/200/?29295'),
 (11, 'Qui in aliquid.', 95, '2015-10-28', 72, 209, 2, 2, 'active', 'https://lorempixel.com/200/200/?60527'),
 (12, 'Quo pariatur iure.', 42, '1983-03-09', 7, 27, 3, 2, 'active', 'https://lorempixel.com/200/200/?58668'),
 (13, 'Laboriosam blanditiis natus adipisci.', 18, '2006-04-23', 48, 940, 1, 3, 'active', 'https://lorempixel.com/200/200/?69373'),
-(14, 'Voluptates corrupti minus soluta.', 28, '2003-03-16', 90, 29, 4, 5, 'active', 'https://lorempixel.com/200/200/?25038'),
-(15, 'Dignissimos quis quasi.', 97, '2012-04-11', 69, 588, 4, 5, 'active', 'https://lorempixel.com/200/200/?72910'),
+(14, 'Voluptates corrupti minus soluta.', 28, '2003-03-16', 95, 29, 4, 5, 'active', 'https://lorempixel.com/200/200/?25038'),
+(15, 'Dignissimos quis quasi.', 97, '2012-04-11', 159, 588, 4, 5, 'active', 'https://lorempixel.com/200/200/?72910'),
 (16, 'Id perspiciatis veritatis.', 53, '2001-02-20', 21, 481, 6, 2, 'active', 'https://lorempixel.com/200/200/?30632'),
 (17, 'Ipsum officia sed.', 21, '1992-09-02', 47, 842, 2, 4, 'active', 'https://lorempixel.com/200/200/?95476'),
 (18, 'Et culpa occaecati.', 36, '1993-02-12', 23, 818, 1, 2, 'active', 'https://lorempixel.com/200/200/?42875'),
@@ -1152,7 +1179,7 @@ INSERT INTO `produit` (`idProd`, `nomProd`, `numLot`, `datePerem`, `qteDispo`, `
 (988, 'Consequatur voluptates sit eos.', 30, '1972-09-05', 8, 576, 3, 6, 'active', 'https://lorempixel.com/200/200/?13352'),
 (989, 'Non accusamus.', 41, '2023-08-14', 79, 152, 5, 4, 'active', 'https://lorempixel.com/200/200/?15556'),
 (990, 'Id occaecati qui neque.', 5, '1980-11-15', 87, 972, 4, 6, 'active', 'https://lorempixel.com/200/200/?42527'),
-(991, 'Aut est fugit.', 57, '1996-02-10', 15, 412, 1, 5, 'active', 'https://lorempixel.com/200/200/?79348'),
+(991, 'Aut est fugit.', 57, '1996-02-10', 15, 41256, 1, 5, 'active', 'images/'),
 (992, 'Veniam necessitatibus magni.', 4, '2007-04-13', 60, 223, 2, 3, 'active', 'https://lorempixel.com/200/200/?36600'),
 (993, 'Quia autem amet.', 72, '1972-03-07', 47, 406, 3, 2, 'active', 'https://lorempixel.com/200/200/?80757'),
 (994, 'Est eos quis illo.', 39, '1997-12-17', 75, 748, 4, 3, 'active', 'https://lorempixel.com/200/200/?99500'),
@@ -1161,7 +1188,7 @@ INSERT INTO `produit` (`idProd`, `nomProd`, `numLot`, `datePerem`, `qteDispo`, `
 (997, 'Ea id nulla veniam.', 3, '1979-02-08', 12, 535, 2, 4, 'active', 'https://lorempixel.com/200/200/?92901'),
 (998, 'Perspiciatis quas dolores.', 43, '2003-08-03', 75, 482, 6, 1, 'active', 'https://lorempixel.com/200/200/?21692'),
 (999, 'Officiis suscipit repellendus vel.', 69, '1970-02-17', 69, 779, 4, 5, 'active', 'https://lorempixel.com/200/200/?19405'),
-(1000, 'Impedit assumenda et et.', 57, '1986-02-06', 44, 193, 3, 6, 'active', 'https://lorempixel.com/200/200/?70128');
+(1000, 'Impedit assumenda et et.', 57, '1986-02-06', 44, 193, 3, 6, 'supprimer', 'https://lorempixel.com/200/200/?70128');
 
 -- --------------------------------------------------------
 
@@ -1184,14 +1211,16 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`idU`, `nomU`, `login`, `password`, `etat`) VALUES
 (1, 'Block', 'elinore.botsford', '5a296e12a4b77b56d476e6ae37af5529', 'active'),
 (2, 'Reichert', 'omer.cummerata', '978e88e0c0b33443a90f3fc5cb0d0bb3', 'active'),
-(3, 'Konopelski', 'emmanuelle.hill', '4ec75cf81fae73f551e701008128081d', 'active'),
+(3, 'Konopelski', 'emmanuelle.hill', '4ec75cf81fae73f551e701008128081d', 'supprimer'),
 (4, 'Jacobs', 'wtillman', '038a7f9216791cc7c082ce59b4f5ed9a', 'active'),
 (5, 'Marquardt', 'cyundt', 'a48952e4ece165c80a9398db8cf81cbd', 'active'),
 (6, 'Stracke', 'qkerluke', '672464f470426d3da6ea549dae05e7dc', 'active'),
 (7, 'Marvin', 'jeramy06', 'eccd1e22260eec7c98c3878e43921189', 'active'),
 (8, 'Hermann', 'eudora.kuhn', '37d3b69f6e30d358721a737566602933', 'active'),
-(9, 'Reichel', 'aiyana.feeney', '96597b07573b16f0103fda5c61156e43', 'active'),
-(10, 'Lehner', 'albina75', 'febff96ca9e7301d4ead48530254f27a', 'active');
+(9, 'Reichel', 'aiyana.feeney', '96597b07573b16f0103fda5c61156e43', 'supprimer'),
+(10, 'Lehner', 'albina75', 'febff96ca9e7301d4ead48530254f27a', 'supprimer'),
+(12, 'admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'active'),
+(13, 'azerty', 'azerty', 'ab4f63f9ac65152575886860dde480a1', 'supprimer');
 
 -- --------------------------------------------------------
 
@@ -1203,7 +1232,7 @@ CREATE TABLE `ventes` (
   `idVente` int NOT NULL,
   `dateVente` date NOT NULL,
   `qteVente` int NOT NULL,
-  `prixT` double NOT NULL,
+  `numFact` text NOT NULL,
   `idProd` int NOT NULL,
   `idClient` int NOT NULL,
   `etat` varchar(255) NOT NULL
@@ -1213,111 +1242,119 @@ CREATE TABLE `ventes` (
 -- Déchargement des données de la table `ventes`
 --
 
-INSERT INTO `ventes` (`idVente`, `dateVente`, `qteVente`, `prixT`, `idProd`, `idClient`, `etat`) VALUES
-(2, '1984-02-10', 98, 73462, 556, 2, 'active'),
-(3, '2019-10-28', 59, 1668, 33, 2, 'active'),
-(4, '1998-02-11', 78, 51299, 708, 8, 'active'),
-(5, '1990-06-14', 72, 41087, 990, 1, 'active'),
-(6, '1972-08-27', 15, 89494, 242, 5, 'active'),
-(7, '2004-02-23', 11, 70041, 258, 5, 'active'),
-(8, '1983-12-16', 33, 24637, 611, 6, 'active'),
-(9, '1995-02-05', 80, 11200, 474, 3, 'active'),
-(10, '2009-08-19', 70, 47196, 945, 3, 'active'),
-(11, '2007-06-28', 91, 27362, 795, 10, 'active'),
-(12, '2003-06-20', 43, 91766, 705, 3, 'active'),
-(13, '1997-09-18', 61, 87906, 118, 6, 'active'),
-(14, '2001-12-20', 11, 68931, 638, 1, 'active'),
-(15, '1980-04-02', 29, 42791, 85, 3, 'active'),
-(16, '2007-02-24', 18, 77627, 540, 10, 'active'),
-(17, '2010-05-08', 63, 45845, 104, 9, 'active'),
-(18, '2018-12-22', 63, 70499, 471, 1, 'active'),
-(19, '2022-03-20', 91, 68028, 905, 6, 'active'),
-(20, '2004-11-15', 2, 11059, 11, 5, 'active'),
-(21, '2011-03-19', 69, 44757, 563, 5, 'active'),
-(22, '2000-05-19', 30, 85493, 453, 1, 'active'),
-(23, '2006-04-02', 95, 60388, 915, 4, 'active'),
-(24, '2011-12-23', 74, 80426, 981, 9, 'active'),
-(25, '1985-10-18', 1, 39833, 191, 5, 'active'),
-(26, '2007-11-21', 40, 83158, 317, 3, 'active'),
-(27, '1979-11-30', 72, 85004, 497, 3, 'active'),
-(28, '2000-05-29', 9, 79114, 161, 7, 'active'),
-(29, '2011-02-14', 9, 56943, 713, 6, 'active'),
-(30, '2011-12-26', 100, 41753, 806, 7, 'active'),
-(31, '2011-11-13', 3, 8322, 603, 4, 'active'),
-(32, '1987-01-11', 44, 55819, 911, 5, 'active'),
-(33, '1970-02-22', 80, 70235, 211, 2, 'active'),
-(34, '2007-06-19', 59, 68558, 982, 7, 'active'),
-(35, '1982-05-25', 43, 66014, 311, 6, 'active'),
-(36, '1995-07-03', 91, 76693, 403, 5, 'active'),
-(37, '1982-10-28', 86, 62892, 336, 9, 'active'),
-(38, '2006-04-30', 52, 2409, 943, 10, 'active'),
-(39, '2015-11-29', 23, 49677, 913, 9, 'active'),
-(40, '2015-01-13', 8, 16914, 216, 6, 'active'),
-(41, '1989-01-10', 69, 76422, 130, 9, 'active'),
-(42, '2010-02-20', 75, 66587, 81, 4, 'active'),
-(43, '2004-05-19', 10, 68460, 172, 9, 'active'),
-(44, '1995-07-16', 48, 29523, 887, 6, 'active'),
-(45, '1972-11-24', 14, 22284, 453, 9, 'active'),
-(46, '1996-08-24', 68, 24716, 497, 5, 'active'),
-(47, '1984-06-24', 100, 9802, 727, 3, 'active'),
-(48, '1999-07-27', 36, 71928, 841, 1, 'active'),
-(49, '2021-03-19', 6, 98205, 594, 8, 'active'),
-(50, '2002-03-31', 17, 78319, 978, 10, 'active'),
-(51, '1991-03-12', 23, 51030, 153, 3, 'active'),
-(52, '2005-07-31', 11, 58290, 614, 10, 'active'),
-(53, '2007-10-17', 89, 50739, 333, 5, 'active'),
-(54, '2022-09-05', 80, 98152, 824, 7, 'active'),
-(55, '2010-07-29', 37, 21705, 942, 5, 'active'),
-(56, '2016-10-16', 68, 28266, 895, 2, 'active'),
-(57, '2001-05-23', 79, 38991, 296, 5, 'active'),
-(58, '1982-05-22', 99, 7569, 759, 5, 'active'),
-(59, '2004-01-22', 68, 82250, 149, 10, 'active'),
-(60, '1977-10-02', 33, 56035, 89, 8, 'active'),
-(61, '1978-04-13', 60, 18244, 410, 9, 'active'),
-(62, '2006-02-14', 20, 47117, 320, 2, 'active'),
-(63, '2003-11-12', 49, 83492, 180, 6, 'active'),
-(64, '2004-03-25', 96, 36830, 475, 10, 'active'),
-(65, '1991-08-30', 9, 52658, 219, 5, 'active'),
-(66, '1990-04-22', 54, 36491, 293, 1, 'active'),
-(67, '1975-09-03', 10, 30363, 916, 1, 'active'),
-(68, '2014-11-21', 73, 94998, 549, 6, 'active'),
-(69, '2000-02-28', 100, 10673, 397, 8, 'active'),
-(70, '1995-08-28', 14, 15490, 422, 2, 'active'),
-(71, '2000-01-22', 34, 27103, 676, 8, 'active'),
-(72, '1985-04-24', 36, 25431, 382, 6, 'active'),
-(73, '2012-09-03', 29, 49268, 604, 1, 'active'),
-(74, '2014-08-17', 42, 71390, 808, 7, 'active'),
-(75, '2006-08-03', 19, 72948, 269, 9, 'active'),
-(76, '1981-11-22', 92, 6422, 582, 2, 'active'),
-(77, '2012-07-21', 79, 99048, 276, 2, 'active'),
-(78, '1981-07-04', 10, 97575, 151, 7, 'active'),
-(79, '2015-11-17', 54, 5468, 139, 4, 'active'),
-(80, '1974-04-04', 28, 95316, 603, 10, 'active'),
-(81, '2005-10-16', 6, 19769, 470, 8, 'active'),
-(82, '2000-10-21', 88, 14736, 309, 10, 'active'),
-(83, '2008-09-28', 2, 72132, 271, 9, 'active'),
-(84, '1982-12-30', 30, 75457, 657, 4, 'active'),
-(85, '2003-05-11', 2, 90239, 169, 6, 'active'),
-(86, '2020-06-01', 8, 39260, 873, 2, 'active'),
-(87, '2009-04-24', 62, 78650, 690, 6, 'active'),
-(88, '2007-03-11', 74, 15273, 639, 8, 'active'),
-(89, '1975-09-07', 59, 84666, 107, 5, 'active'),
-(90, '2012-10-19', 48, 65404, 93, 7, 'active'),
-(91, '1998-08-01', 96, 34385, 5, 8, 'active'),
-(92, '2008-06-13', 50, 66109, 197, 10, 'active'),
-(93, '2010-03-31', 54, 28531, 236, 8, 'active'),
-(94, '1974-07-22', 70, 30303, 947, 1, 'active'),
-(95, '2019-03-24', 78, 55127, 917, 3, 'active'),
-(96, '1989-03-10', 32, 7712, 582, 5, 'active'),
-(97, '1993-09-27', 69, 82527, 161, 8, 'active'),
-(98, '2021-06-16', 96, 79660, 586, 6, 'active'),
-(99, '2007-08-24', 30, 74452, 929, 2, 'active'),
-(100, '2008-05-08', 39, 92171, 461, 8, 'active'),
-(101, '1977-08-01', 90, 81326, 12, 5, 'active');
+INSERT INTO `ventes` (`idVente`, `dateVente`, `qteVente`, `numFact`, `idProd`, `idClient`, `etat`) VALUES
+(2, '1984-02-10', 98, '73462', 556, 2, 'active'),
+(3, '2019-10-28', 59, '73462', 33, 2, 'active'),
+(4, '1998-02-11', 78, '7346', 708, 8, 'active'),
+(5, '1990-06-14', 72, '41087', 990, 1, 'active'),
+(6, '1972-08-27', 15, '89494', 242, 5, 'active'),
+(7, '2004-02-23', 11, '70041', 258, 5, 'active'),
+(8, '1983-12-16', 33, '24637', 611, 6, 'active'),
+(9, '1995-02-05', 80, '11200', 474, 3, 'active'),
+(10, '2009-08-19', 70, '47196', 945, 3, 'active'),
+(11, '2007-06-28', 91, '27362', 795, 10, 'active'),
+(12, '2003-06-20', 43, '91766', 705, 3, 'active'),
+(13, '1997-09-18', 61, '87906', 118, 6, 'active'),
+(14, '2001-12-20', 11, '68931', 638, 1, 'active'),
+(15, '1980-04-02', 29, '42791', 85, 3, 'active'),
+(16, '2007-02-24', 18, '77627', 540, 10, 'active'),
+(17, '2010-05-08', 63, '45845', 104, 9, 'active'),
+(18, '2018-12-22', 63, '70499', 471, 1, 'active'),
+(19, '2022-03-20', 91, '68028', 905, 6, 'active'),
+(20, '2004-11-15', 2, '11059', 11, 5, 'active'),
+(21, '2011-03-19', 69, '44757', 563, 5, 'active'),
+(22, '2000-05-19', 30, '85493', 453, 1, 'active'),
+(23, '2006-04-02', 95, '60388', 915, 4, 'active'),
+(24, '2011-12-23', 74, '80426', 981, 9, 'active'),
+(25, '1985-10-18', 1, '39833', 191, 5, 'active'),
+(26, '2007-11-21', 40, '83158', 317, 3, 'active'),
+(27, '1979-11-30', 72, '85004', 497, 3, 'active'),
+(28, '2000-05-29', 9, '79114', 161, 7, 'active'),
+(29, '2011-02-14', 9, '56943', 713, 6, 'active'),
+(30, '2011-12-26', 100, '41753', 806, 7, 'active'),
+(31, '2011-11-13', 3, '8322', 603, 4, 'active'),
+(32, '1987-01-11', 44, '55819', 911, 5, 'active'),
+(33, '1970-02-22', 80, '70235', 211, 2, 'active'),
+(34, '2007-06-19', 59, '68558', 982, 7, 'active'),
+(35, '1982-05-25', 43, '66014', 311, 6, 'active'),
+(36, '1995-07-03', 91, '76693', 403, 5, 'active'),
+(37, '1982-10-28', 86, '62892', 336, 9, 'active'),
+(38, '2006-04-30', 52, '2409', 943, 10, 'active'),
+(39, '2015-11-29', 23, '49677', 913, 9, 'active'),
+(40, '2015-01-13', 8, '16914', 216, 6, 'active'),
+(41, '1989-01-10', 69, '76422', 130, 9, 'active'),
+(42, '2010-02-20', 75, '66587', 81, 4, 'active'),
+(43, '2004-05-19', 10, '68460', 172, 9, 'active'),
+(44, '1995-07-16', 48, '29523', 887, 6, 'active'),
+(45, '1972-11-24', 14, '22284', 453, 9, 'active'),
+(46, '1996-08-24', 68, '24716', 497, 5, 'active'),
+(47, '1984-06-24', 100, '9802', 727, 3, 'active'),
+(48, '1999-07-27', 36, '71928', 841, 1, 'active'),
+(49, '2021-03-19', 6, '98205', 594, 8, 'active'),
+(50, '2002-03-31', 17, '78319', 978, 10, 'active'),
+(51, '1991-03-12', 23, '51030', 153, 3, 'active'),
+(52, '2005-07-31', 11, '58290', 614, 10, 'active'),
+(53, '2007-10-17', 89, '50739', 333, 5, 'active'),
+(54, '2022-09-05', 80, '98152', 824, 7, 'active'),
+(55, '2010-07-29', 37, '21705', 942, 5, 'active'),
+(56, '2016-10-16', 68, '28266', 895, 2, 'active'),
+(57, '2001-05-23', 79, '38991', 296, 5, 'active'),
+(58, '1982-05-22', 99, '7569', 759, 5, 'active'),
+(59, '2004-01-22', 68, '82250', 149, 10, 'active'),
+(60, '1977-10-02', 33, '56035', 89, 8, 'active'),
+(61, '1978-04-13', 60, '18244', 410, 9, 'active'),
+(62, '2006-02-14', 20, '47117', 320, 2, 'active'),
+(63, '2003-11-12', 49, '83492', 180, 6, 'active'),
+(64, '2004-03-25', 96, '36830', 475, 10, 'active'),
+(65, '1991-08-30', 9, '52658', 219, 5, 'active'),
+(66, '1990-04-22', 54, '36491', 293, 1, 'active'),
+(67, '1975-09-03', 10, '30363', 916, 1, 'active'),
+(68, '2014-11-21', 73, '94998', 549, 6, 'active'),
+(69, '2000-02-28', 100, '10673', 397, 8, 'active'),
+(70, '1995-08-28', 14, '15490', 422, 2, 'active'),
+(71, '2000-01-22', 34, '27103', 676, 8, 'active'),
+(72, '1985-04-24', 36, '25431', 382, 6, 'active'),
+(73, '2012-09-03', 29, '49268', 604, 1, 'active'),
+(74, '2014-08-17', 42, '71390', 808, 7, 'active'),
+(75, '2006-08-03', 19, '72948', 269, 9, 'active'),
+(76, '1981-11-22', 92, '6422', 582, 2, 'active'),
+(77, '2012-07-21', 79, '99048', 276, 2, 'active'),
+(78, '1981-07-04', 10, '97575', 151, 7, 'active'),
+(79, '2015-11-17', 54, '5468', 139, 4, 'active'),
+(80, '1974-04-04', 28, '95316', 603, 10, 'active'),
+(81, '2005-10-16', 6, '19769', 470, 8, 'active'),
+(82, '2000-10-21', 88, '14736', 309, 10, 'active'),
+(83, '2008-09-28', 2, '72132', 271, 9, 'active'),
+(84, '1982-12-30', 30, '75457', 657, 4, 'active'),
+(85, '2003-05-11', 2, '90239', 169, 6, 'active'),
+(86, '2020-06-01', 8, '39260', 873, 2, 'active'),
+(87, '2009-04-24', 62, '78650', 690, 6, 'active'),
+(88, '2007-03-11', 74, '15273', 639, 8, 'active'),
+(89, '1975-09-07', 59, '84666', 107, 5, 'active'),
+(90, '2012-10-19', 48, '65404', 93, 7, 'active'),
+(91, '1998-08-01', 96, '34385', 5, 8, 'active'),
+(92, '2008-06-13', 50, '66109', 197, 10, 'active'),
+(93, '2010-03-31', 54, '28531', 236, 8, 'active'),
+(94, '1974-07-22', 70, '30303', 947, 1, 'active'),
+(95, '2019-03-24', 78, '55127', 917, 3, 'active'),
+(96, '1989-03-10', 32, '7712', 582, 5, 'active'),
+(97, '1993-09-27', 69, '82527', 161, 8, 'active'),
+(98, '2021-06-16', 96, '79660', 586, 6, 'active'),
+(99, '2007-08-24', 30, '74452', 929, 2, 'active'),
+(100, '2008-05-08', 39, '92171', 461, 8, 'active'),
+(101, '1977-08-01', 90, '81326', 12, 5, 'active');
 
 --
 -- Index pour les tables déchargées
 --
+
+--
+-- Index pour la table `approvisionnement`
+--
+ALTER TABLE `approvisionnement`
+  ADD PRIMARY KEY (`idAppro`),
+  ADD KEY `idProd` (`idProd`),
+  ADD KEY `idFournis` (`idFournis`);
 
 --
 -- Index pour la table `categorie`
@@ -1373,6 +1410,12 @@ ALTER TABLE `ventes`
 --
 
 --
+-- AUTO_INCREMENT pour la table `approvisionnement`
+--
+ALTER TABLE `approvisionnement`
+  MODIFY `idAppro` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+
+--
 -- AUTO_INCREMENT pour la table `categorie`
 --
 ALTER TABLE `categorie`
@@ -1394,7 +1437,7 @@ ALTER TABLE `facture`
 -- AUTO_INCREMENT pour la table `fournisseur`
 --
 ALTER TABLE `fournisseur`
-  MODIFY `idFournis` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idFournis` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `produit`
@@ -1406,7 +1449,7 @@ ALTER TABLE `produit`
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `idU` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idU` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT pour la table `ventes`
@@ -1417,6 +1460,13 @@ ALTER TABLE `ventes`
 --
 -- Contraintes pour les tables déchargées
 --
+
+--
+-- Contraintes pour la table `approvisionnement`
+--
+ALTER TABLE `approvisionnement`
+  ADD CONSTRAINT `approvisionnement_ibfk_1` FOREIGN KEY (`idProd`) REFERENCES `produit` (`idProd`),
+  ADD CONSTRAINT `approvisionnement_ibfk_2` FOREIGN KEY (`idFournis`) REFERENCES `fournisseur` (`idFournis`);
 
 --
 -- Contraintes pour la table `facture`
