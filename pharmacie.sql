@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.5deb2
+-- version 5.1.1deb5ubuntu1
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : mar. 23 avr. 2024 à 12:00
--- Version du serveur :  8.0.36-0ubuntu0.20.04.1
--- Version de PHP : 7.4.3-4ubuntu2.20
+-- Généré le : jeu. 25 avr. 2024 à 09:25
+-- Version du serveur : 8.0.36-0ubuntu0.22.04.1
+-- Version de PHP : 8.1.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -30,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `approvisionnement` (
   `idAppro` int NOT NULL,
+  `numBL` varchar(255) NOT NULL,
   `qteAppro` int NOT NULL,
   `dateAppro` date NOT NULL,
   `prixU` float NOT NULL,
@@ -42,51 +42,10 @@ CREATE TABLE `approvisionnement` (
 -- Déchargement des données de la table `approvisionnement`
 --
 
-INSERT INTO `approvisionnement` (`idAppro`, `qteAppro`, `dateAppro`, `prixU`, `idProd`, `idFournis`, `etat`) VALUES
-(1, 99, '1988-12-13', 874, 1, 1, 'active'),
-(4, 190, '1985-02-25', 784, 10, 3, 'active'),
-(5, 77, '1977-03-07', 693, 8, 6, 'active'),
-(6, 168, '2019-07-26', 998, 8, 6, 'active'),
-(7, 101, '1974-06-12', 787, 5, 6, 'active'),
-(8, 47, '2013-06-04', 956, 7, 4, 'active'),
-(9, 165, '1971-01-31', 953, 9, 3, 'active'),
-(11, 116, '1994-12-18', 554, 8, 2, 'active'),
-(12, 182, '2016-02-07', 294, 7, 4, 'active'),
-(13, 64, '1999-04-14', 847, 9, 1, 'active'),
-(14, 66, '1985-04-01', 257, 7, 4, 'active'),
-(17, 26, '1994-06-18', 942, 9, 4, 'active'),
-(18, 141, '2022-07-14', 296, 2, 4, 'active'),
-(19, 88, '1973-03-08', 903, 10, 4, 'active'),
-(20, 155, '1985-10-29', 519, 4, 5, 'active'),
-(21, 141, '2000-04-07', 881, 5, 5, 'supprimer'),
-(22, 192, '1980-09-02', 515, 5, 2, 'supprimer'),
-(24, 92, '2008-11-09', 596, 7, 6, 'supprimer'),
-(25, 119, '1987-02-23', 642, 3, 2, 'supprimer'),
-(27, 112, '1989-09-28', 639, 8, 4, 'supprimer'),
-(29, 40, '1989-05-17', 330, 1, 1, 'supprimer'),
-(30, 88, '2004-12-02', 280, 2, 6, 'supprimer'),
-(33, 35, '2010-08-04', 362, 9, 2, 'supprimer'),
-(34, 55, '2001-03-30', 231, 9, 6, 'supprimer'),
-(35, 44, '1985-10-26', 448, 3, 1, 'supprimer'),
-(37, 121, '2001-03-08', 407, 2, 1, 'supprimer'),
-(38, 37, '2001-07-11', 816, 5, 4, 'supprimer'),
-(39, 108, '2017-10-16', 663, 8, 5, 'supprimer'),
-(41, 141, '1987-02-19', 308, 6, 4, 'supprimer'),
-(42, 46, '2007-02-17', 921, 1, 3, 'supprimer'),
-(43, 176, '2012-03-17', 437, 10, 5, 'supprimer'),
-(44, 84, '1976-02-05', 477, 3, 5, 'supprimer'),
-(45, 71, '2021-09-25', 864, 10, 6, 'supprimer'),
-(46, 197, '2023-10-06', 783, 7, 4, 'supprimer'),
-(49, 139, '2005-03-24', 884, 10, 1, 'supprimer'),
-(50, 75, '1998-09-25', 1000, 9, 5, 'supprimer'),
-(51, 159, '1988-06-09', 639, 7, 2, 'supprimer'),
-(52, 27, '1994-10-03', 277, 8, 1, 'supprimer'),
-(53, 82, '2004-01-11', 546, 5, 3, 'supprimer'),
-(54, 152, '2005-11-20', 467, 2, 6, 'supprimer'),
-(55, 166, '1983-02-05', 970, 7, 1, 'supprimer'),
-(57, 172, '2019-06-10', 445, 10, 1, 'supprimer'),
-(59, 127, '1986-09-11', 994, 4, 2, 'supprimer'),
-(60, 97, '1976-03-19', 777, 10, 2, 'supprimer');
+INSERT INTO `approvisionnement` (`idAppro`, `numBL`, `qteAppro`, `dateAppro`, `prixU`, `idProd`, `idFournis`, `etat`) VALUES
+(87, 'BL-00002', 5, '2024-04-25', 400, 5, 2, 'active'),
+(88, 'BL-00002', 7, '2024-04-25', 450, 6, 2, 'active'),
+(89, 'BL-00002', 11, '2024-04-25', 200, 9, 2, 'active');
 
 -- --------------------------------------------------------
 
@@ -201,7 +160,8 @@ INSERT INTO `fournisseur` (`idFournis`, `nomFournis`, `villeFournis`, `emailFour
 (3, 'Murphy', 'Rempelbury', 'adolph47@yahoo.com', '1-682-545', 'active'),
 (4, 'Dickinson', 'East Fiona', 'ullrich.victor@walsh.com', '(613) 990', 'active'),
 (5, 'Bode', 'Hoseahaven', 'fadel.marlene@gmail.com', '802-556-5', 'active'),
-(6, 'Kirlin', 'South Coty', 'willy37@lebsack.com', '+1.795.53', 'active');
+(6, 'Kirlin', 'South Coty', 'willy37@lebsack.com', '+1.795.53', 'active'),
+(7, 'booba', 'bawouan', 'booba@g', '690909090', 'active');
 
 -- --------------------------------------------------------
 
@@ -227,21 +187,21 @@ CREATE TABLE `produit` (
 --
 
 INSERT INTO `produit` (`idProd`, `nomProd`, `numLot`, `datePerem`, `qteDispo`, `prixU`, `idFournis`, `idCategorie`, `etat`, `imageProd`) VALUES
-(1, 'Quae quia qui.', 82, '1970-06-13', 64, 302, 3, 6, 'active', 'https://lorempixel.com/200/200/?11982'),
-(2, 'Consequuntur dolorum nobis nulla.', 55, '1990-08-17', 79, 492, 5, 4, 'active', 'https://lorempixel.com/200/200/?78229'),
-(3, 'Vel est sapiente modi.', 33, '1971-01-20', 82, 58, 6, 1, 'active', 'https://lorempixel.com/200/200/?71785'),
+(1, 'Quae quia qui.', 82, '1970-06-13', 84, 302, 3, 6, 'active', 'https://lorempixel.com/200/200/?11982'),
+(2, 'Consequuntur dolorum nobis nulla.', 55, '1990-08-17', 101, 492, 5, 4, 'active', 'https://lorempixel.com/200/200/?78229'),
+(3, 'Vel est sapiente modi.', 33, '1971-01-20', 86, 58, 6, 1, 'active', 'https://lorempixel.com/200/200/?71785'),
 (4, 'Illum consequatur debitis corrupti id.', 1, '1998-04-10', 63, 285, 2, 2, 'active', 'https://lorempixel.com/200/200/?46300'),
-(5, 'Ut non possimus vero.', 7, '1991-03-27', 45, 560, 6, 3, 'active', 'https://lorempixel.com/200/200/?35982'),
-(6, 'Nostrum nemo quo.', 52, '1989-05-25', 92, 509, 4, 6, 'active', 'https://lorempixel.com/200/200/?15092'),
+(5, 'Ut non possimus vero.', 7, '1991-03-27', 50, 560, 6, 3, 'active', 'https://lorempixel.com/200/200/?35982'),
+(6, 'Nostrum nemo quo.', 52, '1989-05-25', 99, 509, 4, 6, 'active', 'https://lorempixel.com/200/200/?15092'),
 (7, 'Deserunt adipisci et ab.', 4, '2007-09-27', 46, 673, 4, 6, 'active', 'https://lorempixel.com/200/200/?55345'),
-(8, 'Non officia qui error suscipit.', 75, '2013-09-22', 87, 160, 2, 5, 'active', 'https://lorempixel.com/200/200/?51736'),
-(9, 'Ab est sit aliquam.', 82, '1973-09-17', 37, 257, 5, 5, 'active', 'https://lorempixel.com/200/200/?90552'),
+(8, 'Non officia qui error suscipit.', 75, '2013-09-22', 91, 160, 2, 5, 'active', 'https://lorempixel.com/200/200/?51736'),
+(9, 'Ab est sit aliquam.', 82, '1973-09-17', 48, 257, 5, 5, 'active', 'https://lorempixel.com/200/200/?90552'),
 (10, 'Doloribus et voluptatem.', 24, '2010-07-31', 75, 979, 6, 4, 'active', 'https://lorempixel.com/200/200/?29295'),
 (11, 'Qui in aliquid.', 95, '2015-10-28', 72, 209, 2, 2, 'active', 'https://lorempixel.com/200/200/?60527'),
 (12, 'Quo pariatur iure.', 42, '1983-03-09', 7, 27, 3, 2, 'active', 'https://lorempixel.com/200/200/?58668'),
 (13, 'Laboriosam blanditiis natus adipisci.', 18, '2006-04-23', 48, 940, 1, 3, 'active', 'https://lorempixel.com/200/200/?69373'),
-(14, 'Voluptates corrupti minus soluta.', 28, '2003-03-16', 90, 29, 4, 5, 'active', 'https://lorempixel.com/200/200/?25038'),
-(15, 'Dignissimos quis quasi.', 97, '2012-04-11', 69, 588, 4, 5, 'active', 'https://lorempixel.com/200/200/?72910'),
+(14, 'Voluptates corrupti minus soluta.', 28, '2003-03-16', 95, 29, 4, 5, 'active', 'https://lorempixel.com/200/200/?25038'),
+(15, 'Dignissimos quis quasi.', 97, '2012-04-11', 159, 588, 4, 5, 'active', 'https://lorempixel.com/200/200/?72910'),
 (16, 'Id perspiciatis veritatis.', 53, '2001-02-20', 21, 481, 6, 2, 'active', 'https://lorempixel.com/200/200/?30632'),
 (17, 'Ipsum officia sed.', 21, '1992-09-02', 47, 842, 2, 4, 'active', 'https://lorempixel.com/200/200/?95476'),
 (18, 'Et culpa occaecati.', 36, '1993-02-12', 23, 818, 1, 2, 'active', 'https://lorempixel.com/200/200/?42875'),
@@ -1219,7 +1179,7 @@ INSERT INTO `produit` (`idProd`, `nomProd`, `numLot`, `datePerem`, `qteDispo`, `
 (988, 'Consequatur voluptates sit eos.', 30, '1972-09-05', 8, 576, 3, 6, 'active', 'https://lorempixel.com/200/200/?13352'),
 (989, 'Non accusamus.', 41, '2023-08-14', 79, 152, 5, 4, 'active', 'https://lorempixel.com/200/200/?15556'),
 (990, 'Id occaecati qui neque.', 5, '1980-11-15', 87, 972, 4, 6, 'active', 'https://lorempixel.com/200/200/?42527'),
-(991, 'Aut est fugit.', 57, '1996-02-10', 15, 412, 1, 5, 'active', 'https://lorempixel.com/200/200/?79348'),
+(991, 'Aut est fugit.', 57, '1996-02-10', 15, 41256, 1, 5, 'active', 'images/'),
 (992, 'Veniam necessitatibus magni.', 4, '2007-04-13', 60, 223, 2, 3, 'active', 'https://lorempixel.com/200/200/?36600'),
 (993, 'Quia autem amet.', 72, '1972-03-07', 47, 406, 3, 2, 'active', 'https://lorempixel.com/200/200/?80757'),
 (994, 'Est eos quis illo.', 39, '1997-12-17', 75, 748, 4, 3, 'active', 'https://lorempixel.com/200/200/?99500'),
@@ -1228,7 +1188,7 @@ INSERT INTO `produit` (`idProd`, `nomProd`, `numLot`, `datePerem`, `qteDispo`, `
 (997, 'Ea id nulla veniam.', 3, '1979-02-08', 12, 535, 2, 4, 'active', 'https://lorempixel.com/200/200/?92901'),
 (998, 'Perspiciatis quas dolores.', 43, '2003-08-03', 75, 482, 6, 1, 'active', 'https://lorempixel.com/200/200/?21692'),
 (999, 'Officiis suscipit repellendus vel.', 69, '1970-02-17', 69, 779, 4, 5, 'active', 'https://lorempixel.com/200/200/?19405'),
-(1000, 'Impedit assumenda et et.', 57, '1986-02-06', 44, 193, 3, 6, 'active', 'https://lorempixel.com/200/200/?70128');
+(1000, 'Impedit assumenda et et.', 57, '1986-02-06', 44, 193, 3, 6, 'supprimer', 'https://lorempixel.com/200/200/?70128');
 
 -- --------------------------------------------------------
 
@@ -1284,8 +1244,8 @@ CREATE TABLE `ventes` (
 
 INSERT INTO `ventes` (`idVente`, `dateVente`, `qteVente`, `numFact`, `idProd`, `idClient`, `etat`) VALUES
 (2, '1984-02-10', 98, '73462', 556, 2, 'active'),
-(3, '2019-10-28', 59, '1668', 33, 2, 'active'),
-(4, '1998-02-11', 78, '51299', 708, 8, 'active'),
+(3, '2019-10-28', 59, '73462', 33, 2, 'active'),
+(4, '1998-02-11', 78, '7346', 708, 8, 'active'),
 (5, '1990-06-14', 72, '41087', 990, 1, 'active'),
 (6, '1972-08-27', 15, '89494', 242, 5, 'active'),
 (7, '2004-02-23', 11, '70041', 258, 5, 'active'),
@@ -1453,7 +1413,7 @@ ALTER TABLE `ventes`
 -- AUTO_INCREMENT pour la table `approvisionnement`
 --
 ALTER TABLE `approvisionnement`
-  MODIFY `idAppro` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `idAppro` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT pour la table `categorie`
@@ -1477,7 +1437,7 @@ ALTER TABLE `facture`
 -- AUTO_INCREMENT pour la table `fournisseur`
 --
 ALTER TABLE `fournisseur`
-  MODIFY `idFournis` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idFournis` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `produit`

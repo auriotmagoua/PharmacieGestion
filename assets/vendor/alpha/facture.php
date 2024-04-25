@@ -1,9 +1,40 @@
 <?php
+// echo 'salut';
 require('alphapdf.php');
+
+include '../../../connexiondb.php';
+
+$conn = connexionMysqli();
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+if(isset($_POST['IDfact'])){
+$numFact = $_POST['IDfact'];
+// echo $factid;
+
+// $query = "SELECT * FROM ventes WHERE numFact = '$factid'";
+$query = "SELECT nomClient, villeClient, emailClient, telephoneClient, dateVente, nomProd, qteVente, prixU, numFact FROM produit JOIN ventes ON produit.idProd = ventes.idProd JOIN client ON ventes.idClient = client.idClient WHERE ventes.numFact = '$numFact' AND ventes.idClient = client.idClient";
+$result = $conn->query($query);
+
+// Vérifier si des enregistrements ont été trouvés
+if ($result !== false && $result->num_rows > 0) {
+    $data = array();
+    while ($row = $result->fetch_assoc()) {
+        $data[] = $row;
+    } 
+
+// Affichage du nom du premier client
+// echo $data[0]['nomClient'];
 
 // Créer un nouvel objet PDF
 class CustomPDF extends AlphaPDF
 {
+    private $data; // Nouvelle variable pour stocker les données
+
+    // Constructeur de la classe
+    public function __construct($data)
+    {
+        parent::__construct();
+        $this->data = $data; // Stocke les données passées en paramètre
+    }
     // Fonction d'en-tête
     function Header()
     {
@@ -25,18 +56,22 @@ class CustomPDF extends AlphaPDF
         $this->SetFont('Arial','B',14);
         $this->Cell(90, 0, utf8_decode('Numéro de facture:'), 0, 1, 'L');
         $this->SetFont('Arial','I',14);
-        $this->Cell( 0, 0, 'id-90', 0, 1, 'R');
+        $this->Cell( 0, 0, $this->data[0]['numFact'], 0, 1, 'R');
         $this->Ln();
         $this->SetXY(120, 47);
         $this->SetFont('Arial','B',14);
         $this->Cell(90, 0, 'Date de facturation:', 0, 1, 'L');
         $this->SetFont('Arial','I',14);
-        $this->Cell(0, 0, '12-12-2024', 0, 1, 'R');
+        if (!empty($this->data)) {
+            $this->Cell(0, 0, $this->data[0]['dateVente'], 0, 1, 'R');
+        }
         $this->SetXY(120, 54);
         $this->SetFont('Arial','B',14);
         $this->Cell(90, 0, utf8_decode('Échéance:'), 0, 1, 'L');
         $this->SetFont('Arial','I',14);
-        $this->Cell(0, 0, '12-12-2024', 0, 1, 'R');
+        if (!empty($this->data)) {
+            $this->Cell(0, 0, $this->data[0]['dateVente'], 0, 1, 'R');
+        }
         $this->Ln(20);
     }
 
@@ -51,68 +86,9 @@ class CustomPDF extends AlphaPDF
         $this->Cell(0, 10, 'Merci d\'etre passe chez nous', 0, 0, 'C');
     }
 
-    // Chargement des données
-    function LoadData()
-    {
-        // Ajouter le corps du tableau
-        $data = array(
-            array('', 'Article 1', '9', '350,00', '3 150,00'),
-            array('', 'Article 1', '9', '350,00', '3 150,00'),
-            array('', 'Article 1', '9', '350,00', '3 150,00'),
-            array('', 'Article 1', '9', '350,00', '3 150,00'),
-            array('', 'Article 1', '9', '350,00', '3 150,00'),
-            array('', 'Article 2', '7', '120,00', '840,00'),
-            array('', 'Article 2', '7', '120,00', '840,00'),
-            array('', 'Article 2', '7', '120,00', '840,00'),
-            array('', 'Article 2', '7', '120,00', '840,00'),
-            array('', 'Article 2', '7', '120,00', '840,00'),
-            array('', 'Article 2', '7', '120,00', '840,00'),
-            array('', 'Article 2', '7', '120,00', '840,00')
-            // ...
-        );
-        return $data;
-    }
-
-    // Tableau personnalisé
-    function FancyTable($header, $data)
-    {
-        // Couleurs, épaisseur du trait et police en gras
-        $this->SetFillColor(0, 100, 0); 
-        $this->SetTextColor(255);
-        // $this->SetDrawColor(128, 0, 0);
-        $this->SetLineWidth(.3);
-        $this->SetFont('', 'B');
-
-        // En-tête du tableau
-        $w = array(25, 75, 25, 30, 35);
-        for ($i = 0; $i < count($header); $i++) {
-            $this->Cell($w[$i], 8, $header[$i], 1, 0, 'C', true);
-        }
-        $this->Ln();
-
-        // Restauration des couleurs et de la police
-        $this->SetFillColor(224, 235, 255);
-        $this->SetTextColor(0);
-        $this->SetFont('');
-
-        $n = 1;
-        // Données du tableau
-        foreach ($data as $row) {
-            $this->Cell($w[0],7,$n,'LRT',0,'C');
-            $this->Cell($w[1],7,utf8_decode($row[1]),'LRT',0,'L');
-            $this->Cell($w[2],7,utf8_decode($row[2]),'LRT',0,'R');
-            $this->Cell($w[3],7,utf8_decode($row[3]),'LRT',0,'R');
-            $this->Cell($w[4],7,utf8_decode($row[4]),'LRT',0,'R');
-            $this->Ln();
-            $n++;
-        }
-
-        // Trait de fermeture
-        $this->Cell(array_sum($w), 0, '', 'T');
-    }
 }
 
-$pdf = new CustomPDF(); // Création d'une instance de la classe CustomPDF
+$pdf = new CustomPDF($data); // Création d'une instance de la classe CustomPDF
 $pdf->AliasNbPages(); // Gestion automatique du nombre de pages
 
 $pdf->AddPage(); // Ajout d'une page
@@ -125,41 +101,85 @@ $pdf->SetTextColor(0, 0, 0);
 $pdf->SetFont('Arial', 'B', 14); 
 $pdf->Cell(30, 7, 'Nom: ', 0, 0, 'L'); 
 $pdf->SetFont('Arial', '', 14); 
-$pdf->Cell(80, 7, utf8_decode('Jhon Doe'), 0, 1, 'L'); 
+$pdf->Cell(80, 7, utf8_decode($data[0]['nomClient']), 0, 1, 'L'); 
 $pdf->SetFont('Arial', 'B', 14); 
 $pdf->Cell(30, 7, 'Ville: ', 0, 0, 'L'); 
 $pdf->SetFont('Arial', '', 14); 
-$pdf->Cell(95, 7, utf8_decode('Bafoussam'), 0, 1, 'L'); 
+$pdf->Cell(95, 7, utf8_decode($data[0]['villeClient']), 0, 1, 'L'); 
 $pdf->SetFont('Arial', 'B', 14); 
 $pdf->Cell(30, 7, 'Email: ', 0, 0, 'L'); 
 $pdf->SetFont('Arial', '', 14); 
-$pdf->Cell(95, 7, utf8_decode('adresse@gmial.com'), 0, 1, 'L'); 
+$pdf->Cell(95, 7, utf8_decode($data[0]['emailClient']), 0, 1, 'L'); 
 $pdf->SetFont('Arial', 'B', 14); 
 $pdf->Cell(30, 7, 'Telephone: ', 0, 0, 'L'); 
 $pdf->SetFont('Arial', '', 14); 
-$pdf->Cell(95, 7, utf8_decode('698989898'), 0, 1, 'L'); 
+$pdf->Cell(95, 7, utf8_decode($data[0]['telephoneClient']), 0, 1, 'L'); 
 $pdf->Ln(10); 
 
 // En-tête du tableau
 $header = array('n', utf8_decode('Désignation'), utf8_decode('Quantité'),  'Prix unitaire', 'Montant');
 $pdf->SetFont('Arial', 'B', 14);
-$pdf->FancyTable($header, $pdf->LoadData());
+
+
+
+// $pdf->FancyTable($header, $pdf->LoadData());
+
+// Couleurs, épaisseur du trait et police en gras
+$pdf->SetFillColor(0, 100, 0); 
+$pdf->SetTextColor(255);
+// $this->SetDrawColor(128, 0, 0);
+$pdf->SetLineWidth(.3);
+$pdf->SetFont('', 'B');
+
+// En-tête du tableau
+$w = array(25, 75, 25, 30, 35);
+for ($i = 0; $i < count($header); $i++) {
+    $pdf->Cell($w[$i], 8, $header[$i], 1, 0, 'C', true);
+}
+$pdf->Ln();
+
+// Restauration des couleurs et de la police
+$pdf->SetFillColor(224, 235, 255);
+$pdf->SetTextColor(0);
+$pdf->SetFont('');
+
+$n = 1;
+$montantHT = 0;
+// Données du tableau
+foreach ($data as $row) {
+    $pdf->Cell($w[0],7,$n,'LRT',0,'C');
+    $pdf->Cell($w[1],7,utf8_decode($row['nomProd']),'LRT',0,'L');
+    $pdf->Cell($w[2],7,utf8_decode($row['qteVente']),'LRT',0,'R');
+    $pdf->Cell($w[3],7,utf8_decode($row['prixU']),'LRT',0,'R');
+    $montant = $row['qteVente'] * $row['prixU'];
+    $pdf->Cell($w[4], 7, utf8_decode($montant), 'LRT', 0, 'R');
+    $montantHT += $montant;
+    $pdf->Ln();
+    $n++;
+}
+// $row[0];
+
+// Trait de fermeture
+$pdf->Cell(array_sum($w), 0, '', 'T');
+
 $pdf->Ln(); 
 $pdf->Cell(115);  // Cellule vide pour déplacer vers la droite
 $pdf->Cell(40, 7, 'Montant HT: ', 'LRT', 0, 'L'); 
-$pdf->Cell(35, 7, '234456', 'LRT', 1, 'R'); 
+$pdf->Cell(35, 7, $montantHT, 'LRT', 1, 'R'); 
 
+$montantTVA = $montantHT * (19.25 / 100);
 $pdf->Cell(115);  // Cellule vide pour déplacer vers la droite
 $pdf->Cell(40, 7, 'TVA (19,25%): ', 'LRT', 0, 'L'); 
-$pdf->Cell(35, 7, '345.2', 'LRT', 1, 'R');
+$pdf->Cell(35, 7, $montantTVA, 'LRT', 1, 'R');
 
+$montantTotal = $montantHT + $montantTVA;
 $pdf->SetTextColor(255);
 $pdf->SetLineWidth(.3);
 $pdf->SetFont('', 'B');
 $pdf->SetFillColor(0, 100, 0); 
 $pdf->Cell(115);  // Cellule vide pour déplacer vers la droite
 $pdf->Cell(40, 8, 'TOTAL TTC: ', 'LRTB', 0, 'L', true); 
-$pdf->Cell(35, 8, '987645', 'LRTB', 1, 'R', true); 
+$pdf->Cell(35, 8, $montantTotal, 'LRTB', 1, 'R', true); 
 // Restauration des couleurs et de la police
 $pdf->SetFillColor(224, 235, 255);
 $pdf->SetTextColor(0);
@@ -171,6 +191,21 @@ $pdf->SetFont('', 'B');
 $pdf->Cell(40, 8, 'Signature Client', 'B', 0, 'L'); 
 $pdf->Cell(50);
 $pdf->Cell(40, 8, 'Signature Caisse', 'B', 1, 'L'); 
+$pdf->Image('../../img/cachet.png',110,180,0);
 
-$pdf->Output(); // Génération du document PDF
+}else {
+    echo "Aucun enregistrement trouvé.";
+}
+// Fermeture de la connexion à la base de données
+// $stmt->close();
+$conn->close();
+}
+// Ne pas envoyer de sortie HTML avant la génération du PDF
+$pdfOutput = $pdf->Output('', 'S'); // Stocker le PDF dans une variable
+
+// Envoyer le PDF en réponse à la requête AJAX
+echo base64_encode($pdfOutput);
+exit; // Arrêter l'exécution du script PHP après l'envoi du PDF
+}
+
 ?>

@@ -10,8 +10,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Récupération des valeurs du formulaire
     $date1 = $conn->real_escape_string($_POST['dateD']);
     $date2 = $conn->real_escape_string($_POST['dateF']);
-    $etat = $conn->real_escape_string($_POST['etatP']);
+    $idfour = $conn->real_escape_string($_POST['select-autocomplete']);
 
+    
     class PDF extends FPDF
     {
         // Tableau simple
@@ -38,25 +39,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $pdf->AddPage();
 
     // Titres des colonnes
-    $header = array('IdVente', 'DateVente', 'QteVente', 'Nom Fact', 'NomProd', 'NomClient');
+    $header = array('Id Approv',  'Qte Approv', 'date Approv', 'prixU', 'Nom Prod','Nom Four');
 
     // Requête pour récupérer les données de la table produit
     $sql = "SELECT 
-                ventes.idVente, 
-                ventes.dateVente, 
-                ventes.qteVente, 
-                ventes.numFact, 
+                approvisionnement.idAppro, 
+                approvisionnement.qteAppro, 
+                approvisionnement.dateAppro,  
+                approvisionnement.prixU,  
                 produit.nomProd, 
-                client.nomClient
+                fournisseur.nomFournis
             FROM 
-                ventes
+                approvisionnement
             JOIN 
-                produit ON ventes.idProd = produit.idProd
+                produit ON approvisionnement.idProd = produit.idProd
             JOIN 
-                client ON ventes.idClient = client.idClient 
+                fournisseur ON approvisionnement.idFournis = fournisseur.idFournis 
             WHERE 
-                DATE(ventes.dateVente) BETWEEN '$date1' AND '$date2'
-                AND ventes.etat = '$etat';";
+                DATE(approvisionnement.dateAppro) BETWEEN '$date1' AND '$date2'
+                AND approvisionnement.idFournis = '$idfour';";
 
     $result = $conn->query($sql);
 
@@ -64,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($result->num_rows > 0) {
         // Récupérer chaque ligne de données
         while ($row = $result->fetch_assoc()) {
-            $data[] = array($row["idVente"], $row["dateVente"], $row["qteVente"], $row["numFact"], $row["nomProd"], $row["nomClient"]);
+            $data[] = array($row["idAppro"], $row["qteAppro"], $row["dateAppro"], $row["prixU"], $row["nomProd"], $row["nomFournis"]);
         }
     } else {
         echo "0 results";

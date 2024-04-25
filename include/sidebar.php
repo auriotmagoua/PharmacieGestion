@@ -35,6 +35,13 @@
       </li><!-- End Register Page Nav -->
 
       <li class="nav-item">
+        <a class="nav-link collapsed" href="approvisionnement.php">
+          <i class="bi bi-file-earmark"></i>
+          <span>Approvisionnement</span>
+        </a>
+      </li><!-- End Approvisionnement page Nav -->
+
+      <li class="nav-item">
         <a class="nav-link collapsed" href="client.php">
           <i class="bi bi-file-earmark"></i>
           <span>Clients</span>
@@ -60,6 +67,22 @@
           <span>Listing Vente</span>
         </a>
       </li><!-- End listing periode page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="listeApproFour.php">
+          <i class="bi bi-file-earmark"></i>
+          <span>Listing Approv Forni</span>
+        </a>
+      </li><!-- End listing Approvisionnement en fonction fornisseur  page Nav -->
+
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="listeFacture.php">
+          <i class="bi bi-file-earmark"></i>
+          <span>Listing Facture</span>
+        </a>
+      </li><!-- End listing des vente ou facture  page Nav -->
     </ul>
 
   </aside><!-- End Sidebar-->
+  
