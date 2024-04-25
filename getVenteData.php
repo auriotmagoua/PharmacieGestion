@@ -34,11 +34,8 @@ $data = array();
 // Parcourir les résultats de la requête et les stocker dans le tableau
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
-<<<<<<< HEAD
         $row['id'] = $row['idVente']; // Utiliser 'idProd' comme 'id'
         $data[] = $row;
-=======
->>>>>>> 035d8a20d976a2f632acc5c3185bff36e40c7fde
     }
 }
 
