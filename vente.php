@@ -1,141 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<!-- Lien de non connection -->
 <?php include "tet.php"?>
 
-<?php 
-// include "tet.php"
-?>
 <?php include "include/header.php"?>
+<!-- select2  link-->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
 <body>
-<!-- navbar -->
+
+  <!-- navbar -->
 <?php include "include/navbar.php"?>
 
 <!-- sidebar -->
 <?php include "include/sidebar.php"?>
-<!-- Select2 CSS -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
-<!-- Inclure jQuery -->
-<script src="assets/vendor/jquery-3.6.0.min.js"></script>
 
 
-<!-- Inclure DataTables -->
-<link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-
-<!-- contain page -->
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Dashboard</h1>
+      <h1>Vendre Produit</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item active">Dashboard</li>
+          <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+          <li class="breadcrumb-item active">Vendre Produit</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
-
-      <div>
-        <!-- Form with validation -->
-        <form id="venteForm" action="#" method="POST" novalidate>
-          <div class="form-group">
-              <label for="client">Client:</label>
-              <select id="client" name="client" class="form-control" required></select>
-          </div>
-          <div class="form-group">
-              <label for="quantite">Quantité vendue:</label>
-              <input type="number" id="quantite" name="quantite" class="form-control" required>
-          </div>
-          <div class="form-group">
-                <label for="produit">Produit:</label>
-                <select id="produit" name="produit" class="form-control"></select>
-                <button id="addToCartBtn" class="btn btn-primary">Ajouter au panier</button>
-            </div>
-          <div class="form-group">
-          <div id="cartItems"></div>
-              <div class="card mt-3">
-                  <div class="card-body">
-                      <h5 class="card-title">Prix Total</h5>
-                      <input type="text" id="totalPriceInput" class="form-control" readonly>
-                  </div>
+    <section class="section">
+    <div class="row">
+      <!-- <div class="col-lg-2"></div> -->
+      <div class="col-lg-12 justify-content-center align-items-center card">
+        <form action="" id="invoice-form">
+          <div class="row">
+            <div class="card-header text-center">
+             <div class="row">
+                <!-- <div class="col-sm-2"></div> -->
+                <div class="col-sm-3 text-start mx-3">
+                <p class="h5">choisir client:</p>
+                  <select name="idClient" id="idClient" class="form-control mx-3"></select>
+                </div>
+                <div class="col-sm-6"></div>
+                </div>
               </div>
+            </div>
+            <div class="card-body">
+              <table class="table table-bordered table-hover" id="invoiceItem">	
+                <tr>
+                  <th width="2%"><input id="checkAll" class="formcontrol" type="checkbox"></th>
+                  <th width="15%">Produit</th>
+                  <th width="15%">Quantite</th>
+                  <th width="15%">Prix Unitaire</th>								
+                  <th width="15%">Total</th>
+                </tr>							
+                <tr>
+                  <td><input class="itemRow" type="checkbox"></td>
+                  <td><select type="text" name="productCode[]"  id="productCode_1" class="form-control" autocomplete="off"></select></td>
+                  <td><input type="number" name="quantity[]" id="quantity_1" class="form-control quantity" autocomplete="off"></td>
+                  <td><input type="number" name="price[]" id="price_1" class="form-control price" autocomplete="off"></td>
+                  <td><input type="number" name="total[]" id="total_1" class="form-control total" autocomplete="off"></td>
+                </tr>						
+              </table>
+            </div>
           </div>
-          <button type="submit" class="btn btn-primary" id="btnEnregistrer">Enregistrer</button>
-      </form>
-
+          <div class="row">
+          <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+              <button class="btn btn-danger delete" id="removeRows" type="button">- Delete</button>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-end">
+              <button class="btn btn-success" id="addRows" type="button">+ Add More</button>
+            </div>
+			    </div>
+          <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+              <span class="form-inline">
+                <div class="form-group">
+                  <label>Subtotal: &nbsp;</label>
+                  <div class="input-group">
+                    <span class="input-group-text" id="inputGroupPrepend">@</span>
+                    <input value="" type="number" class="form-control" name="subTotal" id="subTotal" placeholder="Subtotal">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Taux d'imposition &nbsp;</label>
+                  <div class="input-group">
+                    <input value="" type="number" class="form-control" name="taxRate" id="taxRate" placeholder="Tax Rate">
+                    <span class="input-group-text" id="inputGroupPrepend">%</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Montant taxe: &nbsp;</label>
+                  <div class="input-group">
+                    <span class="input-group-text" id="inputGroupPrepend">@</span>
+                    <input value="" type="number" class="form-control" name="taxAmount" id="taxAmount" placeholder="Tax Amount">
+                  </div>
+                </div>							
+                <div class="form-group">
+                  <label>Total: &nbsp;</label>
+                  <div class="input-group">
+                    <span class="input-group-text" id="inputGroupPrepend">@</span>
+                    <input value="" type="number" class="form-control" name="totalAftertax" id="totalAftertax" placeholder="Total">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Le montant payé: &nbsp;</label>
+                  <div class="input-group">
+                    <span class="input-group-text" id="inputGroupPrepend">@</span>
+                    <input value="" type="number" class="form-control" name="amountPaid" id="amountPaid" placeholder="Amount Paid">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Montant dû: &nbsp;</label>
+                  <div class="input-group">
+                    <span class="input-group-text" id="inputGroupPrepend">@</span>
+                    <input value="" type="number" class="form-control" name="amountDue" id="amountDue" placeholder="Amount Due">
+                  </div>
+                </div>
+              </span>
+            </div>
+            <div class="col-sm-3"></div>
+          </div>
+          <div class="row py-4">
+              <div class="col-sm-4"></div>
+              <input type="hidden" name="type" value="1">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <input data-loading-text="Saving Invoice..." type="submit" name="invoice_btn" id="invoice_btn" value="Save Invoice" class="btn btn-success submit_btn invoice-save-btm">						
+                </div>
+              </div>
+              <div class="col-sm-4"></div>
+          </div>
+        </form>
       </div>
-
-<!-- jQuery -->
-<table id="ventesTable" class="display" style="width:100%">
-    <thead>
-        <tr>
-            <th>ID Vente</th>
-            <th>Date de vente</th>
-            <th>Quantité vendue</th>
-            <th>Prix total</th>
-            <th>Nom Produit</th>
-            <th>Nom Client</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
-<!-- Modal de Suppression -->
-<div class="modal fade" id="modalSuppression" tabindex="-1" role="dialog" aria-labelledby="modalSuppressionLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalSuppressionLabel">Confirmation de Suppression</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Afficher les informations à supprimer ici -->
-                <div class="form-group">
-                    <label for="idVenteSuppression">ID Vente:</label>
-                    <input type="text" id="idVenteSuppression" class="form-control" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="dateVenteSuppression">Date de vente:</label>
-                    <input type="text" id="dateVenteSuppression" class="form-control" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="qteVenteSuppression">Quantité vendue:</label>
-                    <input type="text" id="qteVenteSuppression" class="form-control" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="prixTSuppression">Prix total:</label>
-                    <input type="text" id="prixTSuppression" class="form-control" readonly>
-                </div>
-                <!-- Ajoutez d'autres champs selon vos besoins -->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                <button type="button" class="btn btn-danger" id="btnConfirmerSuppression">Confirmer la Suppression</button>
-            </div>
-        </div>
     </div>
-</div>
+
+    </section>
+
   </main><!-- End #main -->
 
-  <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
-    </div>
-  </footer><!-- End Footer -->
+  <?php include "include/footer.php";?>
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap.min.js"></script>
-  <!-- Select2 JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-  <!-- <script src="assets/vendor/dataTables.bootstrap5.js"></script> -->
-
+  <!-- <script src="script/client.js"></script> -->
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/chart.js/chart.umd.js"></script>
@@ -146,134 +158,235 @@
   <script src="assets/vendor/php-email-form/validate.js"></script>
 
   <!-- Template Main JS File -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="cart.js"></script>
-<script>
-$(document).ready(function() {
-    var cartItems = []; // Initialisez cartItems comme un tableau vide
-
-    // Appel AJAX pour envoyer les données au script PHP lors de la soumission du formulaire
-    $('#venteForm').on('submit', function(event) {
-        event.preventDefault(); // Empêcher le comportement par défaut du formulaire
-
-        var idClient = $('#client').val();
-        var qteVente = $('#quantite').val();
-        var prixT = $('#totalPriceInput').val(); // Vous devez ajouter un ID à votre champ de prix total pour récupérer sa valeur
-        var idProd = $('#produit').val();
-        // var idProd = cartItems.map(item => item.id).join(',');
-
-        // Envoyer les données au script PHP pour traitement
-        $.ajax({
-            url: 'traitement_vente.php',
-            type: 'POST',
-            data: {
-                client: idClient,
-                quantite: qteVente,
-                prixTotal: prixT,
-                idProduit: idProd
-            },
-            success: function(response) {
-                // Gérer la réponse du script PHP après l'insertion des données
-                console.log(response);
-                // Réinitialiser le panier et le formulaire après l'enregistrement de la vente
-                cartItems = [];
-                function updateCart() {
-                    $('#cartItems').empty();
-                    totalPrice = 0;
-                    var totalQuantity = 0; // Ajout de la variable pour stocker la quantité totale
-
-                    cartItems.forEach(function(item) {
-                        var price = item.price * item.quantity;
-                        totalPrice += price;
-                        totalQuantity += item.quantity; // Ajout de la quantité de chaque produit au total
-                        $('#cartItems').append('<div>' + item.name + ' - ' + item.price + ' € <span class="badge badge-primary">' + item.quantity + '</span> ' + price.toFixed(2) + ' € <button class="btn btn-sm btn-danger removeFromCart" data-id="' + item.id + '">Retirer</button></div>');
-                    });
-
-                    $('#totalPriceInput').val(totalPrice.toFixed(2) + ' €');
-                    $('#quantite').val(totalQuantity); // Mettre à jour le champ de quantité avec la quantité totale
-                }
-                updateCart();
-                $('#venteForm')[0].reset(); // Réinitialiser le formulaire
-                location.reload();
-            },
-            error: function() {
-                alert('Erreur lors de l\'enregistrement de la vente.');
-            }
-        });
-    });
-
-});
-
-</script>
+  <script src="assets/js/main.js"></script>
   <script>
-$(document).ready(function() {
-    var table = $('#ventesTable').DataTable({
-        "ajax": {
-            "url": "liste_ventes.php",
-            "dataSrc": ""
-        },
-        "columns": [
-            { "data": "idVente" },
-            { "data": "dateVente" },
-            { "data": "qteVente" },
-            { "data": "prixT" },
-            { "data": "nomProd" },
-            { "data": "nomClient" },
-            {
-                "data": null,
-                "render": function(data, type, row, meta) {
-                    return "<a href= 'assets/vendor/alpha/facture.php'><button class='btn btn-success btnImprimer' data-id='" + row.idVente + "'>Imprimer</button></a> <button class='btn btn-danger btnSupprimer'>Supprimer</button>";
-                }
-            }
-        ]
-    });
-
-    // Gérer le clic sur le bouton "Imprimer"
-    $('#ventesTable').on('click', '.btnImprimer', function() {
-    var idVente = $(this).data('id');
+     $(document).ready(function(){
+	$(document).on('click', '#checkAll', function() {          	
+		$(".itemRow").prop("checked", this.checked);
+	});	
+	$(document).on('click', '.itemRow', function() {  	
+		if ($('.itemRow:checked').length == $('.itemRow').length) {
+			$('#checkAll').prop('checked', true);
+		} else {
+			$('#checkAll').prop('checked', false);
+		}
+	});  
+	var count = $(".itemRow").length;
+	$(document).on('click', '#addRows', function() { 
+		count++;
+		var htmlRows = '';
+		htmlRows += '<tr>';
+		htmlRows += '<td><input class="itemRow" type="checkbox"></td>';          
     
-        // Requête AJAX pour générer la facture PDF
-        // $.ajax({
-        //     url: 'generer_facture.php', // Assurez-vous de remplacer 'generer_facture.php' par le chemin correct de votre script PHP
-        //     type: 'POST',
-        //     data: { idVente: idVente },
-        //     success: function(response) {
-        //         // Télécharger le fichier PDF généré
-        //         var blob = new Blob([response]);
-        //         var link = document.createElement('a');
-        //         link.href = window.URL.createObjectURL(blob);
-        //         link.download = 'facture.pdf';
-        //         document.body.appendChild(link);
-        //         link.click();
-        //         document.body.removeChild(link);
-        //     },
-        //     error: function() {
-        //         alert('Erreur lors de la génération de la facture PDF.');
-        //     }
-        // });
-    });
-});
-</script>
+		htmlRows += '<td><select type="text" name="productCode[]"  id="productCode_'+count+'" class="form-control" autocomplete="off"></select></td>';          
+		htmlRows += '<td><input type="number" name="quantity[]" id="quantity_'+count+'" class="form-control quantity" autocomplete="off"></td>';   		
+		htmlRows += '<td><input type="number" name="price[]" id="price_'+count+'" class="form-control price" autocomplete="off"></td>';		 
+		htmlRows += '<td><input type="number" name="total[]" id="total_'+count+'" class="form-control total" autocomplete="off"></td>';          
+		htmlRows += '</tr>';
 
-<script>
-  $(document).ready(function() {
-    $.ajax({
-          url: 'charger_clients.php',
-          type: 'GET',
-          dataType: 'json',
-          success: function(data) {
-              $('#client').empty(); // Efface les options existantes avant de charger les nouvelles données
-              $.each(data, function(index, item) {
-                  $('#client').append('<option value="' + item.idClient + '">' + item.nomClient + '</option>');
+		$('#invoiceItem').append(htmlRows);
+
+    $('#productCode_'+count).select2();
+
+  // Effectuer une requête AJAX pour récupérer les données de la base de données
+  $.ajax({
+    url: 'getProdInv.php', // Remplacez "obtenir_donnees.php" par votre script de récupération de données
+    type: 'GET',
+    minLength: 2,
+    // minimumInputLength:1,
+    dataType: 'json',
+    success: function(data) {
+      // Parcourir les données et générer les options de l'élément select
+      for (var i = 0; i < data.length; i++) {
+        $('#productCode_'+count).append('<option value="' + data[i].idProd + '">' + data[i].nomProd + '</option>');
+      }
+      $('#productCode_'+count).change(function() {
+        // Obtenir le prix unitaire sélectionné
+        var selectedProductId = $(this).val();
+        var selectedProduct = data.find(function(product) {
+          return product.idProd === selectedProductId;
+        });
+
+        // Afficher le prix unitaire dans le champ d'entrée
+        if (selectedProduct) {
+          $('#price_'+count).val(selectedProduct.prixU);
+        }
+      });
+    },
+    error: function() {
+      alert('Une erreur s\'est produite lors de la récupération des données.');
+    }
+  });
+
+	}); 
+
+  $(document).on('click', '#removeRows', function(){
+  $(".itemRow:checked").each(function() {
+    $(this).closest('tr').remove();
+  });
+  $('#checkAll').prop('checked', false);
+  calculateTotal();
+	});
+  $(document).on('blur', "[id^=quantity_]", function(){
+		calculateTotal();
+	});	
+	$(document).on('blur', "[id^=price_]", function(){
+		calculateTotal();
+	});	
+	$(document).on('blur', "#taxRate", function(){		
+		calculateTotal();
+	});	
+	$(document).on('blur', "#amountPaid", function(){
+		var amountPaid = $(this).val();
+		var totalAftertax = $('#totalAftertax').val();	
+		if(amountPaid && totalAftertax) {
+			totalAftertax = totalAftertax-amountPaid;			
+			$('#amountDue').val(totalAftertax);
+		} else {
+			$('#amountDue').val(totalAftertax);
+		}	
+	});	
+  
+});
+
+
+function calculateTotal(){
+	var totalAmount = 0; 
+	$("[id^='price_']").each(function() {
+		var id = $(this).attr('id');
+		id = id.replace("price_",'');
+		var price = $('#price_'+id).val();
+		var quantity  = $('#quantity_'+id).val();
+		if(!quantity) {
+			quantity = 1;
+		}
+		var total = price*quantity;
+		$('#total_'+id).val(parseFloat(total));
+		totalAmount += total;			
+	});
+	$('#subTotal').val(parseFloat(totalAmount));	
+	var taxRate = $("#taxRate").val();
+	var subTotal = $('#subTotal').val();	
+	if(subTotal) {
+		var taxAmount = subTotal*taxRate/100;
+		$('#taxAmount').val(taxAmount);
+		subTotal = parseFloat(subTotal)+parseFloat(taxAmount);
+		$('#totalAftertax').val(subTotal);		
+		var amountPaid = $('#amountPaid').val();
+		var totalAftertax = $('#totalAftertax').val();	
+		if(amountPaid && totalAftertax) {
+			totalAftertax = totalAftertax-amountPaid;			
+			$('#amountDue').val(totalAftertax);
+		} else {		
+			$('#amountDue').val(subTotal);
+		}
+	}
+}
+
+
+
+        // envoyer les donnees a  save.php pour enregistrement
+        $(document).on("click", "#invoice_btn", function (e) {
+      e.preventDefault();
+      var formData = new FormData($("#invoice-form")[0]);
+      // console.log(formData);
+      $.ajax({
+          data: formData,
+          type: "post",
+          url: "saveInvoice.php",
+          dataType: "json",
+          processData: false,
+          contentType: false,
+          success: function (response) {
+            if (response.statusCode == 200) {
+              Swal.fire({
+              icon: "success",
+              title: "Good Job!",
+              // toast:true,
+              text: "Vente effectuees avec success",
+              showConfirmButton: true,
+              timer: 3000
+            });
+            $("#invoice-form")[0].reset();
+            } else{
+              Swal.fire({
+                icon: "error",
+                title: "Oops...!",
+                // toast:true,
+                text: "Erreur l\'or de l\'enregistrement de la vente",
+                showConfirmButton: true,
+                timer: 3000
               });
-              $('#client').trigger('change'); // Met à jour le Select2 après avoir ajouté les options
+            }
           },
-          error: function() {
-              alert('Une erreur s\'est produite lors de la récupération des données.');
+          error: function(xhr,status,error) {
+            console.log('error'+ error);
+            // toastr.warning('Erreur dans votre requette ajax');
           }
       });
+  });
+
+
+
+    // chargement des  clients dans le select 2
+    $(document).ready(function() {
+      $('#idClient').select2();
+        
+      // Effectuer une requête AJAX pour récupérer les données de la base de données
+      $.ajax({
+        url: 'getClient.php', // Remplacez "obtenir_donnees.php" par votre script de récupération de données
+        type: 'GET',
+        minLength: 1,
+        dataType: 'json',
+        success: function(data) {
+          // Parcourir les données et générer les options de l'élément select
+          for (var i = 0; i < data.length; i++) {
+            $('#idClient').append('<option value="' + data[i].idClient + '">' + data[i].nomClient + '</option>');
+          }
+        },
+        error: function() {
+          alert('Une erreur s\'est produite lors de la récupération des données.');
+        }
+      });
     });
-</script>
+
+        // chargement des  clients dans le select 2
+        $(document).ready(function() {
+      $('#productCode_1').select2();
+
+      // Effectuer une requête AJAX pour récupérer les données de la base de données
+      $.ajax({
+        url: 'getProdInv.php', // Remplacez "obtenir_donnees.php" par votre script de récupération de données
+        type: 'GET',
+        minLength: 1,
+        dataType: 'json',
+        success: function(data) {
+          // Parcourir les données et générer les options de l'élément select
+          for (var i = 0; i < data.length; i++) {
+            $('#productCode_1').append('<option value="' + data[i].idProd + '">' + data[i].nomProd + '</option>');
+            // $('#price_1').val(data[i].prixU );
+          }
+           // Gérer l'événement de changement de l'option sélectionnée
+          $('#productCode_1').change(function() {
+            // Obtenir le prix unitaire sélectionné
+            var selectedProductId = $(this).val();
+            var selectedProduct = data.find(function(product) {
+              return product.idProd === selectedProductId;
+            });
+
+            // Afficher le prix unitaire dans le champ d'entrée
+            if (selectedProduct) {
+              $('#price_1').val(selectedProduct.prixU);
+            }
+          });
+        },
+        error: function() {
+          alert('Une erreur s\'est produite lors de la récupération des données.');
+        }
+      });
+    });
+  </script>
+
 </body>
 
 </html>
