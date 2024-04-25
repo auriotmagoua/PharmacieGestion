@@ -32,7 +32,7 @@ if ($result->num_rows > 0) {
         echo "<td>" . $row["nomProd"] . "</td>";
         
         echo "<td>" . $row["nomClient"] . "</td>";
-        echo '<td><button class="btn btn-outline-success btn-facture" data-fact-id="' . $row["numFact"] . '">Imprimer</button></td>';
+        echo '<td><button class="btn btn-outline-success btn-facture" data-fact-id="' . $row["numFact"] . '"><i class="fa fa-print"></i> PRINT</button></td>';
         echo "</tr>";
     }
 } else {

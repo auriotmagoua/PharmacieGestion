@@ -4,10 +4,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Récupérer les données du formulaire
     $supplierName = $_POST['supplierName'];
     $productNames = $_POST['productName'];
+    $numBL = $_POST['numBL'];
     $quantities = $_POST['quantity'];
     $prices = $_POST['price'];
     $etat = 'active';
-
+	
     // Connexion à la base de données
     include '../connexiondb.php';
 	$conn = connexionMysqli();
@@ -43,13 +44,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Boucle à travers les produits et les insérer dans la table
     for ($i = 0; $i < count($productNames); $i++) {
         $productName = intval($productNames[$i]);
+        // $productcode = intval($productcodes[$i]);
         $quantity = intval($quantities[$i]);
         $price = floatval($prices[$i]);
 
-
 		// Préparer la requête d'insertion
-		$stmt = $conn->prepare("INSERT INTO approvisionnement (qteAppro, prixU, dateAppro, idProd, idFournis, etat) VALUES (?, ?, ?, ?, ?, ?)");
-		$stmt->bind_param("ssssss", $quantity, $price, $dateAppro, $productName, $idFournis, $etat);
+		$stmt = $conn->prepare("INSERT INTO approvisionnement (numBL, qteAppro, prixU, dateAppro, idProd, idFournis, etat) VALUES (?, ?, ?, ?, ?, ?, ?)");
+		$stmt->bind_param("sssssss", $numBL, $quantity, $price, $dateAppro, $productName, $idFournis, $etat);
 	
 		if ($stmt->execute()) {
 			$sql1 = "UPDATE produit SET qteDispo = qteDispo + $quantity WHERE idProd = $productName";
@@ -57,13 +58,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			// echo 'succes de l\'enregistrement';
 			$response = array(
 				'statusCode' => 200,
-				'message' => 'fournisseur ajouté avec succès'
+				'message' => 'produit(s) ajouté(s) avec succès'
 			);
 		} else {
 			// echo 'echec de l\'enregistrement';
 			$response = array(
 				'statusCode' => 500,
-				'message' => 'Erreur lors de l\'insertion du forunisseur : ' . $stmt->error
+				'message' => 'Erreur lors de l\'insertion du/des produit(s) : ' . $stmt->error
 			);
 		}
 	

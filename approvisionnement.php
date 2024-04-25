@@ -40,18 +40,19 @@
                         <input id="currency" type="hidden" value="$">
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                                <h3>From,</h3>
+                                <h3>De,</h3>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="supplierName" id="supplierName" placeholder="supplier Name" autocomplete="on">
+                                    <input type="text" class="form-control" name="supplierName" id="supplierName" placeholder="Nom du fournisseur" autocomplete="on"><br>
+                                    <input type="text" name="numBL" id="numBL" class="form-control" placeholder="No BL">
                                 </div><br>
                             </div>      		
                             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 pull-right">
-                                <h3>To,</h3>
-                                <p>this pharmacy</p>
+                                <h3>À,</h3>
+                                <p>cette pharmacie</p>
 
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 pull-right">
-                                <button class="btn btn-primary" id="btn-submit" type="submit">Enregistrer les produits</button>
+                                <button class="btn btn-primary" id="btn-submit" type="submit">Enregistrer produit(s)</button>
                             </div>
                         </div>
                         <div class="row"><br>
@@ -59,7 +60,7 @@
                                 <table class="table table-bordered table-hover" id="invoiceItem">	
                                     <tr>
                                         <th width="2%"><input id="checkAll" class="formcontrol" type="checkbox"></th>
-                                        <!-- <th width="15%">Item No</th> -->
+                                        <!-- <th width="15%">No BL</th> -->
                                         <th width="38%">Nom du produit</th>
                                         <th width="15%">Quantite</th>
                                         <th width="15%">Prix unitaire</th>								
@@ -78,8 +79,8 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                <button class="btn btn-danger delete" id="removeRows" type="button">- Delete</button>
-                                <button class="btn btn-success" id="addRows" type="button">+ Add More</button>
+                                <button class="btn btn-danger delete" id="removeRows" type="button">- Supprimer</button>
+                                <button class="btn btn-success" id="addRows" type="button">+ Ajouter plus</button>
                             </div>
                             <br>
                         </div>
@@ -96,14 +97,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label>Tax Rate: &nbsp;</label>
+                                        <label> Taux d'imposition: &nbsp;</label>
                                         <div class="input-group">
                                             <input value="" type="number" class="form-control" name="taxRate" id="taxRate" placeholder="Tax Rate">
                                             <div class="input-group-text">%</div>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label>Tax Amount: &nbsp;</label>
+                                        <label>Montant de la taxe: &nbsp;</label>
                                         <div class="input-group">
                                             <div class="input-group-text">$</div>
                                             <input value="" type="number" class="form-control" name="taxAmount" id="taxAmount" placeholder="Tax Amount">
@@ -117,14 +118,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label>Amount Paid: &nbsp;</label>
+                                        <label>Le montant payé: &nbsp;</label>
                                         <div class="input-group">
                                             <div class="input-group-text">$</div>
                                             <input value="" type="number" class="form-control" name="amountPaid" id="amountPaid" placeholder="Amount Paid">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label>Amount Due: &nbsp;</label>
+                                        <label>Montant dû: &nbsp;</label>
                                         <div class="input-group">
                                             <div class="input-group-text">$</div>
                                             <input value="" type="number" class="form-control" name="amountDue" id="amountDue" placeholder="Amount Due">
