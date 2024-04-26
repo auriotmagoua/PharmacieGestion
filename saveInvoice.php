@@ -1,4 +1,6 @@
 <?php
+include "tet.php";
+
 require_once 'connexiondb.php';
 $conn = connexionMysqli(); // Utilisation de votre méthode de connexion mysqli
 
@@ -41,7 +43,7 @@ if (count($_POST) > 0) {
     $productCodes = $_POST['productCode'];
     $quantities = $_POST['quantity'];
     $numFact = generateInvoiceNumber();
-    $prices = $_POST['price'];
+    $prixVente = $_POST['price'];
     $dateVente = date('Y-m-d');
     $etat = 'active';
 
@@ -50,11 +52,10 @@ if (count($_POST) > 0) {
 
         foreach ($productCodes as $key => $productCode) {
             // Préparation de la requête d'insertion
-            $sql = "INSERT INTO ventes (dateVente, qteVente, numFact, idProd, idClient, etat) VALUES ('$dateVente', $quantities[$key], '$numFact', $productCodes[$key], $idClient, '$etat')";
+            $sql = "INSERT INTO ventes (dateVente, qteVente,prixVente ,numFact, idProd, idClient, etat,idU) 
+            VALUES ('$dateVente', $quantities[$key],$prixVente[$key],'$numFact', $productCodes[$key], $idClient, '$etat',$idU)";
             // Exécution de la requête
             $result = $conn->query($sql);
-            $sql1 = "UPDATE produit SET qteDispo = qteDispo - $quantities[$key] WHERE idProd = $productCodes[$key]";
-            $res = $conn->query($sql1);
         }
 
         if ($result) {

@@ -21,10 +21,11 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     if ($resultat->num_rows === 1) {
         // Démarrer la session
         session_start();
-
+        $row = $resultat->fetch_assoc();
         // Stocker les informations de session
         $_SESSION["loggedin"] = true;
         $_SESSION["username"] = $username;
+        $_SESSION["idU"] = $row['idU'];
 
         // Fermer la connexion à la base de données
         $requete->close();

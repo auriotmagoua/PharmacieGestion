@@ -23,11 +23,11 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Dashboard</h1>
+      <h1>Listing des ventes</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item active">Dashboard</li>
+          <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+          <li class="breadcrumb-item active">Listing des ventes</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -37,20 +37,19 @@
             <!-- <div class="col-lg-2"></div> -->
             <div class="col-lg-12  card">
                 <div class="row">
-                    <table id="example" class="table table-striped" style="width:100%">
+                    <table id="dataTable" class="display table  table-bordered" style="width:100%">
                         <thead>
                             <tr>
-                                <th>IDVente</th>
-                                <th>dateVente</th>
-                                <th>qteVendu</th>
+                                <th>#</th>
+                                <th width="4%">dateVente</th>
+                                <th>qteV</th>
                                 <th>numFactur</th>
                                 <th>Nom Produit</th>
                                 <th>Client</th>
-                                <th>Action</th>                                                                                                                                                                                                                                                                                                                                      
+                                <th width="24%">Action</th>                                                                          
                             </tr>
                         </thead>
                         <tbody>
-                         
                         </tbody>
                     </table>
                 </div>
@@ -68,6 +67,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <input type="hidden" id="idU" name="idU" value="<?php echo $idU;?>">
                 <iframe id="pdfViewer" style="width: 100%; height: 700px;"></iframe>
             </div>
         </div>
@@ -130,56 +130,117 @@
 <!-- Template Main JS File -->
 <script src="assets/js/main.js"></script>
 <script>
-    $(document).ready(function () {
-        // Chargement des données de la base de données lors du chargement de la page
-        $.ajax({
-            url: 'getVenteData.php', // Le script PHP pour récupérer les données de la base de données
-            type: 'GET',
-            success: function (response) {
-                // Ajout des éléments récupérés dans le tableau
-                $('tbody').html(response);
-            },
-            error: function (xhr, status, error) {
-                console.error('Une erreur est survenue lors du chargement des données.');
+$(document).ready(function() {
+    $('#dataTable').DataTable({
+        "ajax": {
+            "url": "getVenteData.php",
+            "dataSrc": ""
+        },
+        "columns": [
+            {"data": "idVente"},
+            {"data": "dateVente"},
+            {"data": "qteVente"},
+            {"data": "numFact"},
+            {"data": "nomProd"},
+            {"data": "nomClient"},
+            {
+                "render": function(data, type, row) {
+                    printButton = '<button class="btn btn-outline-success btn-facture" data-fact-id="' + row.numFact + '">Imprimer</button>';
+                    cancelButton = '<button class="btn btn-outline-danger btn-annuler mx-2" data-annuler-id="' + row.numFact  + '">Annuler</button>';
+                    console.log(cancelButton);
+                    return printButton + cancelButton ;
+                }
             }
-        });
-
-        var IdFactur ; // Variable pour stocker l'ID de l
-
-        $(document).on('click', '.btn-facture', function () {
-            IdFactur = $(this).data('fact-id'); // Récupérer l'ID
-            var rowData = $(this).closest('tr').find('td'); // Récupérer les données de la ligne sélectionnée
-
-            // Afficher les données de l'utilisateur dans le modal
-           
-
-           // $('#delete').modal('show'); // Afficher le modal de confirmation
-
-
-                         $.ajax({
-                                    url: 'assets/vendor/alpha/facture.php', // facture
-                                    type: 'POST',
-                                    data: { IDfact: IdFactur }, // Passer l'ID de la facture
-                                    success: function (response) {
-                                        // Afficher le PDF dans le modal
-                                        $('#pdfViewer').attr('src', 'data:application/pdf;base64,' + response);
-                                        $('#pdfModal').modal('show');
-                                    },
-                                    error: function (xhr, status, error) {
-                                        console.error('Une erreur .');
-                                        Swal.fire(
-                                            'Erreur!',
-                                            'Une erreur .',
-                                            'error'
-                                        );
-                                    }
-                                });
-        });
-           
-                    // Effectuer une requête AJAX pour 
-                                
-          
+        ]
     });
+    });
+
+    $(document).on('click', '.btn-facture', function() {
+    var numFact = $(this).data('fact-id');
+
+    // Envoyer la valeur numFact via AJAX
+    $.ajax({
+        url: 'assets/vendor/alpha/facture.php', // URL de votre fichier PHP
+        type: 'POST', // Méthode HTTP GET
+        data: { numFact: numFact }, // Données à envoyer
+        success: function(response) {
+            // Traitement de la réponse en cas de succès
+            // Vous pouvez effectuer des actions supplémentaires ici
+            // console.log('Réponse de la requête AJAX :', response);
+
+            $('#pdfViewer').attr('src', 'data:application/pdf;base64,' + response);
+                $('#pdfModal').modal('show');
+        },
+        error: function(xhr, status, error) {
+            // Traitement de l'erreur en cas d'échec de la requête AJAX
+            console.error('Erreur lors de la requête AJAX :', error);
+            // Afficher un message d'erreur à l'utilisateur ou effectuer d'autres actions nécessaires
+        }
+    });
+});
+
+$(document).on('click', '.btn-annuler', function() {
+    Swal.fire({
+        title: "Es-tu sûr? ",
+        text: "Vous ne pourrez pas revenir en arrière !",
+        icon: "question",
+        showDenyButton: true,
+        showCancelButton: true,
+        denyButtonText: `Don't save`, 
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#7784489",
+        confirmButtonText: "Save"
+      }).then((result) => {
+        if (result.isConfirmed) {
+            var numFact = $(this).data('annuler-id');
+            var idU = $('#idU').val();
+            $.ajax({
+                url: 'annulerVente.php', 
+                type: 'POST', 
+                data: { 
+                    numFact: numFact,
+                    idU:idU
+                }, 
+                success: function(response) {
+                    if (response.statusCode == 200) {
+                        Swal.fire({
+                        icon: 'success',
+                        title: 'Succès',
+                        text: response.message,
+                        confirmButtonText: 'OK',
+                        showConfirmButton: true,
+                        timer: 3000
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                        location.reload();
+                        }
+                    });
+                    }else{
+                        Swal.fire({
+                        icon: "error",
+                        title: "Oops...!",
+                        // toast:true,
+                        text: "Erreur l\'or de lannulation de la facture!",
+                        showConfirmButton: true,
+                        timer: 3000
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Traitement de l'erreur en cas d'échec de la requête AJAX
+                    console.error('Erreur lors de la requête AJAX :', error);
+                    // Afficher un message d'erreur à l'utilisateur ou effectuer d'autres actions nécessaires
+                }
+            });
+        }else if (result.isDenied) {
+          Swal.fire("Facture non annuler", "", "info");
+          setTimeout(function() {
+            Swal.close();
+          }, 3000);
+        }
+    
+});
+});
 </script>
 </body>
 </html>
