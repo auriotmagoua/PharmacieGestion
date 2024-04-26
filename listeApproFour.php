@@ -40,11 +40,11 @@
     <form id="searchForm" method="POST">
         <div class="form-group">
             <label for="dateD">Date debut</label>
-            <input type="date" class="form-control" name="dateD" id="dateD" required>
+            <input type="date" class="form-control" name="dateD" id="dateD" >
         </div>
         <div class="form-group">
             <label for="dateF">Date de fin</label>
-            <input type="date" class="form-control" name="dateF" id="dateF" required>
+            <input type="date" class="form-control" name="dateF" id="dateF" >
         </div>
         <div class="form-group">
             <label for="select-autocomplete">Fournisseur</label><br>
