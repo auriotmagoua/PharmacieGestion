@@ -1,4 +1,5 @@
 <?php
+include "tet.php";
 // Vérification si le formulaire est soumis
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Récupérer les données du formulaire
@@ -49,12 +50,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $price = floatval($prices[$i]);
 
 		// Préparer la requête d'insertion
-		$stmt = $conn->prepare("INSERT INTO approvisionnement (numBL, qteAppro, prixU, dateAppro, idProd, idFournis, etat) VALUES (?, ?, ?, ?, ?, ?, ?)");
-		$stmt->bind_param("sssssss", $numBL, $quantity, $price, $dateAppro, $productName, $idFournis, $etat);
+		$stmt = $conn->prepare("INSERT INTO approvisionnement (numBL, qteAppro, prixU, dateAppro, idProd, idFournis, etat, idU) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+		$stmt->bind_param("sssssssi", $numBL, $quantity, $price, $dateAppro, $productName, $idFournis, $etat, $idU);
 	
 		if ($stmt->execute()) {
-			$sql1 = "UPDATE produit SET qteDispo = qteDispo + $quantity WHERE idProd = $productName";
-            $res = $conn->query($sql1);
+			// $sql1 = "UPDATE produit SET qteDispo = qteDispo + $quantity WHERE idProd = $productName";
+            // $res = $conn->query($sql1);
 			// echo 'succes de l\'enregistrement';
 			$response = array(
 				'statusCode' => 200,

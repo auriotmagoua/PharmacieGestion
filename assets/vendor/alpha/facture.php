@@ -8,9 +8,7 @@ $conn = connexionMysqli();
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 if(isset($_POST['IDfact'])){
 $numFact = $_POST['IDfact'];
-// echo $factid;
 
-// $query = "SELECT * FROM ventes WHERE numFact = '$factid'";
 $query = "SELECT nomClient, villeClient, emailClient, telephoneClient, dateVente, nomProd, qteVente, prixU, numFact FROM produit JOIN ventes ON produit.idProd = ventes.idProd JOIN client ON ventes.idClient = client.idClient WHERE ventes.numFact = '$numFact' AND ventes.idClient = client.idClient";
 $result = $conn->query($query);
 
@@ -21,8 +19,6 @@ if ($result !== false && $result->num_rows > 0) {
         $data[] = $row;
     } 
 
-// Affichage du nom du premier client
-// echo $data[0]['nomClient'];
 
 // Créer un nouvel objet PDF
 class CustomPDF extends AlphaPDF
@@ -132,7 +128,7 @@ $pdf->SetLineWidth(.3);
 $pdf->SetFont('', 'B');
 
 // En-tête du tableau
-$w = array(25, 75, 25, 30, 35);
+$w = array(15, 85, 25, 30, 35);
 for ($i = 0; $i < count($header); $i++) {
     $pdf->Cell($w[$i], 8, $header[$i], 1, 0, 'C', true);
 }
@@ -163,23 +159,23 @@ foreach ($data as $row) {
 $pdf->Cell(array_sum($w), 0, '', 'T');
 
 $pdf->Ln(); 
-$pdf->Cell(115);  // Cellule vide pour déplacer vers la droite
-$pdf->Cell(40, 7, 'Montant HT: ', 'LRT', 0, 'L'); 
-$pdf->Cell(35, 7, $montantHT, 'LRT', 1, 'R'); 
+// $pdf->Cell(115);  // Cellule vide pour déplacer vers la droite
+// $pdf->Cell(40, 7, 'Montant HT: ', 'LRT', 0, 'L'); 
+// $pdf->Cell(35, 7, $montantHT, 'LRT', 1, 'R'); 
 
-$montantTVA = $montantHT * (19.25 / 100);
-$pdf->Cell(115);  // Cellule vide pour déplacer vers la droite
-$pdf->Cell(40, 7, 'TVA (19,25%): ', 'LRT', 0, 'L'); 
-$pdf->Cell(35, 7, $montantTVA, 'LRT', 1, 'R');
+// $montantTVA = $montantHT * (19.25 / 100);
+// $pdf->Cell(115);  // Cellule vide pour déplacer vers la droite
+// $pdf->Cell(40, 7, 'TVA (19,25%): ', 'LRT', 0, 'L'); 
+// $pdf->Cell(35, 7, $montantTVA, 'LRT', 1, 'R');
 
-$montantTotal = $montantHT + $montantTVA;
+// $montantTotal = $montantHT + $montantTVA;
 $pdf->SetTextColor(255);
 $pdf->SetLineWidth(.3);
 $pdf->SetFont('', 'B');
 $pdf->SetFillColor(0, 100, 0); 
-$pdf->Cell(115);  // Cellule vide pour déplacer vers la droite
-$pdf->Cell(40, 8, 'TOTAL TTC: ', 'LRTB', 0, 'L', true); 
-$pdf->Cell(35, 8, $montantTotal, 'LRTB', 1, 'R', true); 
+// $pdf->Cell(115);  // Cellule vide pour déplacer vers la droite
+$pdf->Cell(155, 8, 'TOTAL: ', 'LRTB', 0, 'L', true); 
+$pdf->Cell(35, 8, $montantHT, 'LRTB', 1, 'R', true); 
 // Restauration des couleurs et de la police
 $pdf->SetFillColor(224, 235, 255);
 $pdf->SetTextColor(0);
@@ -191,13 +187,10 @@ $pdf->SetFont('', 'B');
 $pdf->Cell(40, 8, 'Signature Client', 'B', 0, 'L'); 
 $pdf->Cell(50);
 $pdf->Cell(40, 8, 'Signature Caisse', 'B', 1, 'L'); 
-$pdf->Image('../../img/cachet.png',110,180,0);
+$pdf->Image('../../img/cachet.png',$pdf->GetX() + 110, $pdf->GetY() - 3, 40, 0);
 
-}else {
-    echo "Aucun enregistrement trouvé.";
 }
-// Fermeture de la connexion à la base de données
-// $stmt->close();
+
 $conn->close();
 }
 // Ne pas envoyer de sortie HTML avant la génération du PDF

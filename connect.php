@@ -19,17 +19,24 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     
     // Si les identifiants sont valides, renvoyer une réponse JSON avec succès true
     if ($resultat->num_rows === 1) {
+        // Récupérer la ligne de résultat
+        $row = $resultat->fetch_assoc();
+    
+        // Récupérer l'ID de l'utilisateur
+        $id = $row['idU'];
+    
         // Démarrer la session
         session_start();
-
+    
         // Stocker les informations de session
         $_SESSION["loggedin"] = true;
         $_SESSION["username"] = $username;
-
+        $_SESSION["idU"] = $id;
+    
         // Fermer la connexion à la base de données
         $requete->close();
         $connexion->close();
-
+    
         // Répondre avec une réponse JSON de succès
         echo json_encode(['success' => true]);
         exit;

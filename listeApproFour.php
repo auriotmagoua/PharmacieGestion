@@ -30,7 +30,7 @@
 </head>
 
 <body>
-<!-- navbar -->
+<!-- navbar --></center>
 <?php include "include/navbar.php"?>
 
 <!-- sidebar -->

@@ -21,7 +21,7 @@
       <h1>Approvisionnement</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="index.php">Home</a></li>
           <li class="breadcrumb-item active">Approvisionnement</li>
         </ol>
       </nav>
@@ -39,21 +39,19 @@
                     <div class="load-animate animated fadeInUp">
                         <input id="currency" type="hidden" value="$">
                         <div class="row">
-                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <h3>De,</h3>
                                 <div class="form-group">
                                     <input type="text" class="form-control" name="supplierName" id="supplierName" placeholder="Nom du fournisseur" autocomplete="on"><br>
                                     <input type="text" name="numBL" id="numBL" class="form-control" placeholder="No BL">
                                 </div><br>
                             </div>      		
-                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 pull-right">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 pull-right">
                                 <h3>À,</h3>
                                 <p>cette pharmacie</p>
 
                             </div>
-                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 pull-right">
-                                <button class="btn btn-primary" id="btn-submit" type="submit">Enregistrer produit(s)</button>
-                            </div>
+                           
                         </div>
                         <div class="row"><br>
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -84,6 +82,7 @@
                             </div>
                             <br>
                         </div>
+                        
                         <div class="row">
                             <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3"></div>
 
@@ -93,44 +92,15 @@
                                         <label>Somme total: &nbsp;</label>
                                         <div class="input-group">
                                             <div class="input-group-text">$</div>
-                                            <input value="" type="number" class="form-control" name="subTotal" id="subTotal" placeholder="Subtotal">
+                                            <input value="" type="number" class="form-control" name="subTotal" id="subTotal" placeholder="Somme total">
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label> Taux d'imposition: &nbsp;</label>
-                                        <div class="input-group">
-                                            <input value="" type="number" class="form-control" name="taxRate" id="taxRate" placeholder="Tax Rate">
-                                            <div class="input-group-text">%</div>
+                                    <br><br>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pull-right">
+                                            <center><button class="btn btn-primary" id="btn-submit" type="submit">Enregistrer produit(s)</button></center>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Montant de la taxe: &nbsp;</label>
-                                        <div class="input-group">
-                                            <div class="input-group-text">$</div>
-                                            <input value="" type="number" class="form-control" name="taxAmount" id="taxAmount" placeholder="Tax Amount">
-                                        </div>
-                                    </div>							
-                                    <div class="form-group">
-                                        <label>Total: &nbsp;</label>
-                                        <div class="input-group">
-                                            <div class="input-group-text">$</div>
-                                            <input value="" type="number" class="form-control" name="totalAftertax" id="totalAftertax" placeholder="Total">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Le montant payé: &nbsp;</label>
-                                        <div class="input-group">
-                                            <div class="input-group-text">$</div>
-                                            <input value="" type="number" class="form-control" name="amountPaid" id="amountPaid" placeholder="Amount Paid">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Montant dû: &nbsp;</label>
-                                        <div class="input-group">
-                                            <div class="input-group-text">$</div>
-                                            <input value="" type="number" class="form-control" name="amountDue" id="amountDue" placeholder="Amount Due">
-                                        </div>
-                                    </div>
+                                    </div><br><br>
                                 </span>
                             </div>
                             <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3"></div>
@@ -215,6 +185,11 @@
 
         $(document).on('click', '#btn-submit', function(e) {
             e.preventDefault();
+            if ($('#supplierName').val() === '' && $('#numBL').val() === '' && $('#quantity_1').val() === '' && $('#price_1').val() === ''){
+                toastr.error('Veuillez renseigner tout les champs.');
+
+            }else{
+
             // Afficher la boîte de dialogue de confirmation
             Swal.fire({
                 title: "Are you sure?",
@@ -257,11 +232,13 @@
                         },
                         error: function(xhr, status, error) {
                             // Gérer les erreurs de requête AJAX
-                            alert("Une erreur s'est produite : " + xhr.responseText);
+                            toastr.error('Veuillez renseigner tout les champs.');
                         }
                     });
                 }
             });
+        }
+
                 
         });
     </script>

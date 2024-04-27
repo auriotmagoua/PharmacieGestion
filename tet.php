@@ -9,4 +9,5 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 // Obtenez les informations de l'utilisateur connecté
 $username = $_SESSION["username"];
+$idU = $_SESSION["idU"];
 ?>
