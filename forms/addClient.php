@@ -1,4 +1,5 @@
 <?php
+include "../tet.php";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    
     include '../connexiondb.php';
@@ -23,8 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $telC = $_POST['telC'];
 
     // Préparer la requête d'insertion
-    $stmt = $conn->prepare("INSERT INTO client (nomClient, villeClient, emailClient, telephoneClient) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("ssss", $nomC, $villeC, $emailC, $telC);
+    $stmt = $conn->prepare("INSERT INTO client (nomClient, villeClient, emailClient, telephoneClient,idU) 
+    VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssi", $nomC, $villeC, $emailC, $telC,$idU);
 
     if ($stmt->execute()) {
         // echo 'succes de l\'enregistrement';

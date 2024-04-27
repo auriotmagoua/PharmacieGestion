@@ -5,7 +5,7 @@ $conn = connexionMysqli();
 // $term = $_GET['term'];
 
 // Requête SQL pour récupérer les données correspondantes
-$sql = "SELECT idClient,nomClient FROM client  LIMIT 10";
+$sql = "SELECT idClient,nomClient FROM client";
 $result = $conn->query($sql);
 
 // Construction du tableau de résultats

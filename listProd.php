@@ -34,7 +34,11 @@
 
     <div class="card">
       <div class="card-header">
-        <p class="h4 text-center">PRODUIT ENREGISTRER</p>
+        <div class="container-fluid d-flex justify-content-center align-items-center">
+          <form>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" href="#ajoutProd" role="button">AJOUTER PRODUIT</button>
+          </form>
+        </div>
       </div>
       <div class="card-body">
       <!-- <form class="container-fluid justify-content-start"><button type="button" class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">AJOUTER UN CLIENT</button></form></center> -->
@@ -44,9 +48,6 @@
               <th>#</th>
               <th>nomProd</th>
               <th>imageProd</th>
-              <th>numLot</th>
-              <th>datePerem</th>
-              <th>qteDispo</th>
               <th>PrixU</th>
               <th>Action</th>
             </tr>
@@ -56,9 +57,6 @@
                   <th>#</th>
                   <th>nomProd</th>
                   <th>imageProd</th>
-                  <th>numLot</th>
-                  <th>datePerem</th>
-                  <th>qteDispo</th>
                   <th>PrixU</th>
                   <th>Action</th>
               </tr>
@@ -68,54 +66,63 @@
     </div>
 
   <!-- add modal -->
-  <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+  <div class="modal fade" id="ajoutProd" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <p class="h4 text-center">ENREGISTRER UN CLIENT</p>
+          <p class="h4 text-center">ENREGISTRER UN PRODUIT</p>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form class="row g-3 needs-validation" id="myform" novalidate>
-            <div class="col-md-12">
-              <label for="nomC" class="form-label">Nom du client:</label>
-              <input type="text" class="form-control" id="nomC" name="nomC" required>
-              <div class="invalid-feedback">
-                nom du client requis!
-              </div>
+          <form class="row  needs-validation" id="myform" novalidate enctype="multipart/form-data">
+            <div class="card-header">
             </div>
             <div class="col-md-12">
-              <label for="villeC" class="form-label">Ville:</label>
-              <input type="text" class="form-control" id="villeC" name="villeC" required>
-              <div class="invalid-feedback">
-                ville requise!
-              </div>
+                <label for="nomProd" class="form-label">Nom produit:</label>
+                <input type="text" class="form-control" id="nomProd1" name="nomProd1" placeholder="enter un nom" required>
+                <div class="invalid-feedback">
+                nom produit requis!
+                </div>
             </div>
-            <div class="col-md-12">
-              <label for="emailC" class="form-label">email:</label>
-              <input type="email" class="form-control" id="emailC" name="emailC" required>
-              <div class="invalid-feedback">
-                email not valide!
+              <div class="col-md-12 py-2">
+                  <label for="prixU" class="form-label">Prix unitaire</label>
+                  <input type="number" class="form-control" id="prixU1" name="prixU1" placeholder="" required>
+                  <div class="invalid-feedback">
+                  prix unitaire requis!
+                  </div>
               </div>
-            </div>
-            <div class="col-md-12">
-              <label for="telC" class="form-label">telephone:</label>
-              <input type="number" class="form-control" id="telC" name="telC" required>
-              <div class="invalid-feedback">
-                numero de telephone requis!
+              <div class="col-md-12 py-2">
+                  <label for="categoris" class="form-label">Categorie</label>
+                  <select type="text" class="form-control" id="categorie1" name="categorie1" placeholder="" required></select>
+                  <div class="invalid-feedback">
+                  categoris requise!
+                  </div>
               </div>
-            </div>
-            <div class="card-footer">
-              <div class="col-12 ">
-                <button class="btn btn-outline-danger" type="reset">reset</button>
-                <button class="btn btn-outline-primary" type="submit" id="btn-send">save</button>
+              <div class="col-md-12 py-2">
+                <label for="imageProd" class="form-label">image</label>
+                <input type="file" class="form-control" id="imageProd1" name="imageProd1" placeholder="" required>
+                <div class="invalid-feedback">
+                categoris requise!
+                </div>
               </div>
-            </div>
+              <div class="col-md-4 py-2">
+                <label for="idCategorie" class="form-label">image preview:</label>
+                <img class="form-control" src="" alt="" with="40" height="100" id="image-preview1">
+              </div>
+              </div>
+              <div class="card-footer">
+                <div class="col-12 ">
+                  <input type="hidden" name="type" value="1">
+                  <button class="btn btn-outline-danger" type="reset">reset</button>
+                  <button class="btn btn-outline-primary" type="submit" id="btn-save">save</button>
+                </div>  
+              </div>
           </form>
         </div>
       </div>
     </div>
   </div>
+
 
   <!-- edit modal -->
   <div class="modal fade" id="editModalToggle" aria-hidden="true" aria-labelledby="editModalToggleLabel" tabindex="-1">
@@ -136,31 +143,10 @@
               </div>
             </div>
             <div class="col-md-12">
-              <label for="numLot" class="form-label">numero du Lot:</label>
-              <input type="number" class="form-control" id="numLot" name="numLot" required>
-              <div class="invalid-feedback">
-              numero du Lot requise!
-              </div>
-            </div>
-            <div class="col-md-12">
               <label for="imageProd" class="form-label">image du produit:</label>
               <input type="file" class="form-control" id="imageProd" name="imageProd" required>
               <div class="invalid-feedback">
               image du produit requise!
-              </div>
-            </div>
-            <div class="col-md-12">
-              <label for="datePerem" class="form-label">date de Peremption:</label>
-              <input type="date" class="form-control" id="datePerem" name="datePerem" required>
-              <div class="invalid-feedback">
-                date de Peremption requise!
-              </div>
-            </div>
-            <div class="col-md-12">
-              <label for="qteDispo" class="form-label">quantite Dispo:</label>
-              <input type="number" class="form-control" id="qteDispo" name="qteDispo" required>
-              <div class="invalid-feedback">
-              quantite disponible requis!
               </div>
             </div>
             <div class="col-md-12">

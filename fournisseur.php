@@ -30,10 +30,14 @@
 
           <div class="card">
             <div class="card-body">
-            <center><p class="h4 text-center">Fournisseurs enregistrés</p>
+            <!-- <center><p class="h4 text-center">Fournisseurs enregistrés</p> -->
             <br>
-            <form class="container-fluid justify-content-start"><button type="button" class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">AJOUTER UN FOURNISSEUR</button></form></center>
-            <table id="example" class="display" style="width:100%">
+            <div class="container-fluid d-flex justify-content-center align-items-center">
+              <form>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">AJOUTER UN FOURNISSEUR</button>
+              </form>
+            </div>
+            <table id="example" class="display table  table-bordered" style="width:100%">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -41,7 +45,7 @@
                         <th>Ville</th>
                         <th>email</th>
                         <th>telephone</th>
-                        <th>Action</th>
+                        <th width="34%">Action</th>
                     </tr>
                 </thead>
                 <tfoot>
