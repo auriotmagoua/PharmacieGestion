@@ -82,7 +82,21 @@
           <span>Listing Facture</span>
         </a>
       </li><!-- End listing des vente ou facture  page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="ListCategorie.php">
+          <i class="bi bi-file-earmark"></i>
+          <span>Liste Categorie</span>
+        </a>
+      </li><!-- End listing Categorie page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href=" xdecaisse.php">
+          <i class="bi bi-file-earmark"></i>
+          <span>Xde Caisse </span>
+        </a>
+      </li><!-- End Xde Caisse page Nav -->
     </ul>
 
   </aside><!-- End Sidebar-->
-  
+ 
