@@ -1,6 +1,15 @@
 <?php
+require_once('tet.php');
+session_start();
+
+// Vérifier si l'utilisateur est connecté
+if (!isset($_SESSION['idU'])) {
+    // Rediriger vers la page de connexion ou afficher un message d'erreur
+    exit("Erreur: Vous devez être connecté pour ajouter une catégorie.");
+}
 // Récupération des données du formulaire
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
     $nomCategorie = $_POST["categoryName"];
     $etat = "active"; // Vous pouvez définir l'état par défaut ici
 
@@ -9,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn = connexionMysqli();
 
     // Préparation de la requête d'insertion
-    $stmt = $conn->prepare("INSERT INTO categorie (nomCategorie, etat) VALUES (?, ?)");
+    $stmt = $conn->prepare("INSERT INTO categorie (nomCategorie, etat,idU) VALUES (?, ?,?)");
 
     // Vérification de la préparation de la requête
     if ($stmt === false) {
@@ -17,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Liaison des paramètres
-    $stmt->bind_param("ss", $nomCategorie, $etat);
+    $stmt->bind_param("ssi", $nomCategorie, $etat,$idU);
 
     // Exécution de la requête
     if ($stmt->execute() === true) {
