@@ -33,7 +33,7 @@
             <center><p class="h4 text-center">Clients enregistrés</p>
             <br>
             <form class="container-fluid justify-content-start"><button type="button" class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">AJOUTER UN CLIENT</button></form></center>
-            <table id="example" class="display" style="width:100%">
+            <table id="example" class="display table  table-bordered" style="width:100%">
                 <thead>
                     <tr>
                         <th>#</th>

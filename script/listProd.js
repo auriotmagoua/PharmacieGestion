@@ -35,10 +35,7 @@ $(document).ready(function() {
                         // console.log(key + ": " + response[key]); // Affiche chaque élément du tableau
                        // Afficher les informations dans le formulaire de modification
                       $('#nomProd').val(response['nomProd']);
-                      $('#numLot').val(response['numLot']);
                       $('#image-preview').attr('src', response['imageProd']);
-                      $('#datePerem').val(response['datePerem']);
-                      $('#qteDispo').val(response['qteDispo']);
                     //   $('#imageProd').val(response['imageProd']);
                       $('#prixU').val(response['prixU']);
                       $('#idCategorie').val(response['idCategorie']);
@@ -107,6 +104,7 @@ $(document).ready(function() {
                     showConfirmButton: true,
                   });
                   $('#editForm')[0].reset(); // Réinitialise le formulaire
+                  location.reload(); // Recharge la page
                   $('#editModalToggle').modal('hide'); // Masque la fenêtre modale de modification
                 } else if (dataResult.statusCode == 500) {
                   Swal.fire({
@@ -184,8 +182,81 @@ $(document).ready(function() {
         
 });
 
+  // envoyer les donnees a  save.php pour enregistrement
+  $(document).on("click", "#btn-save", function (e) {
+    e.preventDefault();
+    var formData = new FormData($("#myform")[0]);
+    Swal.fire({
+      title: "Es-tu sûr? ",
+      text: "Vous ne pourrez pas revenir en arrière !",
+      icon: "question",
+      showDenyButton: true,
+      showCancelButton: true,
+      denyButtonText: `Don't save`, 
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#7784489",
+      confirmButtonText: "Save"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+        data: formData,
+        type: "post",
+        url: "saveProd.php",
+        dataType: "json",
+        processData: false,
+        contentType: false,
+        success: function (response) {
+          if (response.statusCode == 200) {
+            Swal.fire({
+            icon: 'success',
+            title: 'Succès',
+            text: "Enregistrer avec Succès!",
+            confirmButtonText: 'OK',
+            showConfirmButton: true,
+            timer: 3000
+          }).then((result) => {
+            if (result.isConfirmed) {
+              location.reload(); // Recharge la page
+            }
+          });
+          // $("#invoice-form")[0].reset();
+          }else{
+            Swal.fire({
+              icon: "error",
+              title: "Oops...!",
+              // toast:true,
+              text: "Veuillez renseigner les champs!",
+              showConfirmButton: true,
+              timer: 3000
+            });
+          }
+        },
+        error: function(xhr,status,error) {
+          toastr.warning('Erreur dans votre requette ajax');
+        }
+      });
+    }
+  });
+}); 
 
+  // chargement des  categories dans le select 2
+  $(document).ready(function() {
+    $('#categorie1').select2();
 
-
-
-
+    // Effectuer une requête AJAX pour récupérer les données de la base de données
+    $.ajax({
+        url: 'getCategorie.php', // Remplacez "obtenir_donnees.php" par votre script de récupération de données
+        type: 'GET',
+        minLength: 1,
+        dataType: 'json',
+        success: function(data) {
+            // Parcourir les données et générer les options de l'élément select
+            for (var i = 0; i < data.length; i++) {
+                $('#categorie1').append('<option value="' + data[i].idCategorie + '">' + data[i].nomCategorie + '</option>');
+            }
+        },
+        error: function() {
+            alert('Une erreur s\'est produite lors de la récupération des données.');
+        }
+    });
+  });
