@@ -6,8 +6,9 @@ include '../../../connexiondb.php';
 
 $conn = connexionMysqli();
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-if(isset($_POST['IDfact'])){
-$numFact = $_POST['IDfact'];
+if(isset($_POST['numFact'])){
+$numFact = $_POST['numFact'];
+// echo $factid;
 
 $query = "SELECT nomClient, villeClient, emailClient, telephoneClient, dateVente, nomProd, qteVente, prixU, numFact FROM produit JOIN ventes ON produit.idProd = ventes.idProd JOIN client ON ventes.idClient = client.idClient WHERE ventes.numFact = '$numFact' AND ventes.idClient = client.idClient";
 $result = $conn->query($query);

@@ -40,7 +40,8 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
         // Répondre avec une réponse JSON de succès
         echo json_encode(['success' => true]);
         exit;
-    } else {
+    }
+     else {
         // Si les identifiants sont invalides, renvoyer une réponse JSON avec succès false et un message d'erreur
         echo json_encode(['success' => false, 'message' => 'Identifiants invalides']);
     }

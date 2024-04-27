@@ -1,4 +1,5 @@
 <?php
+include "../tet.php";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    
     include '../connexiondb.php';
@@ -24,8 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $etat = "active";
 
     // Préparer la requête d'insertion
-    $stmt = $conn->prepare("INSERT INTO fournisseur (nomFournis, villeFournis, emailFournis, telephoneFournis, etat) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $nomF, $villeF, $emailF, $telF, $etat);
+    $stmt = $conn->prepare("INSERT INTO fournisseur (nomFournis, villeFournis, emailFournis, telephoneFournis, etat,idU) VALUES (?, ?, ?, ?, ?,?)");
+    $stmt->bind_param("sssssi", $nomF, $villeF, $emailF, $telF, $etat,$idU);
 
     if ($stmt->execute()) {
         // echo 'succes de l\'enregistrement';

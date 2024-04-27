@@ -7,7 +7,7 @@ $(document).ready(function() {
         serverSide: true,
         language: {
             search: ' ',
-            searchPlaceholder: 'Rechercher un fournisseur',
+            searchPlaceholder: 'Recherche fournisseur',
         },
         columnDefs: [{
             targets: -1, // Dernière colonne (colonne "Action")

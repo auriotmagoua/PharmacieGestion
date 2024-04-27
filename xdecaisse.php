@@ -30,13 +30,13 @@
 </head>
 
 <body>
-<!-- navbar --></center>
+<!-- navbar -->
 <?php include "include/navbar.php"?>
 
 <!-- sidebar -->
 <?php include "include/sidebar.php"?>
 <div class="card">
-    <h2>Approvisionnement Fournisseur </h2>
+    <h2>X de Caisse</h2>
     <form id="searchForm" method="POST">
         <div class="form-group">
             <label for="dateD">Date debut</label>
@@ -47,8 +47,8 @@
             <input type="date" class="form-control" name="dateF" id="dateF" >
         </div>
         <div class="form-group">
-            <label for="select-autocomplete">Fournisseur</label><br>
-            <select class="form-select" id="select-autocomplete" name="select-autocomplete">
+            <label for="select-autocomplete">User</label><br>
+            <select class="form-select" id="select-autocomplete2" name="select-autocomplete2">
              </select>
             
         </div>
@@ -77,7 +77,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="libs/select2/dist/js/select2.min.js"></script>
-<script src="listAppFou.js"></script>
+<script src="listuser.js"></script>
 <script>
     $(document).ready(function () {
     // Soumettre le formulaire lors du clic sur le bouton PRINT
@@ -90,7 +90,7 @@
         e.preventDefault(); // Empêcher le formulaire de soumettre normalement
         $.ajax({
             type: 'POST',
-            url: 'fpdfAppFou.php',
+            url: 'fpdfxdecaisse.php',
             data: $(this).serialize(),
             success: function (response) {
                 // Afficher le PDF dans le modal

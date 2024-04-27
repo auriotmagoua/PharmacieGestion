@@ -8,7 +8,7 @@
 $term = $_GET['term'];
 
 // Requête de recherche
-$sql = "SELECT * FROM fournisseur WHERE nomFournis LIKE '%" . $term . "%' order by nomFournis asc limit 10";
+$sql = "SELECT * FROM user WHERE nomU LIKE '%" . $term . "%' order by nomU asc limit 10";
 
 // Exécution de la requête
 $result = $connexion->query($sql);
@@ -18,8 +18,8 @@ $data = array();
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         $data[] = array(
-            'id' => $row['idFournis'],
-            'text' => $row['nomFournis']
+            'id' => $row['idU'],
+            'text' => $row['nomU']
         );
     }
 }

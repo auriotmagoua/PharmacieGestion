@@ -1,5 +1,6 @@
 <?php
 require_once('assets/vendor/fpdf186/fpdf.php');
+require_once('tet.php');
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Connexion à la base de données
@@ -10,7 +11,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Récupération des valeurs du formulaire
     $date1 = !empty($_POST['dateD']) ? $conn->real_escape_string($_POST['dateD']) : '';
     $date2 = !empty($_POST['dateF']) ? $conn->real_escape_string($_POST['dateF']) : '';
-    $etat = !empty($_POST['etatP']) ? $conn->real_escape_string($_POST['etatP']) : '';
+    $iduser = !empty($_POST['select-autocomplete2']) ? $conn->real_escape_string($_POST['select-autocomplete2']) : '';
+
+    if(empty( $iduser) ){
+        $iduser = $idU;
+
+    }
 
     class PDF extends FPDF
     {
@@ -25,8 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $this->Ln(10); // Saut de ligne pour éviter que le texte ne chevauche le contenu
             
             // En-tête du tableau
-            $header = array('Num Vente', 'DateVente', 'QteVente', 'Nom Fact', 'NomProd', 'NomClient');
-            $columnWidths = array(40, 40, 40, 30, 85, 40); // Largeurs des colonnes en millimètres
+            $header = array('num Vente',  'date Vente', 'qte Vente', 'numFAct', 'nomProd','idClient','nom user');
+            $columnWidths = array(25, 40, 25, 30, 70, 40,40); // Largeurs des colonnes en millimètres
 
             // Définir la police et la taille pour l'en-tête du tableau
             $this->SetFont('Arial', 'B', 12);
@@ -40,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         function BasicTable($data)
         {
             // Définir les largeurs des colonnes
-            $columnWidths = array(40, 40, 40, 30, 85, 40); // Largeurs des colonnes en millimètres
+            $columnWidths = array(25, 40, 25, 30, 70, 40,40); // Largeurs des colonnes en millimètres
 
             // Données
             $this->SetFont('Arial', '', 10);
@@ -53,81 +59,79 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 
+
     $pdf = new PDF('L'); // 'L' indique l'orientation paysage
     $pdf->SetFont('Arial', '', 10); // Réduire la taille de la police
     
-    // Titres des colonnes
-    $header = array('Num Vente', 'DateVente', 'QteVente', 'Nom Fact', 'NomProd', 'NomClient');
-
     // Titre du tableau en fonction des critères de la requête
-    $title = "Liste Medicament";
-    if (!empty($date1) && !empty($date2) && !empty($etat)) {
-        $title = "Liste entre $date1 et $date2 et $etat";
-    } elseif (!empty($date1) && empty($date2) && !empty($etat)) {
-        $title = "Liste pour la date $date1 et $etat";
-    } elseif (empty($date1) && !empty($date2) && !empty($etat)) {
-        $title = "Liste pour la date $date2 et $etat";
-    } elseif (!empty($date1) && !empty($date2) && empty($etat)) {
-        $title = "Liste entre $date1 et $date2";
-    } elseif (!empty($date1) && empty($date2) && empty($etat)) {
-        $title = "Liste pour la date $date1";
-    } elseif (empty($date1) && !empty($date2) && empty($etat)) {
-        $title = "Liste pour la date $date2";
-    } elseif (empty($date1) && empty($date2) && !empty($etat)) {
-        $title = "Liste de $etat";
-    } elseif (empty($date1) && empty($date2) && empty($etat)) {
-        $title = "Tous les Medicaments";
+    $title = "Ventes";
+    if (!empty($date1) && !empty($date2) && !empty($iduser)) {
+        $title = "Ventes entre $date1 et $date2 pas $username";
+    } elseif (!empty($date1) && empty($date2) && !empty($iduser)) {
+        $title = "Ventes de  la date $date1 par $username";
+    } elseif (empty($date1) && !empty($date2) && !empty($iduser)) {
+        $title = "Ventes de la date $date2 par $username";
+    } elseif (empty($date1) && empty($date2) && !empty($iduser)) {
+        $title = "Ventes faite par $username";
+    } elseif (empty($date1) && empty($date2) && empty($iduser)) {
+        $title = "Tous les approvisionnements ";
     }
-
+    
     // Affecter le titre à la variable de classe $title
     $pdf->title = $title;
-
+    
     // Ajouter la première page au PDF
     $pdf->AddPage();
+    
+  
 
     // Requête pour récupérer les données de la table produit
-    $sql = "SELECT 
-                ventes.idVente, 
-                ventes.dateVente, 
-                ventes.qteVente, 
-                ventes.numFact, 
-                ventes.etat, 
-                produit.nomProd, 
-                client.nomClient
+          $sql = "SELECT 
+                    ventes.idVente, 
+                    ventes.dateVente, 
+                    ventes.qteVente, 
+                    ventes.numFact, 
+                    ventes.etat, 
+                    ventes.idU, 
+                    produit.nomProd, 
+                    client.nomClient,
+                    user.nomU
             FROM 
-                 ventes
+                ventes
             JOIN 
                 produit ON ventes.idProd = produit.idProd
             JOIN 
+                user ON ventes.idU = user.idU
+            JOIN 
                 client ON ventes.idClient = client.idClient";
 
-    if (empty($date1) && empty($date2) && empty($etat)) {
-        $sql .= " WHERE ventes.etat = 'active'";
-    } elseif (!empty($date1) && empty($date2) && empty($etat)) {
-        $sql .= " WHERE ventes.dateVente = '$date1'";
-    } elseif (empty($date1) && !empty($date2) && empty($etat)) {
-        $sql .= " WHERE ventes.dateVente = '$date2'";
-    } elseif (empty($date1) && empty($date2) && !empty($etat)) {
-        $sql .= " WHERE ventes.etat = '$etat'";
-    } elseif (!empty($date1) && !empty($date2) && empty($etat)) {
-        if ($date2 < $date1) {
+            if (empty($date1) && empty($date2) && empty($iduser)) {
+            $sql .= " WHERE ventes.etat = 'active'";
+            } elseif (!empty($date1) && empty($date2) && empty($iduser)) {
+            $sql .= " WHERE ventes.dateVente = '$date1'";
+            } elseif (empty($date1) && !empty($date2) && empty($iduser)) {
+            $sql .= " WHERE ventes.dateVente = '$date2'";
+            } elseif (empty($date1) && empty($date2) && !empty($iduser)) {
+            $sql .= " WHERE ventes.idU = '$iduser'";
+            } elseif (!empty($date1) && !empty($date2) && empty($iduser)) {
+            if ($date2 < $date1) {
             $temp = $date1;
             $date1 = $date2;
             $date2 = $temp;
-        }
-        $sql .= " WHERE DATE(ventes.dateVente) BETWEEN '$date1' AND '$date2'";
-    } elseif (!empty($date1) && empty($date2) && !empty($etat)) {
-        $sql .= " WHERE ventes.dateVente = '$date1' AND ventes.etat = '$etat'";
-    } elseif (empty($date1) && !empty($date2) && !empty($etat)) {
-        $sql .= " WHERE ventes.dateVente = '$date2' AND ventes.etat = '$etat'";
-    } elseif (!empty($date1) && !empty($date2) && !empty($etat)) {
-        if ($date2 < $date1) {
+            }
+            $sql .= " WHERE DATE(ventes.dateVente) BETWEEN '$date1' AND '$date2'";
+            } elseif (!empty($date1) && empty($date2) && !empty($iduser)) {
+            $sql .= " WHERE ventes.dateVente = '$date1' AND ventes.idU = '$iduser'";
+            } elseif (empty($date1) && !empty($date2) && !empty($iduser)) {
+            $sql .= " WHERE ventes.dateVente = '$date2' AND ventes.idU = '$iduser'";
+            } elseif (!empty($date1) && !empty($date2) && !empty($iduser)) {
+            if ($date2 < $date1) {
             $temp = $date1;
             $date1 = $date2;
             $date2 = $temp;
-        }
-        $sql .= " WHERE DATE(ventes.dateVente) BETWEEN '$date1' AND '$date2' AND ventes.etat = '$etat'";
-    }
+            }
+            $sql .= " WHERE DATE(ventes.dateVente) BETWEEN '$date1' AND '$date2' AND ventes.idU = '$iduser'";
+         }
 
     $result = $conn->query($sql);
 
@@ -137,9 +141,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $i=1;
         while ($row = $result->fetch_assoc()) {
            
-            $data[] = array( $i, $row["dateVente"], $row["qteVente"], $row["numFact"], $row["nomProd"], $row["nomClient"]);
-            $i++;
+            $data[] = array( $i, $row["dateVente"], $row["qteVente"], $row["numFact"], $row["nomProd"], $row["nomClient"], $row["nomU"]);
 
+            $i++;
         }
     } else {
         echo "0 results";
@@ -147,8 +151,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $conn->close();
 
-    // Afficher le tableau
-    $pdf->BasicTable($data);
+    $pdf->BasicTable( $data);
 
     // Ne pas envoyer de sortie HTML avant la génération du PDF
     $pdfOutput = $pdf->Output('', 'S'); // Stocker le PDF dans une variable
@@ -156,6 +159,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Envoyer le PDF en réponse à la requête AJAX
     echo base64_encode($pdfOutput);
     exit; // Arrêter l'exécution du script PHP après l'envoi du PDF
-}
 
+   
+}
 ?>
+
+
