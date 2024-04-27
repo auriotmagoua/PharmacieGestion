@@ -1,3 +1,4 @@
+
 <?php
 require_once('assets/vendor/fpdf186/fpdf.php');
 require_once('tet.php');
@@ -15,7 +16,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if(empty( $iduser) ){
         $iduser = $idU;
+    }
 
+    // Préparer la requête SQL pour vérifier les identifiants
+    $requete = $conn->prepare("SELECT * FROM user WHERE idU= ?  AND etat='active'");
+    $requete->bind_param("s", $iduser);
+    $requete->execute();
+    $resultat = $requete->get_result();
+    if ($resultat->num_rows === 1) {
+        // Récupérer la ligne de résultat
+        $row = $resultat->fetch_assoc();
+    
+        // Récupérer l'ID de l'utilisateur
+        $personne = $row['nomU'];
+    
     }
 
     class PDF extends FPDF
@@ -43,39 +57,38 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         // Tableau simple
-        function BasicTable($data)
-        {
-            // Définir les largeurs des colonnes
-            $columnWidths = array(25, 40, 25, 30, 70, 40,40); // Largeurs des colonnes en millimètres
+      // Tableau simple
+      function BasicTable($data)
+      {
+          // Définir les largeurs des colonnes
+          $columnWidths = array(25, 40, 25, 30, 70, 40,40); // Largeurs des colonnes en millimètres
 
-            // Données
-            $this->SetFont('Arial', '', 10);
-            foreach ($data as $row) {
-                for ($i = 0; $i < count($row); $i++) {
-                    $this->Cell($columnWidths[$i], 10, $row[$i], 1, 0, 'C');
-                }
-                $this->Ln();
-            }
-        }
-    }
+          // Données
+          $this->SetFont('Arial', '', 10);
+          foreach ($data as $row) {
+              for ($i = 0; $i < count($row); $i++) {
+                  $this->Cell($columnWidths[$i], 10, $row[$i], 1, 0, 'C');
+              }
+              $this->Ln();
+          }
+      }
+  }
 
-
-    $pdf = new PDF('L'); // 'L' indique l'orientation paysage
-    $pdf->SetFont('Arial', '', 10); // Réduire la taille de la police
+  $pdf = new PDF('L'); // 'L' indique l'orientation paysage
+  $pdf->SetFont('Arial', '', 10); // Réduire la taille de la police
+  
     
     // Titre du tableau en fonction des critères de la requête
     $title = "Ventes";
     if (!empty($date1) && !empty($date2) && !empty($iduser)) {
-        $title = "Ventes entre $date1 et $date2 pas $username";
+        $title = "Ventes entre $date1 et $date2 pas $personne";
     } elseif (!empty($date1) && empty($date2) && !empty($iduser)) {
-        $title = "Ventes de  la date $date1 par $username";
+        $title = "Ventes de  la date $date1 par $personne";
     } elseif (empty($date1) && !empty($date2) && !empty($iduser)) {
-        $title = "Ventes de la date $date2 par $username";
+        $title = "Ventes de la date $date2 par $personne";
     } elseif (empty($date1) && empty($date2) && !empty($iduser)) {
-        $title = "Ventes faite par $username";
-    } elseif (empty($date1) && empty($date2) && empty($iduser)) {
-        $title = "Tous les approvisionnements ";
-    }
+        $title = "Ventes faite par $personne";
+    } 
     
     // Affecter le titre à la variable de classe $title
     $pdf->title = $title;
@@ -86,52 +99,39 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   
 
     // Requête pour récupérer les données de la table produit
-          $sql = "SELECT 
-                    ventes.idVente, 
-                    ventes.dateVente, 
-                    ventes.qteVente, 
-                    ventes.numFact, 
-                    ventes.etat, 
-                    ventes.idU, 
-                    produit.nomProd, 
-                    client.nomClient,
-                    user.nomU
-            FROM 
-                ventes
-            JOIN 
-                produit ON ventes.idProd = produit.idProd
-            JOIN 
-                user ON ventes.idU = user.idU
-            JOIN 
-                client ON ventes.idClient = client.idClient";
+    $sql = "SELECT 
+                ventes.idVente, 
+                ventes.dateVente, 
+                ventes.qteVente, 
+                ventes.numFact, 
+                ventes.etat, 
+                ventes.idU, 
+                produit.nomProd, 
+                client.nomClient,
+                user.nomU
+        FROM 
+            ventes
+        JOIN 
+            produit ON ventes.idProd = produit.idProd
+        JOIN 
+            user ON ventes.idU = user.idU
+        JOIN 
+            client ON ventes.idClient = client.idClient";
 
-            if (empty($date1) && empty($date2) && empty($iduser)) {
-            $sql .= " WHERE ventes.etat = 'active'";
-            } elseif (!empty($date1) && empty($date2) && empty($iduser)) {
-            $sql .= " WHERE ventes.dateVente = '$date1'";
-            } elseif (empty($date1) && !empty($date2) && empty($iduser)) {
-            $sql .= " WHERE ventes.dateVente = '$date2'";
-            } elseif (empty($date1) && empty($date2) && !empty($iduser)) {
-            $sql .= " WHERE ventes.idU = '$iduser'";
-            } elseif (!empty($date1) && !empty($date2) && empty($iduser)) {
-            if ($date2 < $date1) {
+    if (empty($date1) && empty($date2) && !empty($iduser)) {
+        $sql .= " WHERE ventes.idU = '$iduser'";
+    } elseif (!empty($date1) && empty($date2) && !empty($iduser)) {
+        $sql .= " WHERE ventes.dateVente = '$date1' AND ventes.idU = '$iduser'";
+    } elseif (empty($date1) && !empty($date2) && !empty($iduser)) {
+        $sql .= " WHERE ventes.dateVente = '$date2' AND ventes.idU = '$iduser'";
+    } elseif (!empty($date1) && !empty($date2) && !empty($iduser)) {
+        if ($date2 < $date1) {
             $temp = $date1;
             $date1 = $date2;
             $date2 = $temp;
-            }
-            $sql .= " WHERE DATE(ventes.dateVente) BETWEEN '$date1' AND '$date2'";
-            } elseif (!empty($date1) && empty($date2) && !empty($iduser)) {
-            $sql .= " WHERE ventes.dateVente = '$date1' AND ventes.idU = '$iduser'";
-            } elseif (empty($date1) && !empty($date2) && !empty($iduser)) {
-            $sql .= " WHERE ventes.dateVente = '$date2' AND ventes.idU = '$iduser'";
-            } elseif (!empty($date1) && !empty($date2) && !empty($iduser)) {
-            if ($date2 < $date1) {
-            $temp = $date1;
-            $date1 = $date2;
-            $date2 = $temp;
-            }
-            $sql .= " WHERE DATE(ventes.dateVente) BETWEEN '$date1' AND '$date2' AND ventes.idU = '$iduser'";
-         }
+        }
+        $sql .= " WHERE DATE(ventes.dateVente) BETWEEN '$date1' AND '$date2' AND ventes.idU = '$iduser'";
+    }
 
     $result = $conn->query($sql);
 
@@ -159,8 +159,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Envoyer le PDF en réponse à la requête AJAX
     echo base64_encode($pdfOutput);
     exit; // Arrêter l'exécution du script PHP après l'envoi du PDF
-
-   
 }
 ?>
 
