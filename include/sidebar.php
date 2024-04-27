@@ -9,28 +9,17 @@
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#produit-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Produits</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="produit-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="ajoutProd.php">
-              <i class="bi bi-circle"></i><span>ajouter</span>
-            </a>
-          </li>
-          <li>
-            <a href="listProd.php">
-              <i class="bi bi-circle"></i><span>Lister</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End produit Nav -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-register.php">
           <i class="bi bi-card-list"></i>
           <span>Register</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="listProd.php">
+          <i class="bi bi-card-list"></i>
+          <span>Produits</span>
         </a>
       </li><!-- End Register Page Nav -->
 
@@ -79,7 +68,7 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="listeFacture.php">
           <i class="bi bi-file-earmark"></i>
-          <span>Listing Facture</span>
+          <span>Liste des Ventes</span>
         </a>
       </li><!-- End listing des vente ou facture  page Nav -->
 

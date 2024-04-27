@@ -42,10 +42,7 @@ $columns = array(
             return $imageHTML;
         }
     ),
-    array( 'db' => 'numLot',   'dt'           => 3 ),
-    array( 'db' => 'datePerem',   'dt'        => 4 ),
-    array( 'db' => 'qteDispo',   'dt'         => 5 ),
-    array( 'db' => 'prixU',      'dt'         => 6 ),
+    array( 'db' => 'prixU',      'dt'         => 3 ),
   
 
 );
