@@ -24,33 +24,33 @@
      <!-- Lien de non connection -->
      <?php include "tet.php"?>
 
-     <?php include "include/header.php"?>
+
+
+<?php include "include/header.php"?>
+</head>
+
+<body>
 <!-- navbar -->
 <?php include "include/navbar.php"?>
 
 <!-- sidebar -->
 <?php include "include/sidebar.php"?>
-
-
-</head>
-
-<body>
-
 <div class="card">
-    <h2>Liste Medicament Vendu </h2>
+    <h2>X de Caisse</h2>
     <form id="searchForm" method="POST">
         <div class="form-group">
             <label for="dateD">Date debut</label>
-            <input type="date" class="form-control" name="dateD" id="dateD" required>
+            <input type="date" class="form-control" name="dateD" id="dateD" >
         </div>
         <div class="form-group">
             <label for="dateF">Date de fin</label>
-            <input type="date" class="form-control" name="dateF" id="dateF" required>
+            <input type="date" class="form-control" name="dateF" id="dateF" >
         </div>
         <div class="form-group">
-            <label for="etatP">Etat Medica</label><br>
-            <input type="radio" name="etatP" id="etatP" value="active" required>Active
-            <input type="radio" name="etatP" id="etatP" value="Suprimer" required>SUPPRIMER
+            <label for="select-autocomplete">User</label><br>
+            <select class="form-select" id="select-autocomplete2" name="select-autocomplete2">
+             </select>
+            
         </div>
         <button type="submit" class="btn btn-primary" id="submitButton"><i class="fa fa-print"></i> PRINT</button>
     </form>
@@ -62,7 +62,6 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="pdfModalLabel">Fichier PDF</h5>
-                
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -74,12 +73,11 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
    
-    <!-- <script src="assets/vendor/bootstrap.min.js"></script> -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+    <script src="assets/vendor/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="libs/select2/dist/js/select2.min.js"></script>
+<script src="listuser.js"></script>
 <script>
     $(document).ready(function () {
     // Soumettre le formulaire lors du clic sur le bouton PRINT
@@ -92,7 +90,7 @@
         e.preventDefault(); // Empêcher le formulaire de soumettre normalement
         $.ajax({
             type: 'POST',
-            url: 'fpdfvente.php',
+            url: 'fpdfxdecaisse.php',
             data: $(this).serialize(),
             success: function (response) {
                 // Afficher le PDF dans le modal
@@ -107,7 +105,6 @@
         });
     });
 });
-
 
 </script>
 </body>

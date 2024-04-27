@@ -14,43 +14,49 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     class PDF extends FPDF
     {
-        // Tableau simple
-        function BasicTable($title, $header, $data)
+        public $title; // Déclarer la variable $title comme globale
+
+        // Méthode pour l'en-tête
+        function Header()
         {
-            // Encadrer le titre
-            $this->SetFont('Arial', '', 20);
-            $this->Cell(0, 10, $title, 1, 1, 'C');
+            // Titre encadré centré
+            $this->SetFont('Arial', 'B', 12);
+            $this->Cell(0, 10, $this->title, 1, 1, 'C'); // Utilisation de $this->title pour accéder à la variable de classe
+            $this->Ln(10); // Saut de ligne pour éviter que le texte ne chevauche le contenu
+            
+            // En-tête du tableau
+            $header = array('num Approv',  'Qte Approv', 'date Approv', 'prixU', 'Nom Prod','Nom Four');
+            $columnWidths = array(40, 40, 40, 30, 85, 40); // Largeurs des colonnes en millimètres
 
-            // Saut de ligne après le titre
-            $this->Ln();
-
-            // En-tête
-            foreach ($header as $col) {
-                $this->SetFont('Arial', 'B', 15); // Réduire la taille de la police
-
-                $this->Cell(48, 9, $col, 1);
+            // Définir la police et la taille pour l'en-tête du tableau
+            $this->SetFont('Arial', 'B', 12);
+            for ($i = 0; $i < count($header); $i++) {
+                $this->Cell($columnWidths[$i], 10, $header[$i], 1, 0, 'C');
             }
-            $this->Ln();
+            $this->Ln(); // Saut de ligne après l'en-tête du tableau
+        }
+
+        // Tableau simple
+        function BasicTable($data)
+        {
+            // Définir les largeurs des colonnes
+            $columnWidths = array(40, 40, 40, 30, 85, 40); // Largeurs des colonnes en millimètres
 
             // Données
+            $this->SetFont('Arial', '', 10);
             foreach ($data as $row) {
-                foreach ($row as $col) {
-                    // Ajuster la largeur de la cellule pour éviter le chevauchement
-                    $this->SetFont('Arial', '', 10); // Réduire la taille de la police
-                    $this->Cell(48, 9, $col, 1);
+                for ($i = 0; $i < count($row); $i++) {
+                    $this->Cell($columnWidths[$i], 10, $row[$i], 1, 0, 'C');
                 }
                 $this->Ln();
             }
         }
     }
 
+
     $pdf = new PDF('L'); // 'L' indique l'orientation paysage
     $pdf->SetFont('Arial', '', 10); // Réduire la taille de la police
-    $pdf->AddPage();
-
-    // Titres des colonnes
-    $header = array('Id Approv',  'Qte Approv', 'date Approv', 'prixU', 'Nom Prod','Nom Four');
-
+    
     // Titre du tableau en fonction des critères de la requête
     $title = "Approvisionnements";
     if (!empty($date1) && !empty($date2) && !empty($idfour)) {
@@ -70,6 +76,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } elseif (empty($date1) && empty($date2) && empty($idfour)) {
         $title = "Tous les approvisionnements ";
     }
+    
+    // Affecter le titre à la variable de classe $title
+    $pdf->title = $title;
+    
+    // Ajouter la première page au PDF
+    $pdf->AddPage();
+    
+  
 
     // Requête pour récupérer les données de la table produit
     $sql = "SELECT 
@@ -119,8 +133,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $data = array();
     if ($result->num_rows > 0) {
         // Récupérer chaque ligne de données
+        $i=1;
         while ($row = $result->fetch_assoc()) {
-            $data[] = array($row["idAppro"], $row["qteAppro"], $row["dateAppro"], $row["prixU"], $row["nomProd"], $row["nomFournis"]);
+           
+            $data[] = array($i, $row["qteAppro"], $row["dateAppro"], $row["prixU"], $row["nomProd"], $row["nomFournis"]);
+            $i++;
         }
     } else {
         echo "0 results";
@@ -128,7 +145,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $conn->close();
 
-    $pdf->BasicTable($title, $header, $data);
+    $pdf->BasicTable( $data);
 
     // Ne pas envoyer de sortie HTML avant la génération du PDF
     $pdfOutput = $pdf->Output('', 'S'); // Stocker le PDF dans une variable
@@ -136,5 +153,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Envoyer le PDF en réponse à la requête AJAX
     echo base64_encode($pdfOutput);
     exit; // Arrêter l'exécution du script PHP après l'envoi du PDF
+
+   
 }
 ?>
+
+
