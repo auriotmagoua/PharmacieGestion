@@ -98,7 +98,7 @@
                     </div>
                     <div class="card-footer">
                       <div class="col-12 ">
-                        <button class="btn btn-outline-danger" type="reset">reset</button>
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
                         <button class="btn btn-outline-primary" type="submit" id="btn-send">save</button>
                       </div>
                     </div>
@@ -149,7 +149,7 @@
                     <input type="hidden" name="idC1" id="idC1">
                     <div class="card-footer">
                       <div class="col-12 ">
-                        <button class="btn btn-outline-danger" type="reset">reset</button>
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
                         <button class="btn btn-outline-primary" type="submit" id="btn-send">edit</button>
                       </div>
                     </div>
@@ -158,8 +158,6 @@
               </div>
             </div>
           </div>
-          
-
     </section>
 
   </main><!-- End #main -->

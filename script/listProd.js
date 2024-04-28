@@ -59,14 +59,28 @@ $(document).ready(function() {
     const imageInput = document.getElementById('imageProd');
     const imagePreview = document.getElementById('image-preview');
     imageInput.addEventListener('change', function() {
-        const file = this.files[0];
-        const reader = new FileReader();
+      const file = this.files[0];
+      const reader = new FileReader();
 
-        reader.onload = function(e) {
-            imagePreview.src = e.target.result;
-        }
+      reader.onload = function(e) {
+          imagePreview.src = e.target.result;
+      }
 
-        reader.readAsDataURL(file);
+      reader.readAsDataURL(file);
+    });
+
+
+    const imageInput1 = document.getElementById('imageProd1');
+    const imagePreview1 = document.getElementById('image-preview1');
+    imageInput1.addEventListener('change', function() {
+      const file = this.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+          imagePreview1.src = e.target.result;
+      }
+
+      reader.readAsDataURL(file);
     });
 
 
@@ -260,3 +274,10 @@ $(document).ready(function() {
         }
     });
   });
+
+  $('#ajoutProd').on('shown.bs.modal', function() {
+    $('#categorie1').select2();
+});
+// $('#categorie1').select2({
+//   dropdownParent: $('#votreModal')
+// });

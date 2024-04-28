@@ -51,11 +51,11 @@
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+            <img src="assets/img/pharma.jpeg" alt="" width="50">
 
               <div class="d-flex justify-content-center py-4">
                 <a href="index.html" class="logo d-flex align-items-center w-auto">
-                <img src="assets/img/pharma.jpeg" alt="">
-                  <span class="d-none d-lg-block"> Admin</span>
+                  <span class="d-none d-lg-block"> Pharmacie-Ges</span>
                 </a>
               </div><!-- End Logo -->
 

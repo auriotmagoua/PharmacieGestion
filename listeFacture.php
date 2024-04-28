@@ -112,7 +112,6 @@
   </div>
 </div> -->
 <!--end modal to delete -->
- 
 <?php include "include/footer.php";?>   
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
@@ -145,8 +144,10 @@ $(document).ready(function() {
             {"data": "nomClient"},
             {
                 "render": function(data, type, row) {
-                    printButton = '<button class="btn btn-outline-success btn-facture" data-fact-id="' + row.numFact + '">Imprimer</button>';
-                    cancelButton = '<button class="btn btn-outline-danger btn-annuler mx-2" data-annuler-id="' + row.numFact  + '">Annuler</button>';
+ 
+                    printButton = '<button class="btn btn-outline-success btn-facture" data-fact-id="' + row.numFact + '"><i class="bi bi-printer"></i>Imprimer</button>';
+
+                    cancelButton = '<button class="btn btn-outline-danger btn-annuler mx-2" data-annuler-id="' + row.numFact  + '"> <i class="bi bi-circle"></i>Annuler</button>';
                     console.log(cancelButton);
                     return printButton + cancelButton ;
                 }

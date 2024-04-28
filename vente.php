@@ -48,26 +48,25 @@
             </div>
             <div class="card-body">
              <div class="row">
-                 <table class="table table-bordered table-hover" id="invoiceItem">	
-                <tr>
-                  <th width="2%"><input id="checkAll" class="formcontrol" type="checkbox"></th>
-                  <th width="15%">Produit</th>
-                  <th width="15%">Quantite</th>
-                  <th width="15%">Prix Unitaire</th>								
-                  <th width="15%">Total</th>
-                </tr>							
-                <tr>
-                  <td><input class="itemRow" type="checkbox"></td>
-                  <td><select type="text" name="productCode[]"  id="productCode_1" class="form-control selectProduct" autocomplete="off"></select></td>
-                  <td><input type="number" name="quantity[]" id="quantity_1" class="form-control quantity" autocomplete="off"></td>
-                  <td><input type="number" name="price[]" id="price_1" class="form-control price" autocomplete="off" readonly></td>
-                  <td><input type="number" name="total[]" id="total_1" class="form-control total" autocomplete="off" readonly></td>
-                </tr>						
-              </table>
+                <table class="table table-bordered table-hover" id="invoiceItem">	
+                  <tr>
+                    <th width="2%"><input id="checkAll" class="formcontrol" type="checkbox"></th>
+                    <th width="15%">Produit</th>
+                    <th width="15%">Quantite</th>
+                    <th width="15%">Prix Unitaire</th>								
+                    <th width="15%">Total</th>
+                  </tr>							
+                  <tr>
+                    <td><input class="itemRow" type="checkbox"></td>
+                    <td><select type="text" name="productCode[]"  id="productCode_1" class="form-control selectProduct" autocomplete="off"></select></td>
+                    <td><input type="number" name="quantity[]" min="1" id="quantity_1" class="form-control quantity" autocomplete="off"></td>
+                    <td><input type="number" name="price[]" id="price_1"  class="form-control price" autocomplete="off" readonly></td>
+                    <td><input type="number" name="total[]" id="total_1" class="form-control total" autocomplete="off" readonly></td>
+                  </tr>						
+                </table>
              </div>
             </div>
           </div>
-          <div class="row">
           <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
               <button class="btn btn-danger delete" id="removeRows" type="button">- Delete</button>
@@ -184,7 +183,7 @@
         htmlRows += '<td><input class="itemRow" type="checkbox"></td>';          
         
         htmlRows += '<td><select type="text" name="productCode[]"  id="productCode_'+count+'" class="form-control selectProduct" autocomplete="off"></select></td>';          
-        htmlRows += '<td><input type="number" name="quantity[]" id="quantity_'+count+'" class="form-control quantity" autocomplete="off"></td>';   		
+        htmlRows += '<td><input type="number" name="quantity[]" id="quantity_'+count+'" min="1" class="form-control quantity" autocomplete="off"></td>';   		
         htmlRows += '<td><input type="number" name="price[]" id="price_'+count+'" class="form-control price" autocomplete="off" readonly></td>';		 
         htmlRows += '<td><input type="number" name="total[]" id="total_'+count+'" class="form-control total" autocomplete="off" readonly></td>';          
         htmlRows += '</tr>';

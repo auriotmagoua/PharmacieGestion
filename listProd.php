@@ -111,10 +111,10 @@
               </div>
               </div>
               <div class="card-footer">
-                <div class="col-12 ">
+                <div class="col-12 d-flex  justify-content-center align-items-center">
                   <input type="hidden" name="type" value="1">
-                  <button class="btn btn-outline-danger" type="reset">reset</button>
-                  <button class="btn btn-outline-primary" type="submit" id="btn-save">save</button>
+                  <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                  <button class="btn btn-outline-primary mx-2" type="submit" id="btn-save">save</button>
                 </div>  
               </div>
           </form>
@@ -170,9 +170,9 @@
             </div>
             <input type="hidden" name="idProd" id="idProd">
             <div class="card-footer">
-              <div class="col-12 ">
-                <button class="btn btn-outline-danger" type="reset">cancel</button>
-                <button class="btn btn-outline-primary" type="submit" id="btn-send">save</button>
+              <div class="col-12 d-flex justify-content-center align-items-center">
+                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                <button class="btn btn-outline-primary mx-2" type="submit" id="btn-send">save</button>
               </div>
             </div>
           </form>
