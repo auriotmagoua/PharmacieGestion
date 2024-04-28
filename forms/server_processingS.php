@@ -19,21 +19,48 @@
  */
  
 // DB table to use
-$table = 'fournisseur';
+$table = 'produit';
+// $table = 'ventes';
  
 // Table's primary key
-$primaryKey = 'idFournis';
+$primaryKey = 'idProd';
+// $primaryKey = 'idVente';
  
 // Array of database columns which should be read and sent back to DataTables.
 // The `db` parameter represents the column name in the database, while the `dt`
 // parameter represents the DataTables column identifier. In this case simple
+
+$mysqli = new mysqli('localhost', 'root', 'Pa$$w0rd', 'pharmacie');
+// Vérifier la connexion
+if ($mysqli->connect_errno) {
+    echo "Erreur de connexion à la base de données : " . $mysqli->connect_error;
+    // Gérer l'erreur de connexion selon vos besoins
+    exit();
+}
+
+$requete = "SELECT IFNULL(SUM(ventes.qteVente), 0) AS somme_des_qtes_vendu
+            FROM produit 
+            LEFT JOIN ventes ON produit.idProd = ventes.idProd 
+            GROUP BY produit.idProd";
+
+$resultat = $mysqli->query($requete);
+
+if (!$resultat) {
+    echo "Erreur lors de l'exécution de la requête : " . $mysqli->error;
+    // Gérer l'erreur d'exécution de la requête selon vos besoins
+    exit();
+}
+
+$row = $resultat->fetch_assoc();
+$somme_des_qtes_vendu = $row['somme_des_qtes_vendu'];
 // indexes
 $columns = array(
-    array( 'db' => 'idFournis',      'dt' => 0 ),
-    array( 'db' => 'nomFournis',     'dt' => 1 ),
-    array( 'db' => 'villeFournis',   'dt' => 2 ),
-    array( 'db' => 'emailFournis',   'dt' => 3 ),
-    array( 'db' => 'telephoneFournis',     'dt' => 4 ),
+    // array( 'db' => 'idClient',      'dt' => 0 ),
+    array( 'db' => 'nomProd', 'dt' => 0 ), // Colonne pour le nom du produit
+    // array( 'db' => 'somme_des_qtes_vendu', 'dt' => 1 )
+    
+    // array( 'db' => 'emailClient',   'dt' => 2 ),
+    // array( 'db' => 'telephoneClient',     'dt' => 3 ),
     // array(
     //     'db'        => 'image',
     //     'dt'        => 3,
@@ -63,6 +90,9 @@ $columns = array(
     //     }
     // )
 );
+
+$resultat->free(); // Libérer les résultats de la requête
+$mysqli->close(); // Fermer la connexion à la base de données
  
 // SQL server connection information
 $sql_details = array(
@@ -81,10 +111,34 @@ $sql_details = array(
  
 require( 'ssp.class.php' );
  
+// // Créez une connexion à la base de données
+// $mysqli = new mysqli("localhost", "root", 'Pa$$w0rd', "pharmacie");
+
+// // Définition de la requête pour obtenir la somme des quantités vendues par produit
+// $requete = "SELECT COALESCE(SUM(ventes.qteVente), 0)
+//     FROM produit
+//     LEFT JOIN ventes ON produit.idProd = ventes.idProd
+//     GROUP BY produit.idProd";
+
+// // Exécution de la requête SQL
+// $result = $mysqli->query($requete);
+
+// // Vérification des erreurs d'exécution
+// if (!$result) {
+//     die("Erreur d'exécution de la requête: " . $mysqli->error);
+// }
+
+// // Extraction de la première ligne du résultat
+// $row = $result->fetch_assoc();
+
+// // Affichage pour le débogage
+// var_dump($row);
+
 // Ajoutez votre condition WHERE pour filtrer les lignes où l'état est 'active'
 $whereClause = "etat = 'active'";
 
 echo json_encode(
     SSP::complex( $_GET, $sql_details, $table, $primaryKey, $columns, $whereClause)
 );
+
 

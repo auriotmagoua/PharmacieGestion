@@ -15,7 +15,10 @@
 <?php include "include/sidebar.php"?>
 
 
-
+<?php
+    include 'connexiondb.php';
+    $conn = connexionMysqli();
+  ?>
 
 <!-- contain page -->
   <main id="main" class="main">
@@ -34,11 +37,11 @@
       <div class="row">
 
         <!-- Left side columns -->
-        <div class="col-lg-8">
+        <div class="col-lg-12">
           <div class="row">
 
             <!-- Sales Card -->
-            <div class="col-xxl-4 col-md-6">
+            <div class="col-xxl-3 col-md-6">
               <div class="card info-card sales-card">
 
                 <!-- <div class="filter">
@@ -62,8 +65,8 @@
                       <i class="bi bi-cart"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>145</h6>
-                      <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                      <h6><?php $sql = "SELECT COUNT(*) AS total_ventes FROM ventes"; $result = $conn->query($sql); if ($result) { $row = $result->fetch_assoc(); $totalClients = $row['total_ventes']; echo $totalClients; $result->free(); } ?></h6>
+                      <!-- <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span> -->
 
                     </div>
                   </div>
@@ -73,7 +76,7 @@
             </div><!-- End Sales Card -->
 
             <!-- Revenue Card -->
-            <div class="col-xxl-4 col-md-6">
+            <div class="col-xxl-3 col-md-6">
               <div class="card info-card revenue-card">
                 <div class="card-body">
                   <h5 class="card-title">Approv </h5>
@@ -83,8 +86,7 @@
                       <i class="bi bi-currency-dollar"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>$3,264</h6>
-                      <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                      <h6><?php $sql = "SELECT COUNT(*) AS total_approv FROM approvisionnement"; $result = $conn->query($sql); if ($result) { $row = $result->fetch_assoc(); $totalClients = $row['total_approv']; echo $totalClients; $result->free(); } ?></h6>
 
                     </div>
                   </div>
@@ -93,9 +95,8 @@
               </div>
             </div><!-- End Revenue Card -->
 
-            <!-- Customers Card -->
-            <div class="col-xxl-4 col-xl-12">
-
+            <!-- Revenue Card -->
+            <div class="col-xxl-3 col-md-6">
               <div class="card info-card customers-card">
                 <div class="card-body">
                   <h5 class="card-title">Clients </h5>
@@ -105,79 +106,52 @@
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>1244</h6>
-                      <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>
+                      <h6><?php $sql = "SELECT COUNT(*) AS total_clients FROM client"; $result = $conn->query($sql); if ($result) { $row = $result->fetch_assoc(); $totalClients = $row['total_clients']; echo $totalClients; $result->free(); } ?></h6>
 
                     </div>
                   </div>
 
                 </div>
               </div>
+            </div><!-- End Revenue Card -->
 
-            </div><!-- End Customers Card -->
+            <!-- Revenue Card -->
+            <div class="col-xxl-3 col-md-6">
+              <div class="card info-card customers-card">
+                <div class="card-body">
+                  <h5 class="card-title">Fournisseurs</h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-people"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6><?php $sql = "SELECT COUNT(*) AS total_fournisseur FROM fournisseur"; $result = $conn->query($sql); if ($result) { $row = $result->fetch_assoc(); $totalClients = $row['total_fournisseur']; echo $totalClients; $result->free(); } ?></h6>
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div><!-- End Revenue Card -->
 
             <!-- Reports -->
             <!-- <div class="col-4"> -->
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title">Reports <span>/Today</span></h5>
+                  <h5 class="card-title">Quantité des produits</h5>
 
-                  <!-- Line Chart -->
-                  <div id="reportsChart"></div>
+                  <table id="example" class="display nowrap" style="width:100%">
+                    <thead>
+                        <tr>  
+                            <th>Nom du produit</th>
+                            <th>Quantité Approvisionnée</th>
+                            <th>Quantité vendue</th>
+                            <th>Quantité en stock</th>
+                        </tr>
+                    </thead>
+                </table>
 
-                  <script>
-                    document.addEventListener("DOMContentLoaded", () => {
-                      new ApexCharts(document.querySelector("#reportsChart"), {
-                        series: [{
-                          name: 'Sales',
-                          data: [31, 40, 28, 51, 42, 82, 56],
-                        }, {
-                          name: 'Revenue',
-                          data: [11, 32, 45, 32, 34, 52, 41]
-                        }, {
-                          name: 'Customers',
-                          data: [15, 11, 32, 18, 9, 24, 11]
-                        }],
-                        chart: {
-                          height: 350,
-                          type: 'area',
-                          toolbar: {
-                            show: true
-                          },
-                        },
-                        markers: {
-                          size: 4
-                        },
-                        colors: ['#4154f1', '#2eca6a', '#ff771d'],
-                        fill: {
-                          type: "gradient",
-                          gradient: {
-                            shadeIntensity: 1,
-                            opacityFrom: 0.3,
-                            opacityTo: 0.4,
-                            stops: [0, 90, 100]
-                          }
-                        },
-                        dataLabels: {
-                          enabled: false
-                        },
-                        stroke: {
-                          curve: 'smooth',
-                          width: 2
-                        },
-                        xaxis: {
-                          type: 'datetime',
-                          categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
-                        },
-                        tooltip: {
-                          x: {
-                            format: 'dd/MM/yy HH:mm'
-                          },
-                        }
-                      }).render();
-                    });
-                  </script>
-                  <!-- End Line Chart -->
                 </div>
               </div>
             <!-- </div> -->
@@ -185,37 +159,40 @@
           </div>
         </div><!-- End Left side columns -->
 
-        <!-- Right side columns -->
-        <div class="col-4">
-          <div class="card info-card customers-card">
-            <div class="card-body">
-              <h5 class="card-title">Fournisseurs</h5>
-
-              <div class="d-flex align-items-center">
-                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                  <i class="bi bi-people"></i>
-                </div>
-                <div class="ps-3">
-                  <h6>1255</h6>
-                  <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>
-
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div><!-- End Right side columns -->
+        
       </div>
     </section>
 
   </main><!-- End #main -->
-  
+  <?php
+    // require_once '../connexiondb.php'; 
+    // $conn = connexionMsqli();
+    
+    // $sql = "SELECT IFNULL(SUM(ventes.qteVente), 0), produit.nomProd
+    //         FROM produit 
+    //         LEFT JOIN ventes ON produit.idProd = ventes.idProd 
+    //         GROUP BY produit.idProd";
+
+    // $result = $conn->query($sql);
+    // while ($row = $result->fetch_assoc()) {
+    //     echo "
+    //         <tr>
+    //         <td>".$row['idProd']."</td>
+    //         <td>".$row['codeProd']."</td>
+            
+    //         </tr>
+    //     ";
+    // }
+    
+    // $conn->close();
+  ?>
   <!-- ======= Footer ======= -->
   <?php require "include/footer.php"?>
   
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
+  <!-- <script src="script/index.js"></script> -->
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/chart.js/chart.umd.js"></script>
@@ -227,7 +204,49 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  
 
+  <script>
+    $(document).ready(function() {
+        let data = [];
+        <?php
+        // include 'connexiondb.php';
+        // $conn = connexionMysqli();
+
+        $sql = "SELECT produit.nomProd, IFNULL(SUM(approvisionnement.qteAppro), 0) AS sum_qteAppro, IFNULL(SUM(ventes.qteVente), 0) AS sum_qteVente
+        FROM produit
+        LEFT JOIN approvisionnement ON produit.idProd = approvisionnement.idProd AND approvisionnement.etat = 'active'
+        LEFT JOIN ventes ON produit.idProd = ventes.idProd AND ventes.etat = 'active'
+        GROUP BY produit.idProd";
+
+        $result = $conn->query($sql);
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                $nomProd = $row['nomProd'];
+                $sum_qteAppro = $row['sum_qteAppro'];
+                $sum_qteVente = $row['sum_qteVente'];
+                $qte_stock = $sum_qteAppro - $sum_qteVente;
+                echo "data.push(['$nomProd', $sum_qteAppro, $sum_qteVente, $qte_stock]);";
+            }
+            $result->free();
+        } else {
+            echo "Erreur lors de l'exécution de la requête : " . $conn->error;
+        }
+        ?>
+        new DataTable('#example', {
+            data: data,
+            columns: [
+                { title: 'Nom du produit' },
+                { title: 'Quantité Approvisionnée' },
+                { title: 'Quantité vendue' },
+                { title: 'Quantité en stock' }
+            ],
+            scrollCollapse: true,
+            scroller: true,
+            scrollY: 200
+        });
+    });
+</script>
 </body>
 
 </html>

@@ -1,5 +1,5 @@
 <?php
-include "tet.php";
+include "../tet.php";
 // Vérification si le formulaire est soumis
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Récupérer les données du formulaire
