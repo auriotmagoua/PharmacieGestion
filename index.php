@@ -62,7 +62,7 @@
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-cart"></i>
+                      <i class="bi bi-cart-dash"></i>
                     </div>
                     <div class="ps-3">
                       <h6><?php $sql = "SELECT COUNT(*) AS total_ventes FROM ventes"; $result = $conn->query($sql); if ($result) { $row = $result->fetch_assoc(); $totalClients = $row['total_ventes']; echo $totalClients; $result->free(); } ?></h6>
@@ -79,11 +79,11 @@
             <div class="col-xxl-3 col-md-6">
               <div class="card info-card revenue-card">
                 <div class="card-body">
-                  <h5 class="card-title">Approv </h5>
+                  <h5 class="card-title">Approv</h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-currency-dollar"></i>
+                      <i class="bi bi-cart-plus"></i>
                     </div>
                     <div class="ps-3">
                       <h6><?php $sql = "SELECT COUNT(*) AS total_approv FROM approvisionnement"; $result = $conn->query($sql); if ($result) { $row = $result->fetch_assoc(); $totalClients = $row['total_approv']; echo $totalClients; $result->free(); } ?></h6>
