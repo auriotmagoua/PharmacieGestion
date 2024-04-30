@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $numFact = $_POST['numFact'];
     $etat='supprimer';
         // Préparer la requête de modification
-    $sql = "UPDATE ventes SET idAnnuler=?, etat=? WHERE numFact=?";
+    $sql = "UPDATE ventes SET idAnnuler=?, etat=?, dateAnnuler=NOW() WHERE numFact=?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("iss", $idU,$etat,$numFact); // Ajouter $idProd à la fin des paramètres
         if ($stmt->execute()) {

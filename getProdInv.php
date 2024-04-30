@@ -5,7 +5,7 @@ $conn = connexionMysqli();
 // $term = $_GET['term'];
 
 // Requête SQL pour récupérer les données correspondantes
-$sql = "SELECT idProd,nomProd,prixU FROM produit  LIMIT 10";
+$sql = "SELECT idProd,nomProd,prixU FROM produit";
 $result = $conn->query($sql);
 
 // Construction du tableau de résultats

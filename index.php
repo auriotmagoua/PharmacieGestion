@@ -18,6 +18,7 @@
 <?php
     include 'connexiondb.php';
     $conn = connexionMysqli();
+    include 'stock.php';
   ?>
 
 <!-- contain page -->
@@ -135,14 +136,8 @@
               </div>
             </div><!-- End Revenue Card -->
 
-            <div class="card">
-                <div class="card-body" >
-                  <h5 class="card-title">Statistiques des medicaments vendus par mois</h5>
-                  <canvas id="barChart" style="max-height: 400px;"></canvas>
-                </div>
-              </div>
-
             <!-- Reports -->
+           
             <!-- <div class="col-4"> -->
               <div class="card">
                 <div class="card-body">
@@ -161,8 +156,12 @@
 
                 </div>
               </div>
-            <!-- </div> -->
-            <!-- End Reports -->
+              <div class="card">
+                <div class="card-body" >
+                  <h5 class="card-title">Statistiques des medicaments vendus par mois</h5>
+                  <canvas id="barChart" style="max-height: 400px;"></canvas>
+                </div>
+              </div>
           </div>
         </div><!-- End Left side columns -->
 
@@ -171,28 +170,6 @@
     </section>
 
   </main><!-- End #main -->
-  <?php
-    // require_once '../connexiondb.php'; 
-    // $conn = connexionMsqli();
-    
-    // $sql = "SELECT IFNULL(SUM(ventes.qteVente), 0), produit.nomProd
-    //         FROM produit 
-    //         LEFT JOIN ventes ON produit.idProd = ventes.idProd 
-    //         GROUP BY produit.idProd";
-
-    // $result = $conn->query($sql);
-    // while ($row = $result->fetch_assoc()) {
-    //     echo "
-    //         <tr>
-    //         <td>".$row['idProd']."</td>
-    //         <td>".$row['codeProd']."</td>
-            
-    //         </tr>
-    //     ";
-    // }
-    
-    // $conn->close();
-  ?>
   <!-- ======= Footer ======= -->
   <?php require "include/footer.php"?>
   
@@ -215,25 +192,22 @@
 
   <script>
     $(document).ready(function() {
-        let data = [];
+        let tab = [];
         <?php
-        // include 'connexiondb.php';
+        // include 'connexiondb.php';x  
         // $conn = connexionMysqli();
+        $sql = "SELECT * from produit where etat='active' order by nomProd";
 
-        $sql = "SELECT produit.nomProd, IFNULL(SUM(approvisionnement.qteAppro), 0) AS sum_qteAppro, IFNULL(SUM(ventes.qteVente), 0) AS sum_qteVente
-        FROM produit
-        LEFT JOIN approvisionnement ON produit.idProd = approvisionnement.idProd AND approvisionnement.etat = 'active'
-        LEFT JOIN ventes ON produit.idProd = ventes.idProd AND ventes.etat = 'active'
-        GROUP BY produit.idProd";
 
         $result = $conn->query($sql);
         if ($result) {
+          $sum_qteVente = $sum_qteAppro = $qte_stock = 0;
             while ($row = $result->fetch_assoc()) {
                 $nomProd = $row['nomProd'];
-                $sum_qteAppro = $row['sum_qteAppro'];
-                $sum_qteVente = $row['sum_qteVente'];
-                $qte_stock = $sum_qteAppro - $sum_qteVente;
-                echo "data.push(['$nomProd', $sum_qteAppro, $sum_qteVente, $qte_stock]);";
+                $sum_qteAppro = getApprovisionnement($row['idProd']);
+                $sum_qteVente = getVente($row['idProd']);
+                $qte_stock = getstock($row['idProd']);
+                echo "tab.push(['$nomProd', $sum_qteAppro, $sum_qteVente, $qte_stock]);";
             }
             $result->free();
         } else {
@@ -241,7 +215,7 @@
         }
         ?>
         new DataTable('#example', {
-            data: data,
+            data: tab,
             columns: [
                 { title: 'Nom du produit' },
                 { title: 'Quantité Approvisionnée' },
