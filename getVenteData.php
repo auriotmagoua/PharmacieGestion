@@ -24,7 +24,7 @@ $sql = "SELECT
         GROUP BY 
             ventes.numFact
         ORDER BY 
-            MAX(ventes.idVente) DESC";
+            MAX(ventes.dateVente) ASC";
 
 $result = $conn->query($sql);
 

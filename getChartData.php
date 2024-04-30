@@ -2,7 +2,7 @@
 require_once 'connexiondb.php';
 $conn = connexionMysqli();
 
-$sql = "SELECT MONTH(dateVente) AS mois, COUNT(idVente) AS countVentes FROM ventes GROUP BY mois ORDER BY mois";
+$sql = "SELECT MONTH(dateVente) AS mois, COUNT(idVente) AS countVentes FROM ventes WHERE etat='active' GROUP BY mois ORDER BY mois";
 
 // Exécuter la requête SQL
 $result = $conn->query($sql);
