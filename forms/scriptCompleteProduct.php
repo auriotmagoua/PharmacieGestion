@@ -8,7 +8,7 @@ $conn = connexionMysqli();
 $searchTerm = $_GET['search'];
 
 // Requête SQL pour rechercher les produits correspondants dans la table "produit"
-$sql = "SELECT * FROM produit WHERE nomProd LIKE '%$searchTerm%' LIMIT 10";
+$sql = "SELECT * FROM produit WHERE nomProd LIKE '%$searchTerm%'";
 $result = $conn->query($sql);
 
 // Construction du tableau des résultats

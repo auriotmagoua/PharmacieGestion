@@ -99,9 +99,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $montantHT = 0;
         // Données du tableau
         foreach ($data as $row) {
-            $this->Cell($w[0],7,utf8_decode($row[5]), 0,0,'L');
-            $this->Cell($w[1],7,utf8_decode($row[3]), 0,0,'R');
-            $this->Cell($w[2],7,utf8_decode($row[2]), 0,0,'R');
+            $texte = utf8_decode($row[5]);
+            $longueurMax = 15; // Longueur maximale du texte à afficher
+
+            if (strlen($texte) > $longueurMax) {
+                // Si le texte dépasse la longueur maximale, le raccourcir
+                $texte = substr($texte, 0, $longueurMax) . '...';
+            }
+
+            $this->Cell($w[0], 7, $texte, 0, 0, 'L');
+            $this->Cell($w[1],7,utf8_decode($row[2]), 0,0,'R');
+            $this->Cell($w[2],7,utf8_decode($row[3]), 0,0,'R');
             $montant = $row[3] * $row[2];
             $this->Cell($w[3], 7, utf8_decode($montant), 0, 0, 'R');
             $montantHT += $montant;

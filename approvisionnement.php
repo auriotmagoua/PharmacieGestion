@@ -70,7 +70,7 @@
                                         <td><select type="text" name="productName[]" id="productName_1" class="form-control" autocomplete="off"></select></td>
                                         <td><input type="number" name="quantity[]" id="quantity_1" class="form-control quantity" autocomplete="off"></td>
                                         <td><input type="number" name="price[]" id="price_1" class="form-control price" autocomplete="off"></td>
-                                        <td><input type="number" name="total[]" id="total_1" class="form-control total" autocomplete="off"></td>
+                                        <td><input type="number" name="total[]" id="total_1" class="form-control total" autocomplete="off" readonly></td>
                                     </tr>						
                                 </table>
                             </div>
@@ -92,7 +92,7 @@
                                         <label>Somme total: &nbsp;</label>
                                         <div class="input-group">
                                             <div class="input-group-text">$</div>
-                                            <input value="" type="number" class="form-control" name="subTotal" id="subTotal" placeholder="Somme total">
+                                            <input value="" type="number" class="form-control" name="subTotal" id="subTotal" placeholder="Somme total" readonly>
                                         </div>
                                     </div>
                                     <br><br>
@@ -139,6 +139,14 @@
                     });
                 },
                 minLength: 1 
+                // select: function(event, ui) {
+                //     // Récupérer l'identifiant du fournisseur sélectionné
+                //     var supplierId = ui.item.value;
+                //     // Stocker l'identifiant dans l'attribut value de l'input
+                //     $("#supplierName").val(supplierId).attr("value", supplierId);
+                //     console.log(supplierId);
+                //     return false; // Empêcher la valeur sélectionnée de s'afficher dans l'autocomplete
+                // }
             });
             
             $("#productName_1").select2({

@@ -18,6 +18,7 @@
 <?php
     include 'connexiondb.php';
     $conn = connexionMysqli();
+    include 'stock.php';
   ?>
 
 <!-- contain page -->
@@ -65,7 +66,7 @@
                       <i class="bi bi-cart-dash"></i>
                     </div>
                     <div class="ps-3">
-                      <h6><?php $sql = "SELECT COUNT(*) AS total_ventes FROM ventes"; $result = $conn->query($sql); if ($result) { $row = $result->fetch_assoc(); $totalClients = $row['total_ventes']; echo $totalClients; $result->free(); } ?></h6>
+                      <h6><span id="countVentes"></span></h6>
                       <!-- <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span> -->
 
                     </div>
@@ -211,8 +212,27 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-  
+<!-- Assurez-vous d'inclure jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script>
+    $(document).ready(function() {
+      $.ajax({
+        method: "get",
+        url: "getStat.php",
+        dataType: "json",
+        success: function(response) {
+          $('#countVentes').text(response.countVentes);
+          $('#countAppro').text(response.countAppro);
+          $('#countClients').text(response.countClients);
+          $('#countFournisseurs').text(response.countFournisseurs);
+        },
+        error: function() {
+          // Gérez les erreurs ici
+        }
+      });
+    });
+</script>
   <script>
     $(document).ready(function() {
         let data = [];
@@ -220,19 +240,15 @@
         // include 'connexiondb.php';
         // $conn = connexionMysqli();
 
-        $sql = "SELECT produit.nomProd, IFNULL(SUM(approvisionnement.qteAppro), 0) AS sum_qteAppro, IFNULL(SUM(ventes.qteVente), 0) AS sum_qteVente
-        FROM produit
-        LEFT JOIN approvisionnement ON produit.idProd = approvisionnement.idProd AND approvisionnement.etat = 'active'
-        LEFT JOIN ventes ON produit.idProd = ventes.idProd AND ventes.etat = 'active'
-        GROUP BY produit.idProd";
+        $sql = "SELECT * FROM produit";
 
         $result = $conn->query($sql);
         if ($result) {
             while ($row = $result->fetch_assoc()) {
                 $nomProd = $row['nomProd'];
-                $sum_qteAppro = $row['sum_qteAppro'];
-                $sum_qteVente = $row['sum_qteVente'];
-                $qte_stock = $sum_qteAppro - $sum_qteVente;
+                $sum_qteAppro = getApprovisionnemement($row['idProd']);
+                $sum_qteVente = getVente($row['idProd']);
+                $qte_stock = getStock($row['idProd']);
                 echo "data.push(['$nomProd', $sum_qteAppro, $sum_qteVente, $qte_stock]);";
             }
             $result->free();
@@ -309,6 +325,7 @@
   });
 });
 </script>
+
 </body>
 
 </html>

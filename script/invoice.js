@@ -19,7 +19,7 @@ $(document).ready(function(){
 		htmlRows += '<td><select type="text" name="productName[]" id="productName_'+count+'" class="form-control" autocomplete="off"></select></td>';	
 		htmlRows += '<td><input type="number" name="quantity[]" id="quantity_'+count+'" class="form-control quantity" autocomplete="off"></td>';   		
 		htmlRows += '<td><input type="number" name="price[]" id="price_'+count+'" class="form-control price" autocomplete="off"></td>';		 
-		htmlRows += '<td><input type="number" name="total[]" id="total_'+count+'" class="form-control total" autocomplete="off"></td>';          
+		htmlRows += '<td><input type="number" name="total[]" id="total_'+count+'" class="form-control total" autocomplete="off" readonly></td>';          
 		htmlRows += '</tr>';
 		$('#invoiceItem').append(htmlRows);
 
@@ -72,10 +72,10 @@ $(document).ready(function(){
 		$('#checkAll').prop('checked', false);
 		calculateTotal();
 	});		
-	$(document).on('blur', "[id^=quantity_]", function(){
+	$(document).on('input', "[id^=quantity_]", function(){
 		calculateTotal();
 	});	
-	$(document).on('blur', "[id^=price_]", function(){
+	$(document).on('input', "[id^=price_]", function(){
 		calculateTotal();
 	});	
 	$(document).on('click', '.deleteInvoice', function(){

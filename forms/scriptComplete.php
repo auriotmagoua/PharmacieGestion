@@ -10,7 +10,7 @@ if (isset($_GET['term'])) {
     $suggestions = array();
 
     // Requête SQL pour rechercher les correspondances dans la table produit
-    $sql = "SELECT nomFournis FROM fournisseur WHERE nomFournis LIKE '%$term%' LIMIT 10";
+    $sql = "SELECT nomFournis FROM fournisseur WHERE nomFournis LIKE '%$term%'";
     $result = $conn->query($sql);
 
     // Parcourir les résultats et ajouter les suggestions
