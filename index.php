@@ -21,7 +21,7 @@
       <h1>Dashboard</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="index.php">Home</a></li>
           <li class="breadcrumb-item active">Dashboard</li>
         </ol>
       </nav>
@@ -168,48 +168,9 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <!-- le js pour les statistiques  -->
-  <script src="js/index.js"></script>
+  <!-- <script src="js/index.js"></script> -->
 
-  <script>
-    $(document).ready(function() {
-        let tab = [];
-        <?php
-        include 'connexiondb.php';
-        $conn = connexionMysqli();
-        include 'stock.php';
-        $sql = "SELECT * from produit where etat='active' order by nomProd";
 
-        $sql = "SELECT * FROM produit";
-
-        $result = $conn->query($sql);
-        if ($result) {
-          $sum_qteVente = $sum_qteAppro = $qte_stock = 0;
-            while ($row = $result->fetch_assoc()) {
-                $nomProd = $row['nomProd'];
-                $sum_qteAppro = getApprovisionnement($row['idProd']);
-                $sum_qteVente = getVente($row['idProd']);
-                $qte_stock = getstock($row['idProd']);
-                echo "tab.push(['$nomProd', $sum_qteAppro, $sum_qteVente, $qte_stock]);";
-            }
-            $result->free();
-        } else {
-            echo "Erreur lors de l'exécution de la requête : " . $conn->error;
-        }
-        ?>
-        new DataTable('#example', {
-            data: tab,
-            columns: [
-                { title: 'Nom du produit' },
-                { title: 'Quantité Approvisionnée' },
-                { title: 'Quantité vendue' },
-                { title: 'Quantité en stock' }
-            ],
-            scrollCollapse: true,
-            scroller: true,
-            scrollY: 200
-        });
-    });
-</script>
 
 </body>
 

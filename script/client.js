@@ -1,14 +1,11 @@
 $(document).ready(function() {
 
     // datatable sever-side
-    var table = $('#example').DataTable({
+    new DataTable('#example', {
         ajax: 'forms/server_processing.php',
         processing: true,
         serverSide: true,
-        language: {
-            search: ' ',
-            searchPlaceholder: 'Rechercher un client',
-        },
+
         columnDefs: [{
             targets: -1, // Dernière colonne (colonne "Action")
             render: function(data, type, row, meta) {

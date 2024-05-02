@@ -2,13 +2,9 @@
 
 require_once('ssp.class.php');
 
-// Paramètres de connexion à la base de données
-$sql_details = array(
-    'user' => 'root',
-    'pass' => 'Pa$$w0rd',
-    'db'   => 'pharmacie',
-    'host' => 'localhost'
-);
+// SQL server connection information
+include "../connect_server_P.php";
+
 
 // Fonction pour récupérer la quantité d'approvisionnement d'un produit
 function getApprovisionnement($idProd) {
