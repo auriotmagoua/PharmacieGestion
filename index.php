@@ -14,14 +14,6 @@
 <!-- sidebar -->
 <?php include "include/sidebar.php"?>
 
-
-<?php
-    include 'connexiondb.php';
-    $conn = connexionMysqli();
-    include 'stock.php';
-    include 'stock.php';
-  ?>
-
 <!-- contain page -->
   <main id="main" class="main">
 
@@ -45,20 +37,6 @@
             <!-- Sales Card -->
             <div class="col-xxl-3 col-md-6">
               <div class="card info-card sales-card">
-
-                <!-- <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div> -->
-
                 <div class="card-body">
                   <h5 class="card-title">Ventes</h5>
 
@@ -67,7 +45,7 @@
                       <i class="bi bi-cart-dash"></i>
                     </div>
                     <div class="ps-3">
-                      <h6><span id="countVentes"></span></h6>
+                      <h6 id="countVentes"></h6>
                       <!-- <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span> -->
 
                     </div>
@@ -88,8 +66,7 @@
                       <i class="bi bi-cart-plus"></i>
                     </div>
                     <div class="ps-3">
-                      <h6><?php $sql = "SELECT COUNT(*) AS total_approv FROM approvisionnement"; $result = $conn->query($sql); if ($result) { $row = $result->fetch_assoc(); $totalClients = $row['total_approv']; echo $totalClients; $result->free(); } ?></h6>
-
+                      <h6 id="countAppro"></h6>
                     </div>
                   </div>
                 </div>
@@ -108,8 +85,7 @@
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6><?php $sql = "SELECT COUNT(*) AS total_clients FROM client"; $result = $conn->query($sql); if ($result) { $row = $result->fetch_assoc(); $totalClients = $row['total_clients']; echo $totalClients; $result->free(); } ?></h6>
-
+                      <h6 id="countClients"></h6>
                     </div>
                   </div>
 
@@ -128,8 +104,7 @@
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6><?php $sql = "SELECT COUNT(*) AS total_fournisseur FROM fournisseur"; $result = $conn->query($sql); if ($result) { $row = $result->fetch_assoc(); $totalClients = $row['total_fournisseur']; echo $totalClients; $result->free(); } ?></h6>
-
+                      <h6 id="countFournisseurs"></h6>
                     </div>
                   </div>
 
@@ -189,33 +164,19 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-<!-- Assurez-vous d'inclure jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Assurez-vous d'inclure jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
-    $(document).ready(function() {
-      $.ajax({
-        method: "get",
-        url: "getStat.php",
-        dataType: "json",
-        success: function(response) {
-          $('#countVentes').text(response.countVentes);
-          $('#countAppro').text(response.countAppro);
-          $('#countClients').text(response.countClients);
-          $('#countFournisseurs').text(response.countFournisseurs);
-        },
-        error: function() {
-          // Gérez les erreurs ici
-        }
-      });
-    });
-</script>
+  <!-- le js pour les statistiques  -->
+  <script src="js/index.js"></script>
+
   <script>
     $(document).ready(function() {
         let tab = [];
         <?php
-        // include 'connexiondb.php';x  
-        // $conn = connexionMysqli();
+        include 'connexiondb.php';
+        $conn = connexionMysqli();
+        include 'stock.php';
         $sql = "SELECT * from produit where etat='active' order by nomProd";
 
         $sql = "SELECT * FROM produit";
@@ -225,10 +186,6 @@
           $sum_qteVente = $sum_qteAppro = $qte_stock = 0;
             while ($row = $result->fetch_assoc()) {
                 $nomProd = $row['nomProd'];
-                $sum_qteAppro = getApprovisionnemement($row['idProd']);
-                $sum_qteVente = getVente($row['idProd']);
-                $qte_stock = getStock($row['idProd']);
-                echo "data.push(['$nomProd', $sum_qteAppro, $sum_qteVente, $qte_stock]);";
                 $sum_qteAppro = getApprovisionnement($row['idProd']);
                 $sum_qteVente = getVente($row['idProd']);
                 $qte_stock = getstock($row['idProd']);
@@ -252,61 +209,6 @@
             scrollY: 200
         });
     });
-
-  document.addEventListener("DOMContentLoaded", () => {
-  // Effectuer une requête AJAX pour obtenir les données de la base de données
-  $.ajax({
-    method: "GET",
-    url: "getChartData.php", // Remplacez par le chemin vers votre script PHP pour récupérer les données
-    dataType: "json",
-    success: function(response) {
-      // Récupérer les données de la réponse JSON
-      const labels = response.labels;
-      const data = response.data;
-
-      // Créer le graphique à barres avec les données
-      new Chart(document.querySelector('#barChart'), {
-        type: 'bar',
-        data: {
-          labels: labels,
-          datasets: [{
-            label: 'Bar Chart',
-            data: data,
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(255, 159, 64, 0.2)',
-              'rgba(255, 205, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(201, 203, 207, 0.2)'
-            ],
-            borderColor: [
-              'rgb(255, 99, 132)',
-              'rgb(255, 159, 64)',
-              'rgb(255, 205, 86)',
-              'rgb(75, 192, 192)',
-              'rgb(54, 162, 235)',
-              'rgb(153, 102, 255)',
-              'rgb(201, 203, 207)'
-            ],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          }
-        }
-      });
-    },
-    error: function() {
-      // Gérer les erreurs de la requête AJAX
-    }
-  });
-});
 </script>
 
 </body>

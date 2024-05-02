@@ -1,23 +1,5 @@
 <?php
  
-/*
- * DataTables example server-side processing script.
- *
- * Please note that this script is intentionally extremely simple to show how
- * server-side processing can be implemented, and probably shouldn't be used as
- * the basis for a large complex system. It is suitable for simple use cases as
- * for learning.
- *
- * See https://datatables.net/usage/server-side for full details on the server-
- * side processing requirements of DataTables.
- *
- * @license MIT - https://datatables.net/license_mit
- */
- 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Easy set variables
- */
- 
 // DB table to use
 $table = 'produit';
 // $table = 'ventes';
@@ -30,7 +12,7 @@ $primaryKey = 'idProd';
 // The `db` parameter represents the column name in the database, while the `dt`
 // parameter represents the DataTables column identifier. In this case simple
 
-$mysqli = new mysqli('localhost', 'root', 'Pa$$w0rd', 'pharmacie');
+$mysqli = new mysqli('localhost', 'auriot', 'auriot', 'pharmacie');
 // Vérifier la connexion
 if ($mysqli->connect_errno) {
     echo "Erreur de connexion à la base de données : " . $mysqli->connect_error;

@@ -27,137 +27,138 @@
       </nav>
     </div><!-- End Page Title -->
     <section class="section">
+      <div class="card">
+        <div class="card-body">
+        <div class="container-fluid d-flex justify-content-center align-items-center py-3">
+          <form>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">AJOUTER UN CLIENT</button>
+          </form>
+        </div>
+        <table id="example" class="display table  table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nom</th>
+                    <th>Ville</th>
+                    <th>email</th>
+                    <th>telephone</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>#</th>
+                    <th>Nom</th>
+                    <th>Ville</th>
+                    <th>email</th>
+                    <th>telephone</th>
+                    <th>Action</th>
+                </tr>
+            </tfoot>
+        </table>
+        </div>
+      </div>
 
-          <div class="card">
-            <div class="card-body">
-            <center><p class="h4 text-center">Clients enregistrés</p>
-            <br>
-            <form class="container-fluid justify-content-start"><button type="button" class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">AJOUTER UN CLIENT</button></form></center>
-            <table id="example" class="display table  table-bordered" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nom</th>
-                        <th>Ville</th>
-                        <th>email</th>
-                        <th>telephone</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tfoot>
-                    <tr>
-                        <th>#</th>
-                        <th>Nom</th>
-                        <th>Ville</th>
-                        <th>email</th>
-                        <th>telephone</th>
-                        <th>Action</th>
-                    </tr>
-                </tfoot>
-            </table>
+      <!-- add modal -->
+      <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <p class="h4 text-center">ENREGISTRER UN CLIENT</p>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form class="row g-3 needs-validation" id="myform" novalidate>
+                <div class="col-md-12">
+                  <label for="nomC" class="form-label">Nom du client:</label>
+                  <input type="text" class="form-control" id="nomC" name="nomC" required>
+                  <div class="invalid-feedback">
+                    nom du client requis!
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <label for="villeC" class="form-label">Ville:</label>
+                  <input type="text" class="form-control" id="villeC" name="villeC" required>
+                  <div class="invalid-feedback">
+                    ville requise!
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <label for="emailC" class="form-label">email:</label>
+                  <input type="email" class="form-control" id="emailC" name="emailC" required>
+                  <div class="invalid-feedback">
+                    email non valide!
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <label for="telC" class="form-label">telephone:</label>
+                  <input type="number" class="form-control" id="telC" name="telC" required>
+                  <div class="invalid-feedback">
+                    numero de telephone requis!
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <div class="col-12 ">
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-outline-primary" type="submit" id="btn-send">save</button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
+        </div>
+      </div>
 
-          <!-- add modal -->
-          <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <p class="h4 text-center">ENREGISTRER UN CLIENT</p>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <!-- edit modal -->
+      <div class="modal fade" id="editModalToggle" aria-hidden="true" aria-labelledby="editModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <p class="h4 text-center">MODIFIER UN CLIENT</p>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form class="row g-3 needs-validation" id="editForm" novalidate>
+                <div class="col-md-12">
+                  <label for="nomC" class="form-label">Nom du client:</label>
+                  <input type="text" class="form-control" id="nomC1" name="nomC1" required>
+                  <div class="invalid-feedback">
+                    nom du client requis!
+                  </div>
                 </div>
-                <div class="modal-body">
-                  <form class="row g-3 needs-validation" id="myform" novalidate>
-                    <div class="col-md-12">
-                      <label for="nomC" class="form-label">Nom du client:</label>
-                      <input type="text" class="form-control" id="nomC" name="nomC" required>
-                      <div class="invalid-feedback">
-                        nom du client requis!
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <label for="villeC" class="form-label">Ville:</label>
-                      <input type="text" class="form-control" id="villeC" name="villeC" required>
-                      <div class="invalid-feedback">
-                        ville requise!
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <label for="emailC" class="form-label">email:</label>
-                      <input type="email" class="form-control" id="emailC" name="emailC" required>
-                      <div class="invalid-feedback">
-                        email non valide!
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <label for="telC" class="form-label">telephone:</label>
-                      <input type="number" class="form-control" id="telC" name="telC" required>
-                      <div class="invalid-feedback">
-                        numero de telephone requis!
-                      </div>
-                    </div>
-                    <div class="card-footer">
-                      <div class="col-12 ">
-                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
-                        <button class="btn btn-outline-primary" type="submit" id="btn-send">save</button>
-                      </div>
-                    </div>
-                  </form>
+                <div class="col-md-12">
+                  <label for="villeC" class="form-label">Ville:</label>
+                  <input type="text" class="form-control" id="villeC1" name="villeC1" required>
+                  <div class="invalid-feedback">
+                    ville requise!
+                  </div>
                 </div>
-              </div>
+                <div class="col-md-12">
+                  <label for="emailC" class="form-label">email:</label>
+                  <input type="email" class="form-control" id="emailC1" name="emailC1" required>
+                  <div class="invalid-feedback">
+                    email non valide!
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <label for="telC" class="form-label">telephone:</label>
+                  <input type="text" class="form-control" id="telC1" name="telC1" required>
+                  <div class="invalid-feedback">
+                    numero de telephone requis!
+                  </div>
+                </div>
+                <input type="hidden" name="idC1" id="idC1">
+                <div class="card-footer">
+                  <div class="col-12 ">
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-outline-primary" type="submit" id="btn-send">edit</button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
-
-          <!-- edit modal -->
-          <div class="modal fade" id="editModalToggle" aria-hidden="true" aria-labelledby="editModalToggleLabel" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <p class="h4 text-center">MODIFIER UN CLIENT</p>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <form class="row g-3 needs-validation" id="editForm" novalidate>
-                    <div class="col-md-12">
-                      <label for="nomC" class="form-label">Nom du client:</label>
-                      <input type="text" class="form-control" id="nomC1" name="nomC1" required>
-                      <div class="invalid-feedback">
-                        nom du client requis!
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <label for="villeC" class="form-label">Ville:</label>
-                      <input type="text" class="form-control" id="villeC1" name="villeC1" required>
-                      <div class="invalid-feedback">
-                        ville requise!
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <label for="emailC" class="form-label">email:</label>
-                      <input type="email" class="form-control" id="emailC1" name="emailC1" required>
-                      <div class="invalid-feedback">
-                        email non valide!
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <label for="telC" class="form-label">telephone:</label>
-                      <input type="text" class="form-control" id="telC1" name="telC1" required>
-                      <div class="invalid-feedback">
-                        numero de telephone requis!
-                      </div>
-                    </div>
-                    <input type="hidden" name="idC1" id="idC1">
-                    <div class="card-footer">
-                      <div class="col-12 ">
-                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
-                        <button class="btn btn-outline-primary" type="submit" id="btn-send">edit</button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
+        </div>
+      </div>
     </section>
 
   </main><!-- End #main -->

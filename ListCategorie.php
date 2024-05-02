@@ -32,7 +32,7 @@
       </nav>
     </div><!-- End Page Title -->
         <!-- Bouton pour ajouter une catégorie -->
-<button class="btn btn-primary mb-3" id="btn-add-category" data-bs-toggle="modal" data-bs-target="#addCategoryModal">Ajouter Catégorie</button>
+    <button class="btn btn-primary mb-3" id="btn-add-category" data-bs-toggle="modal" data-bs-target="#addCategoryModal">Ajouter Catégorie</button>
     <section class="section dashboard">
         <div class="row">
             <!-- <div class="col-lg-2"></div> -->
