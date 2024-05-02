@@ -30,9 +30,7 @@
 
           <div class="card">
             <div class="card-body">
-            <!-- <center><p class="h4 text-center">Fournisseurs enregistrés</p> -->
-            <br>
-            <div class="container-fluid d-flex justify-content-center align-items-center">
+            <div class="container-fluid d-flex justify-content-center align-items-center py-3">
               <form>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">AJOUTER UN FOURNISSEUR</button>
               </form>

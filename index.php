@@ -14,14 +14,6 @@
 <!-- sidebar -->
 <?php include "include/sidebar.php"?>
 
-
-<?php
-    include 'connexiondb.php';
-    $conn = connexionMysqli();
-    // include 'stock.php';
-    include 'stock.php';
-  ?>
-
 <!-- contain page -->
   <main id="main" class="main">
 
@@ -45,20 +37,6 @@
             <!-- Sales Card -->
             <div class="col-xxl-3 col-md-6">
               <div class="card info-card sales-card">
-
-                <!-- <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div> -->
-
                 <div class="card-body">
                   <h5 class="card-title">Ventes</h5>
 
@@ -88,8 +66,7 @@
                       <i class="bi bi-cart-plus"></i>
                     </div>
                     <div class="ps-3">
-                    <h6 id="countAppro"></h6>
-
+                      <h6 id="countAppro"></h6>
                     </div>
                   </div>
                 </div>
@@ -108,8 +85,7 @@
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                    <h6 id="countClients"></h6>
-
+                      <h6 id="countClients"></h6>
                     </div>
                   </div>
 
@@ -128,8 +104,7 @@
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                    <h6 id="countFournisseurs"></h6>
-
+                      <h6 id="countFournisseurs"></h6>
                     </div>
                   </div>
 
@@ -189,8 +164,52 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-<!-- Assurez-vous d'inclure jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Assurez-vous d'inclure jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- le js pour les statistiques  -->
+  <script src="js/index.js"></script>
+
+  <script>
+    $(document).ready(function() {
+        let tab = [];
+        <?php
+        include 'connexiondb.php';
+        $conn = connexionMysqli();
+        include 'stock.php';
+        $sql = "SELECT * from produit where etat='active' order by nomProd";
+
+        $sql = "SELECT * FROM produit";
+
+        $result = $conn->query($sql);
+        if ($result) {
+          $sum_qteVente = $sum_qteAppro = $qte_stock = 0;
+            while ($row = $result->fetch_assoc()) {
+                $nomProd = $row['nomProd'];
+                $sum_qteAppro = getApprovisionnement($row['idProd']);
+                $sum_qteVente = getVente($row['idProd']);
+                $qte_stock = getstock($row['idProd']);
+                echo "tab.push(['$nomProd', $sum_qteAppro, $sum_qteVente, $qte_stock]);";
+            }
+            $result->free();
+        } else {
+            echo "Erreur lors de l'exécution de la requête : " . $conn->error;
+        }
+        ?>
+        new DataTable('#example', {
+            data: tab,
+            columns: [
+                { title: 'Nom du produit' },
+                { title: 'Quantité Approvisionnée' },
+                { title: 'Quantité vendue' },
+                { title: 'Quantité en stock' }
+            ],
+            scrollCollapse: true,
+            scroller: true,
+            scrollY: 200
+        });
+    });
+</script>
 
 </body>
 
