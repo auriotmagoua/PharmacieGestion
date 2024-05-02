@@ -1,10 +1,10 @@
 <?php
-//require_once 'connexiondb.php';
+require_once 'connexiondb.php';
 
-//$con = connexionMysqli();
+$con = connexionMysqli();
 
 function getApprovisionnement($idProd){
-    $con = new mysqli("localhost", "auriot", "auriot", "pharmacie");
+    $con = new mysqli("localhost", "root", 'Pa$$w0rd', "pharmacie");
   $sql = "SELECT IFNULL(SUM(approvisionnement.qteAppro), 0) AS sum_qteAppro 
   FROM approvisionnement where etat = 'active' and idProd=$idProd";
   $result = $con->query($sql);
@@ -13,7 +13,7 @@ function getApprovisionnement($idProd){
 }
 
 function getVente($idProd){
-    $con = new mysqli("localhost", "auriot", "auriot", "pharmacie");
+    $con = new mysqli("localhost", "root", 'Pa$$w0rd', "pharmacie");
   $sql = "SELECT IFNULL(SUM(ventes.qteVente), 0) AS sum_qteVente
   FROM ventes
   where etat = 'active'  and idProd=$idProd";

@@ -18,7 +18,7 @@
 <?php
     include 'connexiondb.php';
     $conn = connexionMysqli();
-    include 'stock.php';
+    // include 'stock.php';
     include 'stock.php';
   ?>
 
@@ -67,7 +67,7 @@
                       <i class="bi bi-cart-dash"></i>
                     </div>
                     <div class="ps-3">
-                      <h6><span id="countVentes"></span></h6>
+                      <h6 id="countVentes"></h6>
                       <!-- <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span> -->
 
                     </div>
@@ -88,7 +88,7 @@
                       <i class="bi bi-cart-plus"></i>
                     </div>
                     <div class="ps-3">
-                      <h6><?php $sql = "SELECT COUNT(*) AS total_approv FROM approvisionnement"; $result = $conn->query($sql); if ($result) { $row = $result->fetch_assoc(); $totalClients = $row['total_approv']; echo $totalClients; $result->free(); } ?></h6>
+                    <h6 id="countAppro"></h6>
 
                     </div>
                   </div>
@@ -108,7 +108,7 @@
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6><?php $sql = "SELECT COUNT(*) AS total_clients FROM client"; $result = $conn->query($sql); if ($result) { $row = $result->fetch_assoc(); $totalClients = $row['total_clients']; echo $totalClients; $result->free(); } ?></h6>
+                    <h6 id="countClients"></h6>
 
                     </div>
                   </div>
@@ -128,7 +128,7 @@
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6><?php $sql = "SELECT COUNT(*) AS total_fournisseur FROM fournisseur"; $result = $conn->query($sql); if ($result) { $row = $result->fetch_assoc(); $totalClients = $row['total_fournisseur']; echo $totalClients; $result->free(); } ?></h6>
+                    <h6 id="countFournisseurs"></h6>
 
                     </div>
                   </div>
@@ -177,7 +177,7 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
-  <!-- <script src="script/index.js"></script> -->
+  <script src="script/index.js"></script>
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/chart.js/chart.umd.js"></script>
@@ -191,123 +191,6 @@
   <script src="assets/js/main.js"></script>
 <!-- Assurez-vous d'inclure jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<script>
-    $(document).ready(function() {
-      $.ajax({
-        method: "get",
-        url: "getStat.php",
-        dataType: "json",
-        success: function(response) {
-          $('#countVentes').text(response.countVentes);
-          $('#countAppro').text(response.countAppro);
-          $('#countClients').text(response.countClients);
-          $('#countFournisseurs').text(response.countFournisseurs);
-        },
-        error: function() {
-          // Gérez les erreurs ici
-        }
-      });
-    });
-</script>
-  <script>
-    $(document).ready(function() {
-        let tab = [];
-        <?php
-        // include 'connexiondb.php';x  
-        // $conn = connexionMysqli();
-        $sql = "SELECT * from produit where etat='active' order by nomProd";
-
-        $sql = "SELECT * FROM produit";
-
-        $result = $conn->query($sql);
-        if ($result) {
-          $sum_qteVente = $sum_qteAppro = $qte_stock = 0;
-            while ($row = $result->fetch_assoc()) {
-                $nomProd = $row['nomProd'];
-                $sum_qteAppro = getApprovisionnemement($row['idProd']);
-                $sum_qteVente = getVente($row['idProd']);
-                $qte_stock = getStock($row['idProd']);
-                echo "data.push(['$nomProd', $sum_qteAppro, $sum_qteVente, $qte_stock]);";
-                $sum_qteAppro = getApprovisionnement($row['idProd']);
-                $sum_qteVente = getVente($row['idProd']);
-                $qte_stock = getstock($row['idProd']);
-                echo "tab.push(['$nomProd', $sum_qteAppro, $sum_qteVente, $qte_stock]);";
-            }
-            $result->free();
-        } else {
-            echo "Erreur lors de l'exécution de la requête : " . $conn->error;
-        }
-        ?>
-        new DataTable('#example', {
-            data: tab,
-            columns: [
-                { title: 'Nom du produit' },
-                { title: 'Quantité Approvisionnée' },
-                { title: 'Quantité vendue' },
-                { title: 'Quantité en stock' }
-            ],
-            scrollCollapse: true,
-            scroller: true,
-            scrollY: 200
-        });
-    });
-
-  document.addEventListener("DOMContentLoaded", () => {
-  // Effectuer une requête AJAX pour obtenir les données de la base de données
-  $.ajax({
-    method: "GET",
-    url: "getChartData.php", // Remplacez par le chemin vers votre script PHP pour récupérer les données
-    dataType: "json",
-    success: function(response) {
-      // Récupérer les données de la réponse JSON
-      const labels = response.labels;
-      const data = response.data;
-
-      // Créer le graphique à barres avec les données
-      new Chart(document.querySelector('#barChart'), {
-        type: 'bar',
-        data: {
-          labels: labels,
-          datasets: [{
-            label: 'Bar Chart',
-            data: data,
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(255, 159, 64, 0.2)',
-              'rgba(255, 205, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(201, 203, 207, 0.2)'
-            ],
-            borderColor: [
-              'rgb(255, 99, 132)',
-              'rgb(255, 159, 64)',
-              'rgb(255, 205, 86)',
-              'rgb(75, 192, 192)',
-              'rgb(54, 162, 235)',
-              'rgb(153, 102, 255)',
-              'rgb(201, 203, 207)'
-            ],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          }
-        }
-      });
-    },
-    error: function() {
-      // Gérer les erreurs de la requête AJAX
-    }
-  });
-});
-</script>
 
 </body>
 

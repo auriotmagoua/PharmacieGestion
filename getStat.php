@@ -27,23 +27,3 @@ echo json_encode($data);
 
 $conn->close();
 ?>
-
-<!-- <script>
-    $(document).ready(function(){
-        $.ajax({
-        method:"get",
-        url:"getStat.php",
-        dataType:"json",
-        success:function (response){
-          $('#countVentes').text(response[0]['countVentes']);
-          $('#countAppro').text(response[0]['countAppro']);
-          $('#countClients').text(response[0]['countClients']);
-          $('#countFournisseurs').text(response[0]['countFournisseurs']);
-
-        },
-        error : function(){
-          
-        }
-      });
-    })
-  </script> -->
