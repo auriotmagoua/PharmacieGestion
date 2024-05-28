@@ -117,7 +117,7 @@
             <!-- <div class="col-4"> -->
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title">Quantité des produits</h5>
+                  <h5 class="card-title">Statistiques des medicaments </h5>
 
                   <table id="example" class="display nowrap" style="width:100%">
                     <thead>

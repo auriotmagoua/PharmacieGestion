@@ -22,11 +22,11 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Produits</h1>
+      <h1>Medicaments</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-          <li class="breadcrumb-item active">Produits</li>
+          <li class="breadcrumb-item active">Medicaments</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -36,7 +36,7 @@
       <div class="card-header">
         <div class="container-fluid d-flex justify-content-center align-items-center">
           <form>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" href="#ajoutProd" role="button">AJOUTER PRODUIT</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" href="#ajoutProd" role="button">AJOUTER MEDICAMENT</button>
           </form>
         </div>
       </div>

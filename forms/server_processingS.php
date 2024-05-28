@@ -8,7 +8,7 @@ include "../connect_server_P.php";
 
 // Fonction pour récupérer la quantité d'approvisionnement d'un produit
 function getApprovisionnement($idProd) {
-    $con = new mysqli("localhost", "root", 'Pa$$w0rd', "pharmacie");
+    $con = new mysqli("localhost", "auriot", 'auriot', "pharmacie");
     $sql = "SELECT IFNULL(SUM(approvisionnement.qteAppro), 0) AS sum_qteAppro 
             FROM approvisionnement 
             WHERE etat = 'active' AND idProd = $idProd";
@@ -23,7 +23,7 @@ function getApprovisionnement($idProd) {
 
 // Fonction pour récupérer la quantité de vente d'un produit
 function getVente($idProd) {
-    $con = new mysqli("localhost", "root", 'Pa$$w0rd', "pharmacie");
+    $con = new mysqli("localhost", "auriot", 'auriot', "pharmacie");
     $sql = "SELECT IFNULL(SUM(ventes.qteVente), 0) AS sum_qteVente
             FROM ventes
             WHERE etat = 'active' AND idProd = $idProd";
